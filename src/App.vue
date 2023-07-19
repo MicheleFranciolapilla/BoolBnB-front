@@ -1,14 +1,19 @@
 <script>
-// Importazione dello store (state management)
-  import { store } from "./store"
+  import { store } from "./store";
+  import Comp_ErrorManager from "./components/Comp_ErrorManager.vue";
   export default{
     name        : "App",
-    components  : {}
+    components  : 
+    {
+      Comp_ErrorManager
+    }
   }
 </script>
 
 <template>
-  <h1>hello world</h1>
+  <Comp_ErrorManager />
+  <h2>Welcome</h2>
+  <router-view></router-view>
 </template>
 
 <style scoped lang="scss">
