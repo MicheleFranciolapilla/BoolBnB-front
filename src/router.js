@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 
+import CompPage_Home from "./components/CompPage_Home.vue";
+import Comp_ErrorManager from "./components/Comp_ErrorManager.vue";
+
 const router = createRouter(
     {
         history :   createWebHistory(),
