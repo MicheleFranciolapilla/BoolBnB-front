@@ -21,7 +21,6 @@
       {
         this.store.front_url_root = window.location.origin;
         this.inform_backend();
-        this.store.just_started = false;
       }
     },
     methods:
@@ -33,11 +32,23 @@
         axios.post(`${this.store.api_url_root}front_end`, params)
           .then( res =>
             {
-              console.log(res);
+              if ((res.data.success) && (res.data.value == this.store.front_url_root))
+              {
+                this.store.api_error.error_index = 0;
+                this.store.just_started = false;
+              }
+              else
+              {
+                this.store.api_error.error_index = -1;
+                this.store.api_error.error_msg = "Impossibile stabilire connessione con il backend";
+              }
+              this.store.axios_running = false;
             })
           .catch( error =>
             {
-              console.log(error);
+              this.store.api_error.error_index = -1;
+              this.store.api_error.error_msg = "Impossibile stabilire connessione con il backend";
+              this.store.axios_running = false;
             });
       }
     }

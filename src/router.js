@@ -16,12 +16,12 @@ const router = createRouter(
                                             } 
                         },
                         // {
-                        //     path        :   '/projects',
-                        //     name        :   'projects_index',
+                        //     path        :   '/apartments',
+                        //     name        :   'apartments_index',
                         //     component   :   CompPage_Projects_Index,
                         //     meta        :   {
-                        //                         title : 'My Projects | All Projects'
-                        //                     }   
+                        //                          title : 'My Projects | All Projects'
+                        //                      }   
                         // },
                         // {
                         //     path        :   '/projects/:slug',
