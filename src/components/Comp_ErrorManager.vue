@@ -30,7 +30,7 @@
         </h5>
       </div>
       <div class="modal-body">
-        <h4>{{ store.error_message }}</h4>
+        <h4>Sono error manager</h4>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
