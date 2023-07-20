@@ -2,7 +2,8 @@
   import { store } from "./store";
   import axios from "axios";
   import Comp_ErrorManager from "./components/Comp_ErrorManager.vue";
-  export default{
+  export default
+  {
     name        : "App",
     components  : 
     {
@@ -28,7 +29,16 @@
       inform_backend()
       {
         this.store.axios_running = true;
-        axios.post(`${this.store.api_url_root}/api/front_url_root`, { front_url : this.store.front_url_root })
+        let params = { front_url : this.store.front_url_root };
+        axios.post(`${this.store.api_url_root}front_end`, params)
+          .then( res =>
+            {
+              console.log(res);
+            })
+          .catch( error =>
+            {
+              console.log(error);
+            });
       }
     }
   }

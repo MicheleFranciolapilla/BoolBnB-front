@@ -2,7 +2,7 @@
 import { reactive } from "vue";
 export const store = reactive(
     {
-        api_url_root    :   'http://127.0.0.1:8000',
+        api_url_root    :   'http://127.0.0.1:8000/api/',
         axios_running   :   false,
         api_error       :   {
                                 error_index :   0,
