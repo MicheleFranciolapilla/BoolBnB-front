@@ -20,9 +20,6 @@ import { store } from '../store';
     <h1>I am the main page</h1>
 </template>
 
-</template>
-
-
 <style lang="scss">
 
 </style>
