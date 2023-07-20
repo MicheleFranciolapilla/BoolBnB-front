@@ -9,7 +9,7 @@ import { store } from '../store';
             return {
             }
         },
-        mounted()
+        created()
         {
             store.page_name = "Home";
         }
