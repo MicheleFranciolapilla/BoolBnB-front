@@ -15,6 +15,17 @@
         store
       }
     },
+    watch:
+    {
+      'store.page_name' (new_value)
+      {
+        if ((new_value === "Home") && (this.store.api_error.error_index === 0))
+        {
+          console.log("chiamata api per appartamenti");
+          this.get_apartments();
+        }
+      }
+    },
     mounted()
     {
       if (this.store.just_started)
@@ -22,24 +33,26 @@
         this.store.front_url_root = window.location.origin;
         this.inform_backend();
       }
-      if ((this.store.api_error.error_index == 0) && (this.store.page_name == 'Home'))
-      {
-        this.get_apartments(true);
-      }
+      // if ((this.store.api_error.error_index == 0) && (this.store.page_name == 'Home'))
+      // {
+      //   console.log("chiamata api per appartamenti");
+      //   this.get_apartments(all = false);
+      // }
     },
     methods:
     {
-      async inform_backend()
+      inform_backend()
       {
         this.store.axios_running = true;
         let params = { front_url : this.store.front_url_root };
-        await axios.post(`${this.store.api_url_root}front_end`, params)
+        axios.post(`${this.store.api_url_root}front_end`, params)
           .then( res =>
             {
               if ((res.data.success) && (res.data.value == this.store.front_url_root))
               {
                 this.store.api_error.error_index = 0;
                 this.store.just_started = false;
+                console.log("indirizzo front_end inviato con successo");
               }
               else
               {
@@ -56,14 +69,14 @@
             });
       },
 
-      get_apartments(just_sponsored)
+      get_apartments(all = true)
       {
-        let params = { only_sponsored : just_sponsored };
+        let params = { "all" : all };
         this.store.axios_running = true;
         axios.get(`${this.store.api_url_root}apartments`, params)
         .then( res =>
           {
-
+            console.log(res);
           })
         .catch( error =>
           {
