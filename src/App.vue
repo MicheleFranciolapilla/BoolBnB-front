@@ -1,7 +1,7 @@
 <script>
   import { store } from "./store";
   import axios from "axios";
-  import Comp_ErrorManager from "./components/Comp_ErrorManager.vue";
+  import Comp_ErrorManager from "./components/sections/Comp_ErrorManager.vue";
   export default
   {
     name        : "App",
@@ -33,11 +33,6 @@
         this.store.front_url_root = window.location.origin;
         this.inform_backend();
       }
-      // if ((this.store.api_error.error_index == 0) && (this.store.page_name == 'Home'))
-      // {
-      //   console.log("chiamata api per appartamenti");
-      //   this.get_apartments(all = false);
-      // }
     },
     methods:
     {
@@ -69,18 +64,29 @@
             });
       },
 
-      get_apartments(all = true)
+      get_apartments(filter = "all")
       {
-        let params = { "all" : all };
+        let params = { "filter" : filter };
         this.store.axios_running = true;
-        axios.get(`${this.store.api_url_root}apartments`, params)
+        axios.get(`${this.store.api_url_root}apartments`, { params })
         .then( res =>
           {
-            console.log(res);
+            if (res.data.success)
+            {
+              this.store.api_error.error_index = 0;
+              this.store.apartments = res.data.apartments;
+            }
+            else
+            {
+              this.store.api_error.error_index = 1;
+              this.store.api_error.error_msg = "Nessun appartamento con le caratteristiche richieste";
+            }
+            this.store.axios_running = false;
           })
         .catch( error =>
           {
-
+            this.store.api_error.error_index = -1;
+            this.store.api_error.error_msg = "Impossibile stabilire connessione con il backend";
           });
       }
     }
@@ -88,9 +94,11 @@
 </script>
 
 <template>
+  <div id="front_end">
+    <h1>Welcome to Bool B&B</h1>
+    <router-view></router-view>
+  </div>
   <!-- <Comp_ErrorManager /> -->
-  <h2>Welcome</h2>
-  <router-view></router-view>
 </template>
 
 <style scoped lang="scss">
