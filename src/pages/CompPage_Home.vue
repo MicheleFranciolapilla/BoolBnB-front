@@ -1,5 +1,6 @@
 <script>
 import { store } from '../store';
+import axios from "axios";
 
     export default
     {
@@ -10,6 +11,14 @@ import { store } from '../store';
                 store
             }
         },
+        methods: {
+            getApartments(currentPage){
+                axios.get(`${store.api_url_root}apartments?filter=sponsored&page=${currentPage}`).then(res=> {
+                store.apartments = res.data.apartments
+                store.maxPage =res.data.apartments.last_page
+                })
+            },
+        },
         created()
         {
             store.page_name = "Home";
@@ -19,20 +28,21 @@ import { store } from '../store';
 
 <template>
     <div v-if="store.apartments !== null">
-        <div>
 
+        <button @click="getApartments(store.currentpage)"></button>
+        <div>
             <nav aria-label="Page navigation">
               <ul class="pagination    ">
                 <li class="page-item" :class="(this.store.currentpage === 1) ? 'disabled' : ''">
-                  <a class="page-link"  @click.prevent="store.currentpage --, getProjects(store.currentpage), GoTop()" href="#" aria-label="Previous">
+                  <a class="page-link"  @click.prevent="store.currentpage --, getApartments(store.currentpage)" href="#" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                   </a>
                 </li>
                 <li class="page-item" :class="(this.store.currentpage === pages) ? 'active' : ''" aria-current="page" v-for="(pages,index) in this.store.maxPage ">
-                    <a class="page-link" @click.prevent="store.currentpage = pages,getProjects(store.currentpage), GoTop()" href="#" :style="(store.currentpage === pages) ? 'pointer-events: none; cursor: default;' : ''" >{{ pages }}</a>
+                    <a class="page-link" @click.prevent="store.currentpage = pages,getApartments(store.currentpage)" href="#" :style="(store.currentpage === pages) ? 'pointer-events: none; cursor: default;' : ''" >{{ pages }}</a>
                 </li>
-                <li class="page-item" :class="(this.store.currentpage === this.maxPage) ? 'disabled' : ''" >
-                  <a class="page-link" @click.prevent="store.currentpage ++, getProjects(store.currentpage), GoTop()" href="#" aria-label="Next">
+                <li class="page-item" :class="(this.store.currentpage === this.store.maxPage) ? 'disabled' : ''" >
+                  <a class="page-link" @click.prevent="store.currentpage ++, getApartments(store.currentpage)" href="#" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                   </a>
                 </li>
