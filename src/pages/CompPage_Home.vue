@@ -19,6 +19,26 @@ import { store } from '../store';
 
 <template>
     <div v-if="store.apartments !== null">
+        <div>
+
+            <nav aria-label="Page navigation">
+              <ul class="pagination    ">
+                <li class="page-item" :class="(this.store.currentpage === 1) ? 'disabled' : ''">
+                  <a class="page-link"  @click.prevent="store.currentpage --, getProjects(store.currentpage), GoTop()" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                <li class="page-item" :class="(this.store.currentpage === pages) ? 'active' : ''" aria-current="page" v-for="(pages,index) in this.store.maxPage ">
+                    <a class="page-link" @click.prevent="store.currentpage = pages,getProjects(store.currentpage), GoTop()" href="#" :style="(store.currentpage === pages) ? 'pointer-events: none; cursor: default;' : ''" >{{ pages }}</a>
+                </li>
+                <li class="page-item" :class="(this.store.currentpage === this.maxPage) ? 'disabled' : ''" >
+                  <a class="page-link" @click.prevent="store.currentpage ++, getProjects(store.currentpage), GoTop()" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav> 
+        </div>
         <div class="row container mx-auto">
             <div v-for="(apartment, index) in store.apartments.data " :key='index' class="p-1 col-4">
                 <div class=" p-2 my-1">
@@ -44,7 +64,6 @@ import { store } from '../store';
                             </i>
                         </p>
                     </div>
-                    
                 </div>
             </div>
         </div>

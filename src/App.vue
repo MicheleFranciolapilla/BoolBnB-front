@@ -79,6 +79,7 @@
             {
               this.store.api_error.error_index = 0;
               this.store.apartments = res.data.apartments;
+              this.store.maxPage = res.data.apartments.last_page;
             }
             else
             {

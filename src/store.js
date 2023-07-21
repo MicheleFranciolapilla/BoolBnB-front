@@ -16,6 +16,12 @@ export const store = reactive(
         front_url_root  :   "", 
         just_started    :   true, 
         page_name       :   "",
+        currentpage     :   1,
+        maxPage         :   1,
+
+
+
+
 
         invoke_error()
         {
