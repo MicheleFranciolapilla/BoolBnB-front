@@ -1,12 +1,14 @@
 <script>
   import { store } from "./store";
   import axios from "axios";
+  import Comp_OnLoading from "./components/sections/Comp_OnLoading.vue";
   import Comp_ErrorManager from "./components/sections/Comp_ErrorManager.vue";
   export default
   {
     name        : "App",
     components  : 
     {
+      Comp_OnLoading,
       Comp_ErrorManager
     },
     data()
@@ -81,7 +83,7 @@
               this.store.api_error.error_index = 1;
               this.store.api_error.error_msg = "Nessun appartamento con le caratteristiche richieste";
             }
-            this.store.axios_running = false;
+            // this.store.axios_running = false;
           })
         .catch( error =>
           {
@@ -97,6 +99,11 @@
   <div id="front_end">
     <h1>Welcome to Bool B&B</h1>
     <router-view></router-view>
+    <Comp_OnLoading 
+     v-if="(store.axios_running)"
+     :hg_color = "'blue'"
+     :big = "true"
+     :message = "(store.just_started) ? ('Tentativo di prima connessione al database in corso...') : ('Recupero dati dal database')" />
   </div>
   <!-- <Comp_ErrorManager /> -->
 </template>
