@@ -13,16 +13,26 @@ const router = createRouter(
                             name        :   'home',
                             component   :   CompPage_Home,
                             meta        :   {
-                                                title : 'BoolB&B | Home Page'
-                                            } 
+                                                page_title : 'BoolB&B | Home Page'
+                                            },
+                            beforeEnter :   (to, from, next) =>
+                                            {
+                                                document.title  = to.meta.page_title;
+                                                next();
+                                            }
                         },
                         {
                             path        :   '/search',
                             name        :   'apartments_search',
                             component   :   CompPage_Apartments_Search,
                             meta        :   {
-                                                 title : 'BoolB&B | Ricerca'
-                                            }   
+                                                page_title : 'BoolB&B | Ricerca'
+                                            },
+                            beforeEnter :   (to, from, next) =>
+                                            {
+                                                document.title  = to.meta.page_title;
+                                                next();
+                                            } 
                         },
                         {
                             path        :   '/dettaglio/:slug', 
@@ -33,7 +43,7 @@ const router = createRouter(
                                             }  ,
                             beforeEnter :   (to, from, next) =>
                                             {
-                                                document.title  = to.meta.page_title + to.params.slug.replace("-", " ");
+                                                document.title  = to.meta.page_title + to.params.slug.replaceAll("-", " ");
                                                 next();
                                             }
                         }
