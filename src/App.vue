@@ -1,8 +1,8 @@
 <script>
   import { store } from "./store";
   import axios from "axios";
-  import Comp_OnLoading from "./components/sections/Comp_OnLoading.vue";
-  import Comp_ErrorManager from "./components/sections/Comp_ErrorManager.vue";
+  import Comp_OnLoading from "./components/Comp_OnLoading.vue";
+  import Comp_ErrorManager from "./components/Comp_ErrorManager.vue";
   export default
   {
     name        : "App",
@@ -38,11 +38,11 @@
     },
     methods:
     {
-      inform_backend()
+      async inform_backend()
       {
         this.store.axios_running = true;
         let params = { front_url : this.store.front_url_root };
-        axios.post(`${this.store.api_url_root}front_end`, params)
+        await axios.post(`${this.store.api_url_root}front_end`, params)
           .then( res =>
             {
               if ((res.data.success) && (res.data.value == this.store.front_url_root))

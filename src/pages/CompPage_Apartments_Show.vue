@@ -1,9 +1,9 @@
 <script>
-import { store } from '../../store';
+import { store } from '../store';
 
     export default
     {
-        name    : "CompPage_Home",
+        name    : "CompPage_Apartments_Show",
         data()
         {
             return {
@@ -11,13 +11,13 @@ import { store } from '../../store';
         },
         created()
         {
-            store.page_name = "Home";
+            store.page_name = "Show";
         }
     }
 </script>
 
 <template>
-    <h1>I am the main page</h1>
+    <h1>I am the show page</h1>
 </template>
 
 <style lang="scss">
