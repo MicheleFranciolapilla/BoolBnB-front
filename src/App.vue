@@ -99,7 +99,8 @@
 
 <template>
   <div id="front_end">
-    <h1>Welcome to Bool B&B</h1>
+    <Comp_Header/>
+    <h1 class="text-center">Welcome to Bool B&B</h1>
     <router-view></router-view>
     <Comp_OnLoading 
      v-if="(store.axios_running)"
@@ -110,7 +111,7 @@
   <!-- <Comp_ErrorManager /> -->
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
     // Uso del foglio di stile scss
     @use "./assets/style/main.scss" as *;
 

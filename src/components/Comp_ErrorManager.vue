@@ -18,11 +18,4 @@
 
 <style lang="scss">
 
-i{
-  margin: 1rem;
-  font-size: 30px;
-  background-color: red;
-  color: yellow;
-}
-
 </style>
