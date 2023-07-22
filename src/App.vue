@@ -19,27 +19,33 @@
         store
       }
     },
-    watch:
-    {
-      'store.page_name' (new_value)
-      {
-        if ((new_value === "Home") && (this.store.api_error.error_index === 0))
-        {
-          console.log("chiamata api per appartamenti");
-          this.get_apartments("sponsored");
-        }
-      }
-    },
+    // watch:
+    // {
+    //   'store.page_name' (new_value)
+    //   {
+    //     if ((new_value === "Home") && (this.store.api_error.error_index === 0))
+    //     {
+    //       console.log("chiamata api per appartamenti");
+    //       this.get_apartments("sponsored");
+    //     }
+    //   }
+    // },
     mounted()
     {
       if (this.store.just_started)
       {
-        this.store.front_url_root = window.location.origin;
-        this.inform_backend();
+        this.initialize();
       }
     },
     methods:
     {
+      async initialize()
+      {
+        this.store.front_url_root = window.location.origin;
+        await this.inform_backend();
+        await this.get_services();
+      },
+
       inform_backend()
       {
         this.store.axios_running = true;
@@ -68,6 +74,33 @@
             });
       },
 
+      get_services()
+      {
+        this.store.axios_running = true;
+        axios.get(`${this.store.api_url_root}services`)
+          .then( res =>
+            {
+              if (res.data.success)
+              {
+                this.store.api_error.error_index = 0;
+                this.store.services = res.data.services;
+                console.log("servizi ricevuti con successo");
+              }
+              else
+              {
+                this.store.api_error.error_index = 1;
+                this.store.api_error.error_msg = "Elenco servizi non ricevuto";
+              }
+              this.store.axios_running = false;
+            })
+          .catch( error =>
+            {
+              this.store.api_error.error_index = -2;
+              this.store.api_error.error_msg = "Errore nella chiamata per ottenimento servizi";
+              this.store.axios_running = false;
+            });
+      },
+
       get_apartments(filter = "all")
       {
         let params = { "filter" : filter };
@@ -83,15 +116,15 @@
             }
             else
             {
-              this.store.api_error.error_index = 1;
+              this.store.api_error.error_index = 2;
               this.store.api_error.error_msg = "Nessun appartamento con le caratteristiche richieste";
             }
             this.store.axios_running = false;
           })
         .catch( error =>
           {
-            this.store.api_error.error_index = -1;
-            this.store.api_error.error_msg = "Impossibile stabilire connessione con il backend";
+            this.store.api_error.error_index = -3;
+            this.store.api_error.error_msg = "Errore nella chiamata per ottenimento appartamenti";
           });
       }
     }

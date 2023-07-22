@@ -7,7 +7,7 @@
 </script>
 
 <template>
-    <div id="on_loading" class="text-center" :style="{color: hg_color}">
+    <div id="on_loading" :style="{color: hg_color}">
         <div v-if="big">
             <h2>
                 <i class="fa-solid fa-hourglass-start fa-spin-pulse" :style="{color: hg_color}"></i>
