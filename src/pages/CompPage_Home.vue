@@ -1,50 +1,58 @@
 <script>
-import { store } from '../store';
-import axios from "axios";
+    import { store } from '../store';
+    import axios from "axios";
 
     export default
     {
-        name    : "CompPage_Home",
+        name    :   "CompPage_Home",
         data()
         {
-            return {
-                store
-            }
-        },
-        methods: {
-            getApartments(currentPage){
-                axios.get(`${store.api_url_root}apartments?filter=sponsored&page=${currentPage}`).then(res=> {
-                store.apartments = res.data.apartments
-                store.maxPage =res.data.apartments.last_page
-                })
-            },
+            return  {
+                        store,
+                    }
         },
         created()
         {
-            store.page_name = "Home";
-        }
+            this.store.page_name = "Home";
+            console.log("ready for calling");
+            this.store.prepare_reactive_call("sponsored", 1);
+        },
+        methods: 
+        {
+            // getApartments(currentPage)
+            // {
+            //     axios.get(`${store.api_url_root}apartments?filter=sponsored&page=${currentPage}`).then(res=> {
+            //     store.apartments = res.data.apartments
+            //     store.maxPage =res.data.apartments.last_page
+            //     })
+            // },
+        },
     }
 </script>
 
 <template>
     <div v-if="store.apartments !== null">
 
-        <button @click="getApartments(store.currentpage)"></button>
+        <button @click="store.prepare_reactive_call('sponsored', store.currentpage)"></button>
+        <!-- getApartments(store.currentpage) -->
         <div>
             <nav aria-label="Page navigation">
               <ul class="pagination    ">
                 <li class="page-item" :class="(this.store.currentpage === 1) ? 'disabled' : ''">
-                  <a class="page-link"  @click.prevent="store.currentpage --, getApartments(store.currentpage)" href="#" aria-label="Previous">
+                  <a class="page-link"  @click.prevent="store.currentpage --, store.prepare_reactive_call('sponsored', store.currentpage)" href="#" aria-label="Previous">
+                    <!-- getApartments(store.currentpage) -->
                     <span aria-hidden="true">&laquo;</span>
                   </a>
                 </li>
                 <li class="page-item" :class="(this.store.currentpage === pages) ? 'active' : ''" aria-current="page" v-for="(pages,index) in this.store.maxPage ">
-                    <a class="page-link" @click.prevent="store.currentpage = pages,getApartments(store.currentpage)" href="#" :style="(store.currentpage === pages) ? 'pointer-events: none; cursor: default;' : ''" >{{ pages }}</a>
+                    <a class="page-link" @click.prevent="store.currentpage = pages, store.prepare_reactive_call('sponsored', store.currentpage)" href="#" :style="(store.currentpage === pages) ? 'pointer-events: none; cursor: default;' : ''" >{{ pages }}</a>
+                    <!-- getApartments(store.currentpage) -->
                 </li>
                 <li class="page-item" :class="(this.store.currentpage === this.store.maxPage) ? 'disabled' : ''" >
-                  <a class="page-link" @click.prevent="store.currentpage ++, getApartments(store.currentpage)" href="#" aria-label="Next">
+                  <a class="page-link" @click.prevent="store.currentpage ++, store.prepare_reactive_call('sponsored', store.currentpage)" href="#" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                   </a>
+                  <!-- getApartments(store.currentpage) -->
                 </li>
               </ul>
             </nav> 

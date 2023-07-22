@@ -20,17 +20,17 @@
                 front_url_sent  : false
               }
     },
-    // watch:
-    // {
-    //   'store.page_name' (new_value)
-    //   {
-    //     if ((new_value === "Home") && (this.store.api_error.error_index === 0))
-    //     {
-    //       console.log("chiamata api per appartamenti");
-    //       this.get_apartments("sponsored");
-    //     }
-    //   }
-    // },
+    watch:
+    {
+      'store.reactive_calls' (new_value)
+      {
+        if (new_value)
+        {
+          this.store.reactive_calls = false;
+          this.get_apartments(this.store.filters_on_call.filter, this.store.filters_on_call.page);
+        }
+      }
+    },
     mounted()
     {
       if (this.store.just_started)
@@ -108,32 +108,36 @@
             });
       },
 
-      get_apartments(filter = "all")
+      get_apartments(filter = "sponsored", page = 1)
       {
-        let params = { "filter" : filter };
+        console.log("parametri: ", filter, " - ", page);
+        let params =  { 
+                        "filter"  : filter,
+                        "page"    : page    
+                      };
         this.store.axios_running = true;
         axios.get(`${this.store.api_url_root}apartments`, { params })
-        .then( res =>
-          {
-            if (res.data.success)
+          .then( res =>
             {
-              this.store.api_error.error_index = 0;
-              this.store.apartments = res.data.apartments;
-              this.store.maxPage = res.data.apartments.last_page;
-            }
-            else
-            {
-              this.store.api_error.error_index = 2;
-              this.store.api_error.error_msg = "Nessun appartamento con le caratteristiche richieste";
-            }
-            this.store.axios_running = false;
-          })
-        .catch( error =>
-          {
-            this.store.api_error.error_index = -2;
-            this.store.api_error.error_msg = "Errore nella chiamata per ottenimento appartamenti";
-          });
-      }
+              if (res.data.success)
+              {
+                this.store.api_error.error_index = 0;
+                this.store.apartments = res.data.apartments;
+                this.store.maxPage = res.data.apartments.last_page;
+              }
+              else
+              {
+                this.store.api_error.error_index = 2;
+                this.store.api_error.error_msg = "Nessun appartamento con le caratteristiche richieste";
+              }
+              this.store.axios_running = false;
+            })
+            .catch( error =>
+              {
+                this.store.api_error.error_index = -2;
+                this.store.api_error.error_msg = "Errore nella chiamata per ottenimento appartamenti";
+              });
+        }
     }
   }
 </script>
@@ -149,7 +153,10 @@
     :message = "(!front_url_sent) ? ('Tentativo di prima connessione al database in corso...') : ('Recupero dati dal database')"
   />
 
-  <div v-else-if="((!store.just_started) && (store.api_error.error_index != 0))" id="front_end">
+  <div 
+    v-else-if="((!store.just_started) && (store.api_error.error_index == 0))" 
+    id="front_end"
+  >
     <Comp_Header/>
     <h1 class="text-center">Welcome to Bool B&B</h1>
     <router-view></router-view>

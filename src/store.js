@@ -19,10 +19,20 @@ export const store = reactive(
         page_name       :   "",
         currentpage     :   1,
         maxPage         :   1,
+        reactive_calls  :   false,
+        filters_on_call :   {
+                                filter  : "",
+                                page    : 1  
+                            },
 
 
 
-
+        prepare_reactive_call(param_filter, param_page)
+        {
+            this.filters_on_call.filter = param_filter;
+            this.filters_on_call.page = param_page;
+            this.reactive_calls = true;
+        },
 
         invoke_error()
         {
