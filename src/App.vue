@@ -46,11 +46,11 @@
         await this.get_services();
       },
 
-      inform_backend()
+      async inform_backend()
       {
         this.store.axios_running = true;
         let params = { front_url : this.store.front_url_root };
-        axios.post(`${this.store.api_url_root}front_end`, params)
+        await axios.post(`${this.store.api_url_root}front_end`, params)
           .then( res =>
             {
               if ((res.data.success) && (res.data.value == this.store.front_url_root))
@@ -74,10 +74,10 @@
             });
       },
 
-      get_services()
+      async get_services()
       {
         this.store.axios_running = true;
-        axios.get(`${this.store.api_url_root}services`)
+        await axios.get(`${this.store.api_url_root}services`)
           .then( res =>
             {
               if (res.data.success)
