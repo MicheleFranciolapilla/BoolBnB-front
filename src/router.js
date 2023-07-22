@@ -35,7 +35,7 @@ const router = createRouter(
                                             } 
                         },
                         {
-                            path        :   '/dettaglio/:slug', 
+                            path        :   '/dettaglio/:id/:slug', 
                             name        :   'apartments_show',
                             component   :   CompPage_Apartments_Show,
                             meta        :   {
@@ -47,19 +47,6 @@ const router = createRouter(
                                                 next();
                                             }
                         }
-                        // {
-                        //     path        :   '/projects/:slug',
-                        //     name        :   'projects_show',
-                        //     component   :   CompPage_Projects_Show,
-                        //     meta        :   {
-                        //                         page_title  : 'My Projects | Project'
-                        //                     },
-                        //     beforeEnter :   (to, from, next) =>
-                        //                     {
-                        //                         document.title  = to.meta.page_title + ' : ' + to.params.slug;
-                        //                         next();
-                        //                     }
-                        // }
                     ] 
     });
     export { router };

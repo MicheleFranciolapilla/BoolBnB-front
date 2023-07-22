@@ -108,22 +108,33 @@
             });
       },
 
-      get_apartments(filter = "sponsored", page = 1)
+      get_apartments(filter = "sponsored", page = 1, single = false, single_id = 0)
       {
-        console.log("parametri: ", filter, " - ", page);
-        let params =  { 
-                        "filter"  : filter,
-                        "page"    : page    
-                      };
         this.store.axios_running = true;
-        axios.get(`${this.store.api_url_root}apartments`, { params })
+        let get_single_int;
+        (single) ? (get_single_int = 1) : (get_single_int = 0);
+        let params = "";
+        if (!single)
+          params =  { 
+                      "filter"  : filter,
+                      "page"    : page    
+                    };
+        let end_points = ['apartments', `apartment/${single_id}`];
+        axios.get(`${this.store.api_url_root}${end_points[get_single_int]}`, { params })
           .then( res =>
             {
               if (res.data.success)
               {
                 this.store.api_error.error_index = 0;
-                this.store.apartments = res.data.apartments;
-                this.store.maxPage = res.data.apartments.last_page;
+                if (!single)
+                {
+                  this.store.apartments = res.data.apartments;
+                  this.store.maxPage = res.data.apartments.last_page;
+                }
+                else
+                {
+                  this.store.one_apartment = res.data.apartment;
+                }
               }
               else
               {

@@ -30,6 +30,11 @@
                     default     :   this.store.currentpage = page;
                 }
                 this.store.prepare_reactive_call("sponsored", this.store.currentpage);
+            },
+
+            get_single_apartment()
+            {
+
             }
         },
     }
@@ -57,32 +62,35 @@
               </ul>
             </nav> 
         </div>
+
         <div class="row container mx-auto">
             <div v-for="(apartment, index) in store.apartments.data " :key='index' class="p-1 col-4">
-                <div class=" p-2 my-1">
-                    <div class="overflow-hidden rounded-4" style="height: 300px;">
-                        <img :src="`http://127.0.0.1:8000/storage/${apartment.cover_img}`" alt="" class="img-box">
-                    </div>
-                    <div class="mt-3">                        
-                        <p>
-                            <b>
-                                {{ apartment.title }}, 
-                            </b>
-                            <span class="ms-2">
+                <router-link :to="{name: 'apartments_show', params: { id: apartment.id, slug:apartment.slug}}" class="text-decoration-none text-black" v-on:click="get_single_apartment()">
+                    <div class=" p-2 my-1">
+                        <div class="overflow-hidden rounded-4" style="height: 300px;">
+                            <img :src="`http://127.0.0.1:8000/storage/${apartment.cover_img}`" alt="" class="img-box">
+                        </div>
+                        <div class="mt-3">                        
+                            <p>
                                 <b>
-                                    <i>
-                                        {{ apartment.city }}
-                                    </i>
+                                    {{ apartment.title }}, 
                                 </b>
-                            </span>
-                        </p>
-                        <p class="mt-0">
-                            <i>
-                                {{ apartment.address }}
-                            </i>
-                        </p>
+                                <span class="ms-2">
+                                    <b>
+                                        <i>
+                                            {{ apartment.city }}
+                                        </i>
+                                    </b>
+                                </span>
+                            </p>
+                            <p class="mt-0">
+                                <i>
+                                    {{ apartment.address }}
+                                </i>
+                            </p>
+                        </div>
                     </div>
-                </div>
+                </router-link>
             </div>
         </div>
     </div>

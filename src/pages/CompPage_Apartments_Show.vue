@@ -17,7 +17,7 @@ import { store } from '../store';
 </script>
 
 <template>
-    <h1>I am the show page</h1>
+    <h1>{{this.$route.params.id}}</h1>
 </template>
 
 <style lang="scss">
