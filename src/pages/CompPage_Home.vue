@@ -15,17 +15,22 @@
         {
             this.store.page_name = "Home";
             console.log("ready for calling");
-            this.store.prepare_reactive_call("sponsored", 1);
+            this.call_axios("",1);
         },
         methods: 
         {
-            // getApartments(currentPage)
-            // {
-            //     axios.get(`${store.api_url_root}apartments?filter=sponsored&page=${currentPage}`).then(res=> {
-            //     store.apartments = res.data.apartments
-            //     store.maxPage =res.data.apartments.last_page
-            //     })
-            // },
+            call_axios(op, page = 0)
+            {
+                switch (op)
+                {
+                    case "+"    :   this.store.currentpage++;
+                                    break;
+                    case "-"    :   this.store.currentpage--;
+                                    break;
+                    default     :   this.store.currentpage = page;
+                }
+                this.store.prepare_reactive_call("sponsored", this.store.currentpage);
+            }
         },
     }
 </script>
@@ -33,26 +38,21 @@
 <template>
     <div v-if="store.apartments !== null">
 
-        <button @click="store.prepare_reactive_call('sponsored', store.currentpage)"></button>
-        <!-- getApartments(store.currentpage) -->
         <div>
             <nav aria-label="Page navigation">
               <ul class="pagination    ">
                 <li class="page-item" :class="(this.store.currentpage === 1) ? 'disabled' : ''">
-                  <a class="page-link"  @click.prevent="store.currentpage --, store.prepare_reactive_call('sponsored', store.currentpage)" href="#" aria-label="Previous">
-                    <!-- getApartments(store.currentpage) -->
+                  <a class="page-link"  @click.prevent="call_axios('-')" href="#" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                   </a>
                 </li>
                 <li class="page-item" :class="(this.store.currentpage === pages) ? 'active' : ''" aria-current="page" v-for="(pages,index) in this.store.maxPage ">
-                    <a class="page-link" @click.prevent="store.currentpage = pages, store.prepare_reactive_call('sponsored', store.currentpage)" href="#" :style="(store.currentpage === pages) ? 'pointer-events: none; cursor: default;' : ''" >{{ pages }}</a>
-                    <!-- getApartments(store.currentpage) -->
+                    <a class="page-link" @click.prevent="call_axios('',pages)" href="#" :style="(store.currentpage === pages) ? 'pointer-events: none; cursor: default;' : ''" >{{ pages }}</a>
                 </li>
                 <li class="page-item" :class="(this.store.currentpage === this.store.maxPage) ? 'disabled' : ''" >
-                  <a class="page-link" @click.prevent="store.currentpage ++, store.prepare_reactive_call('sponsored', store.currentpage)" href="#" aria-label="Next">
+                  <a class="page-link" @click.prevent="call_axios('+')" href="#" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                   </a>
-                  <!-- getApartments(store.currentpage) -->
                 </li>
               </ul>
             </nav> 
