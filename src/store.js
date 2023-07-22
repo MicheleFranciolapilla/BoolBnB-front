@@ -28,5 +28,11 @@ export const store = reactive(
         {
             let activator = document.getElementById("modal_activator");
             activator.click();
+        },
+
+        reset_error()
+        {
+            this.api_error.error_index = 0;
+            this.api_error.error_msg = "";
         }
     });
