@@ -7,6 +7,7 @@ import { store } from '../store';
         data()
         {
             return {
+                store
             }
         },
         created()
@@ -17,10 +18,90 @@ import { store } from '../store';
 </script>
 
 <template>
-    <h1>{{this.$route.params.id}}</h1>
-    <h2></h2>
+    <div class="container">
+        <h1>
+            {{ store.one_apartment.title }}
+        </h1>
+        <p class="mt-3">
+            <i>
+                {{store.one_apartment.address  }}
+            </i>
+            <span class="ms-2">
+                <b>
+                    {{store.one_apartment.city }}
+                </b>
+            </span>
+        </p>
+        <div class="row">
+            <div class="col-6 p-2">
+                <div class="overflow-hidden box-image-sx" style="height: 100%; max-height: 500px;">
+                    <img :src="`http://127.0.0.1:8000/storage/${store.one_apartment.cover_img}`" alt="" class="img-box">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="row">
+                    <div v-for="(pictures, index) in store.one_apartment.pictures" :key="index" class="col-6 p-2">
+                        <div class="overflow-hidden box-image-dx" style="height: 100%; max-height: 240px;">
+                            <img :src="`http://127.0.0.1:8000/storage/${pictures.picture_url}`" alt="" :class="`img-box img-${index}`">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row my-2">
+            <div class="col-6">
+                <span><b>Stanze:</b> {{ store.one_apartment.number_of_rooms }}</span>
+                <span class="ms-3"><b>Bagni:</b> {{ store.one_apartment.number_of_bathrooms }}</span>
+                <span class="ms-3"><b>Dimensioni:</b> {{ store.one_apartment.square_meters }} Mq.</span>
+            </div>
+            <div class="col-6">
+                <span>
+                    <b>
+                        Prezzo:
+                    </b>
+                     {{ store.one_apartment.price }}
+                </span>
+            </div>
+        </div>
+        <hr>
+        <p class="text-center">
+            <i>
+                "{{ store.one_apartment.description }}"
+            </i>
+        </p>
+        <hr>
+        <p>
+            <b>
+                Cosa troverai:
+            </b>
+        </p>
+        <div class="row pb-2">
+            <div class="col-6">
+                <div class="row">
+                    <div v-for="(service, index) in store.one_apartment.services" class="col-6 mt-2">
+                        <i :class="service.icon" class="fa-xl"></i>
+                        <span class="ms-2">
+                            {{ service.name }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <style lang="scss">
+.box-image-sx {
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+
+.img-1 {
+    border-top-right-radius: 30px;
+}
+
+.img-3 {
+    border-bottom-right-radius: 30px;
+}
 
 </style>
