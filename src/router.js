@@ -14,11 +14,6 @@ const router = createRouter(
                             component   :   CompPage_Home,
                             meta        :   {
                                                 page_title : 'BoolB&B | Home Page'
-                                            },
-                            beforeEnter :   (to, from, next) =>
-                                            {
-                                                document.title  = to.meta.page_title;
-                                                next();
                                             }
                         },
                         {
@@ -27,12 +22,7 @@ const router = createRouter(
                             component   :   CompPage_Apartments_Search,
                             meta        :   {
                                                 page_title : 'BoolB&B | Ricerca'
-                                            },
-                            beforeEnter :   (to, from, next) =>
-                                            {
-                                                document.title  = to.meta.page_title;
-                                                next();
-                                            } 
+                                            }
                         },
                         {
                             path        :   '/dettaglio/:id/:slug', 
@@ -40,7 +30,7 @@ const router = createRouter(
                             component   :   CompPage_Apartments_Show,
                             meta        :   {
                                                 page_title  :   "BoolB&B | "  
-                                            }  ,
+                                            },
                             beforeEnter :   (to, from, next) =>
                                             {
                                                 document.title  = to.meta.page_title + to.params.slug.replaceAll("-", " ");
