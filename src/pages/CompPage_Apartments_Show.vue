@@ -61,9 +61,7 @@ import { store } from '../store';
                     </b>
                      {{ store.one_apartment.price }}
                 </span>
-
             </div>
-
         </div>
         <hr>
         <p class="text-center">
