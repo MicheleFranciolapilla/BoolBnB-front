@@ -1,5 +1,6 @@
 <script>
 import { store } from '../store';
+import axios from "axios";
 
     export default
     {
@@ -7,12 +8,38 @@ import { store } from '../store';
         data()
         {
             return {
-                store
+                store,
+                mess_name : "",
+                mess_surname : "",
+                mess_email : "",
+                mess_body : "",
+                mess_apt_id : "",
+
             }
         },
         created()
         {
             store.page_name = "Show";
+            this.mess_apt_id = store.one_apartment.id
+        },
+        methods: {
+            compose_params() {
+
+                let params =  {
+
+                    'apartment_id' : this.mess_apt_id,
+                    'email' : this.mess_email,
+                    'email_body' : this.mess_body,
+                    'nome' : this.mess_name,
+                    'cognome' : this.mess_surname
+                }
+
+                console.log("cao")
+                // store.api_url_root + "messages?apartment_id=" + this.mess_apt_id + "&email=" + this.mess_email + "&email_body=" + this.mess_body + "&nome=" + this.mess_name + "&cognome=" + this.mess_surname
+                axios.post(store.api_url_root + "messages", params).then(res => {
+                    console.log(res)
+                })
+            }
         }
     }
 </script>
@@ -70,13 +97,13 @@ import { store } from '../store';
             </i>
         </p>
         <hr>
-        <p>
-            <b>
-                Cosa troverai:
-            </b>
-        </p>
         <div class="row pb-2">
             <div class="col-6">
+                <p>
+                    <b>
+                        Cosa troverai:
+                    </b>
+                </p>
                 <div class="row">
                     <div v-for="(service, index) in store.one_apartment.services" class="col-6 mt-2">
                         <i :class="service.icon" class="fa-xl"></i>
@@ -84,6 +111,29 @@ import { store } from '../store';
                             {{ service.name }}
                         </span>
                     </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card">
+                    <p>
+                        Contatta l'Host
+                    </p>
+                    <form action="http://127.0.0.1:8000/api/messages" method="POST">
+                        <input type="hidden" id="apartment_id" name="apartment_id" v-model="this.mess_apt_id" required><br>
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="nome" v-model="this.mess_name" required><br>
+
+                        <label for="surname">Surname:</label>
+                        <input type="text" id="surname" name="cognome" v-model="this.mess_surname" required><br>
+
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required v-model="this.mess_email"><br>
+
+                        <label for="email_body">Message:</label><br>
+                        <textarea id="email_body" name="email_body" rows="4" cols="50" v-model="this.mess_body" required></textarea><br>
+
+                        <input type="submit" value="Send Message" @click.prevent="compose_params()">
+                    </form>
                 </div>
             </div>
         </div>
