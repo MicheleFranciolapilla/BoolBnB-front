@@ -7,17 +7,27 @@
         {
             return  {
                         store,
-                        fatal_error :   (store.api_error.error_index == -100) 
+                        fatal_error : false
                     }
+        },
+        watch:
+        {
+            'store.api_error.error_index' (new_value)
+            {
+                if (new_value !== 0)
+                {
+                    this.fatal_error = (this.store.api_error.error_index == -100);
+                    this.store.invoke_error();
+                }
+            }
         }
     }
 </script>
 
 <template>
     <div id="error_manager">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#error_modal">
-        </button>
 
+        <button id="modal_activator" type="button" data-bs-toggle="modal" data-bs-target="#error_modal" hidden></button>
         <div class="modal fade" id="error_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="error_modal_label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -47,5 +57,4 @@
 </template>
 
 <style lang="scss">
-
 </style>

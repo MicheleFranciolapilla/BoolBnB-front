@@ -7,7 +7,7 @@
   export default
   {
     name        : "App",
-    components  : 
+    components  :
     {
       Comp_Header,
       Comp_OnLoading,
@@ -140,22 +140,21 @@
 
 <template>
 
-  <Comp_OnLoading 
+  <Comp_ErrorManager />
+
+  <Comp_OnLoading
     v-if="((store.just_started) && (store.axios_running))"
     :hg_color = "(!front_url_sent) ? ('orange') : ('blue')"
     :big = "true"
-    :message = "(!front_url_sent) ? ('Tentativo di prima connessione al database in corso...') : ('Recupero dati dal database')" 
+    :message = "(!front_url_sent) ? ('Tentativo di prima connessione al database in corso...') : ('Recupero dati dal database')"
   />
 
-  <Comp_ErrorManager
-    v-else-if="(store.api_error.error_index != 0)" 
-  />
-
-  <div id="front_end">
+  <div v-else-if="((!store.just_started) && (store.api_error.error_index != 0))" id="front_end">
     <Comp_Header/>
     <h1 class="text-center">Welcome to Bool B&B</h1>
     <router-view></router-view>
   </div>
+  
 </template>
 
 <style lang="scss">
