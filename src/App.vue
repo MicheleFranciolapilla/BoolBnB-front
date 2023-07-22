@@ -27,7 +27,7 @@
         if (new_value)
         {
           this.store.reactive_calls = false;
-          this.get_apartments(this.store.filters_on_call.filter, this.store.filters_on_call.page);
+          this.get_apartments(this.store.filters_on_call.filter, this.store.filters_on_call.page, this.store.filters_on_call.single, this.store.filters_on_call.id);
         }
       }
     },

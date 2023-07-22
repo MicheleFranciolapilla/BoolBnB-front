@@ -18,6 +18,7 @@ import { store } from '../store';
 
 <template>
     <h1>{{this.$route.params.id}}</h1>
+    <h2></h2>
 </template>
 
 <style lang="scss">

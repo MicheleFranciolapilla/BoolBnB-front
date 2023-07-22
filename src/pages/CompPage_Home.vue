@@ -32,9 +32,9 @@
                 this.store.prepare_reactive_call("sponsored", this.store.currentpage);
             },
 
-            get_single_apartment()
+            get_single_apartment(id)
             {
-
+                this.store.prepare_reactive_call("", this.store.currentpage, true, id)
             }
         },
     }
@@ -65,7 +65,7 @@
 
         <div class="row container mx-auto">
             <div v-for="(apartment, index) in store.apartments.data " :key='index' class="p-1 col-4">
-                <router-link :to="{name: 'apartments_show', params: { id: apartment.id, slug:apartment.slug}}" class="text-decoration-none text-black" v-on:click="get_single_apartment()">
+                <router-link :to="{name: 'apartments_show', params: { id: apartment.id, slug:apartment.slug}}" class="text-decoration-none text-black" v-on:click="get_single_apartment(apartment.id)">
                     <div class=" p-2 my-1">
                         <div class="overflow-hidden rounded-4" style="height: 300px;">
                             <img :src="`http://127.0.0.1:8000/storage/${apartment.cover_img}`" alt="" class="img-box">

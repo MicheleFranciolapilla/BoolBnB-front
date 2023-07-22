@@ -23,15 +23,19 @@ export const store = reactive(
         reactive_calls  :   false,
         filters_on_call :   {
                                 filter  : "",
-                                page    : 1  
+                                page    : 1,
+                                single  : false,
+                                id      : 0   
                             },
 
 
 
-        prepare_reactive_call(param_filter, param_page)
+        prepare_reactive_call(param_filter, param_page, single = false, id = 0)
         {
             this.filters_on_call.filter = param_filter;
             this.filters_on_call.page = param_page;
+            this.filters_on_call.single = single;
+            this.filters_on_call.id = id;
             this.reactive_calls = true;
         },
 
