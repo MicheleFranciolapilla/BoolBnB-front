@@ -48,9 +48,47 @@ import { store } from '../store';
                 </div>
             </div>
         </div>
-        <p>
-            
+        <div class="row my-2">
+            <div class="col-6">
+                <span><b>Stanze:</b> {{ store.one_apartment.number_of_rooms }}</span>
+                <span class="ms-3"><b>Bagni:</b> {{ store.one_apartment.number_of_bathrooms }}</span>
+                <span class="ms-3"><b>Dimensioni:</b> {{ store.one_apartment.square_meters }} Mq.</span>
+            </div>
+            <div class="col-6">
+                <span>
+                    <b>
+                        Prezzo:
+                    </b>
+                     {{ store.one_apartment.price }}
+                </span>
+
+            </div>
+
+        </div>
+        <hr>
+        <p class="text-center">
+            <i>
+                "{{ store.one_apartment.description }}"
+            </i>
         </p>
+        <hr>
+        <p>
+            <b>
+                Cosa troverai:
+            </b>
+        </p>
+        <div class="row pb-2">
+            <div class="col-6">
+                <div class="row">
+                    <div v-for="(service, index) in store.one_apartment.services" class="col-6 mt-2">
+                        <i :class="service.icon" class="fa-xl"></i>
+                        <span class="ms-2">
+                            {{ service.name }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
