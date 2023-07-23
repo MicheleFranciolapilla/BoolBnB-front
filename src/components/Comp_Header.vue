@@ -48,8 +48,14 @@ import { store } from "../store";
                     //se siamo in una pagina che sia search
                     if(store.page_name !== 'Search') {
                         //vai alla pagina search
-                        this.$router.push('/search');
+                        console.log('vado?')
+                        const city = this.store.searched_text;
+                        this.$router.push({ name: 'apartments_search', params: { city: city } });
+                    }else {
+                        const currentCity = this.store.searched_text;
+                        this.$router.replace({ ...this.$route, params: { ...this.$route.params, city: currentCity } });
                     }
+                    
 
                     axios.get(store.api_url_root + 'apartments?filter=all&city=' + this.store.searched_text ).then(res => {
                         console.log(res)
