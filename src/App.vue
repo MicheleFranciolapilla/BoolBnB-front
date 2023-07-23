@@ -143,12 +143,12 @@
               }
               this.store.axios_running = false;
             })
-          .catch( error =>
-            {
-              this.store.api_error.error_index = -2;
-              this.store.api_error.error_msg = "Errore nella chiamata per ottenimento appartamenti";
-            });
-      }
+            .catch( error =>
+              {
+                this.store.api_error.error_index = -2;
+                this.store.api_error.error_msg = "Errore nella chiamata per ottenimento appartamenti";
+              });
+        }
     }
   }
 </script>
