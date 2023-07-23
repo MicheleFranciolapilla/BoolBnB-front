@@ -140,7 +140,8 @@ export const store = reactive(
                                 "Vicenza",
                                 "Viterbo",  
                             ],
-        searched_text    :   '',    
+        searched_text   :   '',
+        searched_city   :   '',  
 
 
 

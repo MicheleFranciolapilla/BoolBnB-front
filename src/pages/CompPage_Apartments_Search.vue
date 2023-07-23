@@ -18,7 +18,7 @@ import { store } from '../store';
 </script>
 
 <template>
-    <h1>I am the search page</h1>
+    <h1>Risultati per "{{ store.searched_city }}"</h1>
     <div class="row mx-auto">
         <div class="row">
             <div class="col-6 row">

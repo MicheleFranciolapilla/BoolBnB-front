@@ -54,6 +54,10 @@ import { store } from "../store";
                     axios.get(store.api_url_root + 'apartments?filter=all&city=' + this.store.searched_text ).then(res => {
                         console.log(res)
                         store.apartments = res.data.apartments
+                        
+                        store.searched_city = this.store.searched_text
+                        console.log(store.searched_city)
+
 
                     }) 
                 }
