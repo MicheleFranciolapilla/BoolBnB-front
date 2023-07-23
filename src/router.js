@@ -17,7 +17,7 @@ const router = createRouter(
                                             }
                         },
                         {
-                            path        :   '/search',
+                            path        :   '/search/:city',
                             name        :   'apartments_search',
                             component   :   CompPage_Apartments_Search,
                             meta        :   {

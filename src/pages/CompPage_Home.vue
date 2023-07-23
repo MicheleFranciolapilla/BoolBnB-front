@@ -14,6 +14,7 @@
         created()
         {
             this.store.page_name = "Home";
+            store.searched_text = "";
             console.log("ready for calling");
             this.axios_update("",1);
         },
