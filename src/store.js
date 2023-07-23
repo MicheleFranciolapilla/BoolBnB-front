@@ -22,10 +22,10 @@ export const store = reactive(
         maxPage         :   1,
         reactive_calls  :   false,
         filters_on_call :   {
-                                filter  : "",
-                                page    : 1,
-                                single  : false,
-                                id      : 0   
+                                filter          : "",
+                                page            : 1,
+                                single          : false,
+                                id              : 0   
                             },
         all_cities      :   [
                                 "Agrigento",
