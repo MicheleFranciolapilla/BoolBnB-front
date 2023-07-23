@@ -20,6 +20,14 @@ import axios from "axios";
         created()
         {
             store.page_name = "Show";
+            // if ((!this.store.axios_running) && (this.store.one_apartment == null))
+            // {
+            //     console.log('refresh pagina in corso');
+            //     this.store.get_single_apartment(this.$route.params.id);
+            // }
+        },
+        mounted()
+        {
             this.mess_apt_id = store.one_apartment.id
         },
         methods: {
