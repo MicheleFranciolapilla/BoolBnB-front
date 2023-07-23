@@ -23,8 +23,8 @@ import axios from "axios";
             this.mess_apt_id = store.one_apartment.id
         },
         methods: {
-            compose_params() {
-
+            compose_params() 
+            {
                 let params =  {
 
                     'apartment_id' : this.mess_apt_id,
