@@ -44,11 +44,17 @@ import { store } from "../store";
                       }
                     }
 
+
                     //se siamo in una pagina che sia search
                     if(store.page_name !== 'Search') {
                         //vai alla pagina search
                         this.$router.push('/search');
                     }
+
+                    axios.get(store.api_url_root + 'apartments?filter=all&city=' + this.store.searched_text ).then(res => {
+                        console.log(res)
+                        
+                    }) 
                 }
                 
 
