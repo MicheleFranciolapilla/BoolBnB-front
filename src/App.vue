@@ -27,7 +27,8 @@
         if (new_value)
         {
           this.store.reactive_calls = false;
-          this.get_apartments(this.store.filters_on_call.filter, this.store.filters_on_call.page, this.store.filters_on_call.single, this.store.filters_on_call.id);
+          this.get_apartments();
+          // this.get_apartments(this.store.calls_params.filter, this.store.calls_params.page, this.store.calls_params.single, this.store.calls_params.id);
         }
       }
     },
@@ -108,7 +109,8 @@
             });
       },
 
-      get_apartments(filter = "sponsored", page = 1, single = false, single_id = 0)
+      // get_apartments(filter = "sponsored", page = 1, single = false, single_id = 0)
+      get_apartments()
       {
         this.store.axios_running = true;
         let get_single_int;

@@ -21,12 +21,18 @@ export const store = reactive(
         currentpage     :   1,
         maxPage         :   1,
         reactive_calls  :   false,
-        filters_on_call :   {
+        calls_params    :   {
+                                call_type   : 0, 
                                 filter      : "",
                                 page        : 1,
                                 single      : false,
                                 id          : 0   
                             },
+        call_types_str  :   [
+                                'sponsored',
+                                'all',
+                                'single'
+                            ], 
         all_cities      :   [
                                 "Agrigento",
                                 "Alessandria",
@@ -147,10 +153,10 @@ export const store = reactive(
 
         prepare_reactive_call(param_filter, param_page, single = false, id = 0)
         {
-            this.filters_on_call.filter = param_filter;
-            this.filters_on_call.page = param_page;
-            this.filters_on_call.single = single;
-            this.filters_on_call.id = id;
+            this.calls_params.filter = param_filter;
+            this.calls_params.page = param_page;
+            this.calls_params.single = single;
+            this.calls_params.id = id;
             this.reactive_calls = true;
         },
 
