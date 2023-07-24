@@ -68,7 +68,7 @@ import axios from "axios";
             {
                 let params =  {
 
-                    'apartment_id' : this.mess_apt_id,
+                    'apartment_id' : this.store.one_apartment.id,
                     'email' : this.mess_email,
                     'email_body' : this.mess_body,
                     'nome' : this.mess_name,
