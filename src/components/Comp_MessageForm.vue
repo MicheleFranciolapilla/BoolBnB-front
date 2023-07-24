@@ -132,25 +132,28 @@ import axios from "axios";
             <div class="col-12">
                 <label for="name" class="form-label">Nome:</label>
                 <input type="text" :class="this.nome" class="form-control" id="name" placeholder="Mario" name="nome" v-model="this.mess_name">
+                <span :class="this.nome == 'is-invalid' ? '' : 'd-none'" class="text-danger">Inserisci un nome</span>
             </div>
 
             <!-- COGNOME -->
             <div class="col-12">
                 <label for="surname" class="form-label">Cognome:</label>
                 <input type="text" :class="this.cognome" class="form-control" id="surname" placeholder="Rossi" name="cognome" v-model="this.mess_surname">
+                <span :class="this.cognome == 'is-invalid' ? '' : 'd-none'" class="text-danger">Inserisci un cognome</span>
             </div>
 
             <!-- EMAIL -->
             <div class="col-12">
                 <label for="email" class="form-label">Email:</label>
                 <input type="email" :class="this.email" class="form-control" id="email" placeholder="mariorossi@gmail.com" name="email" v-model="this.mess_email">
-                <span :class="this.email == 'is-invalid' ? '' : 'd-none'" class="text-danger">inserire una mail valida</span>
+                <span :class="this.email == 'is-invalid' ? '' : 'd-none'" class="text-danger">Inserisci una email valida</span>
             </div>
 
             <!-- MESSAGGIO -->
             <div class="col-12">
                 <label for="email_body" class="form-label">Messaggio:</label>
                 <textarea id="email_body" :class="this.testo" name="email_body" rows="4" cols="50" class="form-control" placeholder="Scrivi..." v-model="this.mess_body"></textarea>
+                <span :class="this.testo == 'is-invalid' ? '' : 'd-none'" class="text-danger">Inserisci del testo</span>
             </div>
 
             <!-- INVIO MESSAGGIO -->
@@ -175,7 +178,7 @@ import axios from "axios";
 
         <!-- MESSAGGIO AUTOMATICO INVIO MESSAGGIO -->
         <div class="alert alert-warning alert-dismissible fade show m-3" role="alert" v-if="this.msg_response">
-            <strong>Holy guacamole!</strong> {{this.msg_response}}
+            <strong>Messaggio inviato correttamente!</strong>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" @click="(this.msg_response = '' )"></button>
         </div>
     </div>
