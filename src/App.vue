@@ -130,7 +130,6 @@
                     end_point = "apartments";
                     params    = {
                                   'filter'  : "all",
-                                  'page'    : this.store.current_s_page,
                                   'city'    : this.store.city_to_search
                                 };
                     break;

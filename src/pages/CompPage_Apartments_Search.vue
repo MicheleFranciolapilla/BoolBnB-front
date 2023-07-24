@@ -25,8 +25,8 @@ import { store } from '../store';
         {
             this.store.page_name = "Search";
             // this.store.current_s_page = 1;
-            this.store.city_to_search = this.$route.params.city;
-            this.store.prepare_reactive_call("all");
+            // this.store.city_to_search = this.$route.params.city;
+            // this.store.prepare_reactive_call("all");
             // this.createPage();
         }
     }
@@ -34,7 +34,8 @@ import { store } from '../store';
 
 <template>
     <h1>Risultati per "{{ store.searched_city }}"</h1>
-    <div class="row mx-auto">
+    
+    <div v-if="!store.axios_running" class="row mx-auto">
         <div class="row">
             <div class="col-6 row">
                 <div v-for="(apartment, index) in store.apartments " :key='index' class="p-1 col-6">

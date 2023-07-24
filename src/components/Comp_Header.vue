@@ -49,6 +49,8 @@ import { store } from "../store";
                       }
                     }
 
+                    this.store.city_to_search = this.store.searched_text;
+                    this.store.prepare_reactive_call("all");
 
                     //se siamo in una pagina che sia search
                     if(store.page_name !== 'Search') 
@@ -63,10 +65,6 @@ import { store } from "../store";
                         const currentCity = this.store.searched_text;
                         this.$router.replace({ ...this.$route, params: { ...this.$route.params, city: currentCity } });
                     }
-                    
-                    this.store.current_s_page = 1;
-                    this.store.city_to_search = this.store.searched_text;
-                    this.store.prepare_reactive_call("all");
                 }
                 
 
