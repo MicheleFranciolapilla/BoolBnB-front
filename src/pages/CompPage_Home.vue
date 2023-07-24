@@ -1,9 +1,14 @@
 <script>
     import { store } from '../store';
+    import Comp_OnLoading from '../components/Comp_OnLoading.vue';
 
     export default
     {
         name    :   "CompPage_Home",
+        components :
+        {
+            Comp_OnLoading
+        },
         data()
         {
             return  {
@@ -29,7 +34,7 @@
 </script>
 
 <template>
-    <div v-if="store.apartments !== null">
+    <div v-if="!store.axios_running">
 
         <div>
             <nav aria-label="Page navigation">
@@ -82,6 +87,10 @@
             </div>
         </div>
     </div>
+    <Comp_OnLoading v-else 
+        :hg_color = "'blue'"
+        :big = "false"
+    />
 </template>
 
 <style lang="scss">
