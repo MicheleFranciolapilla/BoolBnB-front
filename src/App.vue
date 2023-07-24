@@ -113,22 +113,38 @@
       get_apartments()
       {
         this.store.axios_running = true;
-        let get_single_int;
-        (single) ? (get_single_int = 1) : (get_single_int = 0);
-        let params = "";
-        if (!single)
-          params =  { 
-                      "filter"  : filter,
-                      "page"    : page    
-                    };
-        let end_points = ['apartments', `apartment/${single_id}`];
-        axios.get(`${this.store.api_url_root}${end_points[get_single_int]}`, { params })
+        let end_point = "";
+        let params    = "";
+        switch (this.store.calls_params.call_type)
+        {
+          case 0  : //sponsored
+                    end_point = "apartments";
+                    params    = {
+                                  'filter'  : "sponsored",
+                                  'page'    : this.store.currentpage
+                                };
+                    break;
+          case 1  : //single
+                    end_point = `apartment/${this.store.calls_params.id}`,
+                    params    = "";
+                    break; 
+        }
+        // let get_single_int;
+        // (single) ? (get_single_int = 1) : (get_single_int = 0);
+        // let params = "";
+        // if (!single)
+        //   params =  { 
+        //               "filter"  : filter,
+        //               "page"    : page    
+        //             };
+        // let end_points = ['apartments', `apartment/${single_id}`];
+        axios.get(`${this.store.api_url_root}${end_point}`, { params })
           .then( res =>
             {
               if (res.data.success)
               {
                 this.store.api_error.error_index = 0;
-                if (!single)
+                if (this.store.calls_params.call_type != 1)
                 {
                   this.store.apartments = res.data.apartments;
                   this.store.maxPage = res.data.apartments.last_page;

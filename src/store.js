@@ -30,8 +30,8 @@ export const store = reactive(
                             },
         call_types_str  :   [
                                 'sponsored',
-                                'all',
-                                'single'
+                                'single',
+                                'all'
                             ], 
         all_cities      :   [
                                 "Agrigento",
