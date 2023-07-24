@@ -36,7 +36,7 @@ import { store } from '../store';
             <div class="col-6 row">
                 <div v-for="(apartment, index) in store.apartments " :key='index' class="p-1 col-6">
                     <div class=" p-2 my-1 card">
-                        <!-- <router-link :to="{name: 'apartments_show', params: { id: apartment.id, slug:apartment.slug}}" class="text-decoration-none text-black" @click="store.prepare_reactive_call('single',apartment.id)"> -->
+                        <router-link :to="{name: 'apartments_show', params: { id: apartment.id, slug:apartment.slug}}" class="text-decoration-none text-black" @click="store.prepare_reactive_call('single',apartment.id)">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="overflow-hidden rounded-4" style="height: 200px;">
@@ -63,7 +63,7 @@ import { store } from '../store';
                                     </p>
                                 </div>
                             </div>
-                        <!-- </router-link>     -->
+                        </router-link>
                     </div>
                 </div>
             </div>
