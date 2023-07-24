@@ -17,15 +17,10 @@ import axios from "axios";
                 mess_apt_id : "",
                 msg_response : "",
 
-                nome : document.getElementById('name'),
-                cognome : document.getElementById('surname'),
-                email : document.getElementById('email'),
-                testo : document.getElementById('email_body'),
-
-                isNomeValid: false,
-                isCognomeValid: false,
-                isEmailValid: false,
-                isTestoValid: false,
+                nome : "",
+                cognome : "",
+                email : "",
+                testo : "",
             }
         },
         mounted()
@@ -57,50 +52,49 @@ import axios from "axios";
 
                 // VALIDAZIONE NOME
                 if (this.mess_name === "") {
-                    this.nome.classList.add('is-invalid');
-                    this.nome.classList.remove('is-valid'); // Rimuovi la classe "is-valid" solo quando il campo è vuoto
-                    this.isNomeValid = false;
+
+                    this.nome = "is-invalid"
+
                 } else {
-                    this.nome.classList.remove('is-invalid');
-                    this.nome.classList.add('is-valid');
-                    this.isNomeValid = true;
+
+                    this.nome = "is-valid"
+
                 }
 
                 // VALIDAZIONE COGNOME
                 if (this.mess_surname === "") {
-                    this.cognome.classList.add('is-invalid');
-                    this.cognome.classList.remove('is-valid'); // Rimuovi la classe "is-valid" solo quando il campo è vuoto
-                    this.isCognomeValid = false;
+
+                    this.cognome = "is-invalid"
+
                 } else {
-                    this.cognome.classList.remove('is-invalid');
-                    this.cognome.classList.add('is-valid');
-                    this.isCognomeValid = true;
+
+                    this.cognome = "is-valid"
                 }
 
                 // VALIDAZIONE EMAIL
                 if (!(this.mess_email.includes('@'))) {
-                    this.email.classList.add('is-invalid');
-                    this.email.classList.remove('is-valid');
-                    this.isEmailValid = false;
+
+                   this.email = "is-invalid"
+
                 } else {
-                    this.email.classList.remove('is-invalid');
-                    this.email.classList.add('is-valid');
-                    this.isEmailValid = true;
+
+                    this.email = "is-valid"
+
                 }
 
                 // VALIDAZIONE TESTO MESSAGGIO
                 if (this.mess_body === "") {
-                    this.testo.classList.add('is-invalid');
-                    this.testo.classList.remove('is-valid'); // Rimuovi la classe "is-valid" solo quando il campo è vuoto
-                    this.isTestoValid = false;
+
+                    this.testo = "is-invalid"
+
                 } else {
-                    this.testo.classList.remove('is-invalid');
-                    this.testo.classList.add('is-valid');
-                    this.isTestoValid = true;
+
+                    this.testo = "is-valid"
+
                 }
 
                 // INVIO DATI AL BACKEND E RESET FORM
-                if(this.isNomeValid === true && this.isCognomeValid === true && this.isEmailValid === true && this.isTestoValid === true) {
+                if(this.nome === "is-valid" && this.cognome === "is-valid" && this.email === "is-valid" && this.testo === "is-valid") {
 
                     // store.api_url_root + "messages?apartment_id=" + this.mess_apt_id + "&email=" + this.mess_email + "&email_body=" + this.mess_body + "&nome=" + this.mess_name + "&cognome=" + this.mess_surname
                     axios.post(store.api_url_root + "messages", params).then(res => {
@@ -113,10 +107,10 @@ import axios from "axios";
                     this.mess_email = ''
                     this.mess_body = ''
 
-                    this.isNomeValid = false
-                    this.isCognomeValid = false
-                    this.isEmailValid = false
-                    this.isTestoValid = false
+                    this.nome = ""
+                    this.cognome = ""
+                    this.email = ""
+                    this.testo = ""
                 }
 
             }
@@ -137,25 +131,26 @@ import axios from "axios";
             <!-- NOME -->
             <div class="col-12">
                 <label for="name" class="form-label">Nome:</label>
-                <input type="text" class="form-control" id="name" placeholder="Mario" name="nome" v-model="this.mess_name">
+                <input type="text" :class="this.nome" class="form-control" id="name" placeholder="Mario" name="nome" v-model="this.mess_name">
             </div>
 
             <!-- COGNOME -->
             <div class="col-12">
                 <label for="surname" class="form-label">Cognome:</label>
-                <input type="text" class="form-control" id="surname" placeholder="Rossi" name="cognome" v-model="this.mess_surname">
+                <input type="text" :class="this.cognome" class="form-control" id="surname" placeholder="Rossi" name="cognome" v-model="this.mess_surname">
             </div>
 
             <!-- EMAIL -->
             <div class="col-12">
                 <label for="email" class="form-label">Email:</label>
-                <input type="email" class="form-control" id="email" placeholder="mariorossi@gmail.com" name="email" v-model="this.mess_email">
+                <input type="email" :class="this.email" class="form-control" id="email" placeholder="mariorossi@gmail.com" name="email" v-model="this.mess_email">
+                <span :class="this.email == 'is-invalid' ? '' : 'd-none'" class="text-danger">inserire una mail valida</span>
             </div>
 
             <!-- MESSAGGIO -->
             <div class="col-12">
                 <label for="email_body" class="form-label">Messaggio:</label>
-                <textarea id="email_body" name="email_body" rows="4" cols="50" class="form-control" placeholder="Scrivi..." v-model="this.mess_body"></textarea>
+                <textarea id="email_body" :class="this.testo" name="email_body" rows="4" cols="50" class="form-control" placeholder="Scrivi..." v-model="this.mess_body"></textarea>
             </div>
 
             <!-- INVIO MESSAGGIO -->
