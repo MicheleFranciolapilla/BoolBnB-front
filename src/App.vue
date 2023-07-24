@@ -150,7 +150,7 @@
                   else if (this.store.calls_params.call_type == 2)
                   {
                     this.store.max_s_page = res.data.apartments.last_page;
-                    this.store.searched_city = this.store.searched_text;
+                    this.store.searched_city = this.store.city_to_search;
                   }
                 }
                 else
