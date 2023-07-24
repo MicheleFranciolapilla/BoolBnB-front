@@ -163,11 +163,6 @@ export const store = reactive(
             this.reactive_calls = true;
         },
 
-        get_single_apartment(id)
-        {
-            this.prepare_reactive_call("", this.currentpage, true, id)
-        },
-
         invoke_error()
         {
             let activator = document.getElementById("modal_activator");
