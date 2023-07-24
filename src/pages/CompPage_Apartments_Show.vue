@@ -1,4 +1,5 @@
 <script>
+import { router } from '../router';
 import { store } from '../store';
 import axios from "axios";
 
@@ -9,6 +10,7 @@ import axios from "axios";
         {
             return {
                 store,
+                direct_call : false,
                 mess_name : "",
                 mess_surname : "",
                 mess_email : "",
@@ -17,20 +19,51 @@ import axios from "axios";
 
             }
         },
+        watch:
+        {
+            'store.axios_running' (new_value)
+            {
+                if ((!new_value) && (this.direct_call))
+                {
+                    console.log("OK");
+                    this.direct_call = false;
+                    if (Object.keys(this.store.one_apartment).length !== 0)
+                    {
+                        const apt_slug = this.store.one_apartment.slug;
+                        const new_title = "BoolBnB | " + apt_slug;
+                        const current_route = router.currentRoute.value;
+                        router.replace({ ...current_route, params:{ ...current_route.params, slug: apt_slug } });
+                        document.title  = new_title;
+                    }
+                }
+            }
+        },
         created()
         {
             store.page_name = "Show";
-            // if ((!this.store.axios_running) && (this.store.one_apartment == null))
-            // {
-            //     console.log('refresh pagina in corso');
-            //     this.store.get_single_apartment(this.$route.params.id);
-            // }
+            if ((!this.store.axios_running) && (this.condition_to_go()))
+            {
+                console.log('refresh pagina in corso');
+                this.direct_call = true;
+                this.store.prepare_reactive_call('single', this.$route.params.id); 
+            }
         },
         mounted()
         {
             this.mess_apt_id = store.one_apartment.id
         },
-        methods: {
+        methods: 
+        {
+            condition_to_go()
+            {
+                if (Object.keys(this.store.one_apartment).length === 0)
+                    return true;
+                if (this.store.one_apartment.id !== this.$route.params.id )
+                    return true;
+                else
+                    return false;
+            },
+
             compose_params() 
             {
                 let params =  {

@@ -20,13 +20,18 @@ export const store = reactive(
         page_name       :   "",
         currentpage     :   1,
         maxPage         :   1,
+        current_s_page  :   1,
+        max_s_page      :   1,
         reactive_calls  :   false,
-        filters_on_call :   {
-                                filter      : "",
-                                page        : 1,
-                                single      : false,
+        calls_params    :   {
+                                call_type   : 0, 
                                 id          : 0   
                             },
+        call_type_array :   [
+                                'sponsored',
+                                'single',
+                                'all'
+                            ], 
         all_cities      :   [
                                 "Agrigento",
                                 "Alessandria",
@@ -142,21 +147,20 @@ export const store = reactive(
                             ],
         searched_text   :   '',
         searched_city   :   '',  
+        city_to_search  :   '', 
 
 
 
-        prepare_reactive_call(param_filter, param_page, single = false, id = 0)
+        prepare_reactive_call(call_type_str, id = 0)
         {
-            this.filters_on_call.filter = param_filter;
-            this.filters_on_call.page = param_page;
-            this.filters_on_call.single = single;
-            this.filters_on_call.id = id;
+            let index = this.call_type_array.indexOf(call_type_str.toLowerCase());
+            if ( index < 0)
+            {
+                index = 0;
+            }
+            this.calls_params.call_type = index;
+            this.calls_params.id = id;
             this.reactive_calls = true;
-        },
-
-        get_single_apartment(id)
-        {
-            this.prepare_reactive_call("", this.currentpage, true, id)
         },
 
         invoke_error()
