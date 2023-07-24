@@ -11,8 +11,9 @@ import { store } from "../store";
             }
         },
         mounted(){
-
+            
         },
+
         methods:{
             Start_search() {
                 console.log('funziona')
@@ -72,94 +73,89 @@ import { store } from "../store";
             },
             Searched_hint(){
                 if (store.searched_text.length > 1) {
-  const tomTomUrl = `https://api.tomtom.com/search/2/geocode/${store.searched_text}.json?key=mDuLGwpUfBez8sET5BVhGMRbc4FRXzB4&countrySet=IT&limit=100&minFuzzyLevel=2&typeahead=false`;
-
-  fetch(tomTomUrl)
-    .then(response => response.json())
-    .then(data => {
-      let results = data.results;
-
-      // Create a Map to store unique elements
-      const uniqueElements = new Map();
-
-      results.forEach(element => {
-        // Check if the element type is "Geography" or "Street"
-        if (element.type === "Geography" || element.type === "Street") {
-          let address, latitude, longitude;
-
-          // Extract data based on the element type
-          if (element.type === "Geography") {
-            address = element.address.municipality;
-            latitude = element.position.lat;
-            longitude = element.position.lon;
-          } else if (element.type === "Street") {
-            address = element.address.freeformAddress;
-            latitude = element.position.lat;
-            longitude = element.position.lon;
-          }
-
-          // Check if address, latitude, and longitude are not undefined
-          if (address && latitude !== undefined && longitude !== undefined) {
-            // Create a unique key using address, latitude, and longitude
-            const key = `${address}_${latitude}_${longitude}`;
-
-            // Add to the Map only if it's a unique combination
-            if (!uniqueElements.has(key)) {
-              uniqueElements.set(key, { address, latitude, longitude });
-            }
-          }
-        }
-      });
-
-      // Convert Map values to an array
-      const uniqueElementsArray = Array.from(uniqueElements.values());
-
-      // Custom sorting function to order the elements
-      const customSort = (a, b) => {
-        // Calculate scores for each element based on how well they match store.searched_text
-        const scoreA = a.address.toLowerCase().includes(store.searched_text.toLowerCase()) ? 1 : 0;
-        const scoreB = b.address.toLowerCase().includes(store.searched_text.toLowerCase()) ? 1 : 0;
-
-        // Sort by score in descending order
-        if (scoreA !== scoreB) {
-          return scoreB - scoreA;
-        }
-
-        // If scores are equal, sort alphabetically by address
-        return a.address.localeCompare(b.address);
-      };
-
-      // Sort the uniqueElementsArray using the customSort function
-      uniqueElementsArray.sort(customSort);
-
-
-
-                      store.RaccoltaIndirizzi = uniqueElementsArray
-                  
-
-                      let hintList = document.getElementById('cities');
-
-                      hintList.innerHTML = '';
-
-                    store.RaccoltaIndirizzi.forEach(element => {
+                const tomTomUrl = `https://api.tomtom.com/search/2/geocode/${store.searched_text}.json?key=mDuLGwpUfBez8sET5BVhGMRbc4FRXzB4&countrySet=IT&limit=100&minFuzzyLevel=2&typeahead=false`;
+                fetch(tomTomUrl)
+                .then(response => response.json())
+                .then(data => {
+                    let results = data.results;
+                    // Create a Map to store unique elements
+                    const uniqueElements = new Map();
+                    results.forEach(element => {
+                    // Check if the element type is "Geography" or "Street"
+                    if (element.type === "Geography" || element.type === "Street") {
+                        let address, latitude, longitude;
+                         // Extract data based on the element type
+                        if (element.type === "Geography") {
+                          address = element.address.municipality;
+                          latitude = element.position.lat;
+                          longitude = element.position.lon;
+                        } else if (element.type === "Street") {
+                          address = element.address.freeformAddress;
+                          latitude = element.position.lat;
+                          longitude = element.position.lon;
+                        }
+                    // Check if address, latitude, and longitude are not undefined
+                    if (address && latitude !== undefined && longitude !== undefined) {
+                        // Create a unique key using address, latitude, and longitude
+                        const key = `${address}_${latitude}_${longitude}`;
+                        // Add to the Map only if it's a unique combination
+                        if (!uniqueElements.has(key)) {
+                            uniqueElements.set(key, { address, latitude, longitude });
+                            }
+                        }
+                    }
+                });
+                const uniqueElementsArray = Array.from(uniqueElements.values());
+                const customSort = (a, b) => {
+                const scoreA = a.address.toLowerCase().includes(store.searched_text.toLowerCase()) ? 1 : 0;
+                const scoreB = b.address.toLowerCase().includes(store.searched_text.toLowerCase()) ? 1 : 0;
+                if (scoreA !== scoreB) {
+                  return scoreB - scoreA;
+                }
+                return a.address.localeCompare(b.address);
+                };
+                uniqueElementsArray.sort(customSort);
+                store.RaccoltaIndirizzi = uniqueElementsArray            
+                let hintList = document.getElementById('cities');
+                hintList.innerHTML = '';
+                store.RaccoltaIndirizzi.forEach(element => {
                       // Create a new option element
-                      const option = document.createElement('option');
+                    const option = document.createElement('option');
                     
                       // Set the value and text of the option to the address property
-                      option.value = element.address;
-                      option.textContent = element.address;
+                    option.value = element.address;
+                    option.textContent = element.address;
                     
                       // Append the option to the hintList
-                      hintList.appendChild(option);
-                    });
-                                          
-                    })
-                    .catch(error => {
-                      console.error("Error fetching data:", error);
-                    });
-                }
+                    hintList.appendChild(option);
+                });                              
+            })
+            .catch(error => {
+                console.error("Error fetching data:", error);
+                });
             }
+            },    
+            calcolatoreLatLon(lat1, lon1, lat2, lon2){
+            const R = 6371e3; // metres
+    
+            const φ1 = lat1 * Math.PI / 180; // φ, λ in radians
+            const φ2 = lat2 * Math.PI / 180;
+            const Δφ = (lat2 - lat1) * Math.PI / 180;
+            const Δλ = (lon2 - lon1) * Math.PI / 180;
+    
+            const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+              Math.cos(φ1) * Math.cos(φ2) *
+              Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+    
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    
+            const d = R * c; // in metres
             
+            const distanceInKilometers = (d / 1000).toFixed(1);
+
+            console.log(distanceInKilometers);
+            return distanceInKilometers;
+            }
         },
     }
 </script>
@@ -195,6 +191,7 @@ import { store } from "../store";
                     </ul>
                 </li>
             </ul>
+            <button @click="calcolatoreLatLon(41.89056, 12.49427, 41.89695, 12.48223)">vai</button>
             <form class="d-flex" role="search" @submit.prevent="Start_search">
                 <input v-model="store.searched_text" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" list="cities" @keyup="Searched_hint()">
                 <datalist id="cities">
