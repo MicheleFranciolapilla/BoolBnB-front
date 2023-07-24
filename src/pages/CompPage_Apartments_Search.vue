@@ -11,23 +11,14 @@ import { store } from '../store';
                 store
             }
         },
-        methods: {
-            createPage()
-            {
-                // const city = this.$route.params.city;
-                // axios.get(store.api_url_root + 'apartments?filter=all&city=' + city).then(res => {
-                //     store.apartments = res.data.apartments
-                //     store.searched_city = city
-                // })
-            }
-        },
         created()
         {
             this.store.page_name = "Search";
-            // this.store.current_s_page = 1;
-            // this.store.city_to_search = this.$route.params.city;
-            // this.store.prepare_reactive_call("all");
-            // this.createPage();
+            if (this.store.calls_params.call_type !== this.store.call_type_array.indexOf('all'))
+            {
+                this.store.city_to_search = this.$route.params.city;
+                this.store.prepare_reactive_call("all");
+            }
         }
     }
 </script>
