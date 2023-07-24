@@ -28,7 +28,6 @@
         {
           this.store.reactive_calls = false;
           this.get_apartments();
-          // this.get_apartments(this.store.calls_params.filter, this.store.calls_params.page, this.store.calls_params.single, this.store.calls_params.id);
         }
       }
     },
@@ -109,7 +108,6 @@
             });
       },
 
-      // get_apartments(filter = "sponsored", page = 1, single = false, single_id = 0)
       get_apartments()
       {
         this.store.axios_running = true;
@@ -125,19 +123,19 @@
                                 };
                     break;
           case 1  : //single
-                    end_point = `apartment/${this.store.calls_params.id}`,
+                    end_point = `apartment/${this.store.calls_params.id}`;
                     params    = "";
                     break; 
+          case 2  : //all
+                    end_point = "apartments";
+                    params    = {
+                                  'filter'  : "all",
+                                  'page'    : this.store.current_s_page,
+                                  'city'    : this.store.searched_text
+                                };
+                    break;
+
         }
-        // let get_single_int;
-        // (single) ? (get_single_int = 1) : (get_single_int = 0);
-        // let params = "";
-        // if (!single)
-        //   params =  { 
-        //               "filter"  : filter,
-        //               "page"    : page    
-        //             };
-        // let end_points = ['apartments', `apartment/${single_id}`];
         axios.get(`${this.store.api_url_root}${end_point}`, { params })
           .then( res =>
             {
@@ -147,7 +145,13 @@
                 if (this.store.calls_params.call_type != 1)
                 {
                   this.store.apartments = res.data.apartments;
-                  this.store.maxPage = res.data.apartments.last_page;
+                  if (this.store.calls_params.call_type == 0)
+                    this.store.maxPage = res.data.apartments.last_page;
+                  else if (this.store.calls_params.call_type == 2)
+                  {
+                    this.store.max_s_page = res.data.apartments.last_page;
+                    this.store.searched_city = this.store.searched_text;
+                  }
                 }
                 else
                 {

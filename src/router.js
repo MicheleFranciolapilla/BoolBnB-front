@@ -25,7 +25,7 @@ const router = createRouter(
                                             }
                         },
                         {
-                            path        :   '/dettaglio/:id/:slug', 
+                            path        :   '/dettaglio/:id/:slug?', 
                             name        :   'apartments_show',
                             component   :   CompPage_Apartments_Show,
                             meta        :   {

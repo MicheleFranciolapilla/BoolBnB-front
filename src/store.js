@@ -20,12 +20,11 @@ export const store = reactive(
         page_name       :   "",
         currentpage     :   1,
         maxPage         :   1,
+        current_s_page  :   1,
+        max_s_page      :   1,
         reactive_calls  :   false,
         calls_params    :   {
                                 call_type   : 0, 
-                                // filter      : "",
-                                // page        : 1,
-                                // single      : false,
                                 id          : 0   
                             },
         call_type_array :   [

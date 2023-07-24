@@ -17,7 +17,8 @@ import { store } from "../store";
             Start_search() {
                 console.log('funziona')
                 //primo check x vedere se è stato inserito testo
-                if(store.searched_text !== ''){
+                if(store.searched_text !== '')
+                {
 
                     //creiamo un variabile che associato il valore inserite nella barra di ricerca e lo rende lowercase
                     const searchTextLower = this.store.searched_text.toLowerCase();
@@ -25,19 +26,23 @@ import { store } from "../store";
                     const exactMatch = this.store.all_cities.find(city => city.toLowerCase() === searchTextLower);
 
                     //se esiste un match perfetto
-                    if (exactMatch) {
+                    if (exactMatch) 
+                    {
                         console.log('sono uguali')
                     //sostituisce il valore scritto nella searchbar al match perfetto
                       this.store.searched_text = exactMatch;
 
                       //se non esiste un match perfett
-                    } else {
+                    } 
+                    else 
+                    {
                         console.log('non sono uguali')
                         //controlliamo se esiste un match parziale (per una cittò scritta a metà magarai..) e ne associamo i valori
                       const partialMatch = this.store.all_cities.find(city => city.toLowerCase().includes(searchTextLower));
                     
                       //se esiste un match parziale
-                      if (partialMatch) {
+                      if (partialMatch) 
+                      {
                         console.log('allora ci pensoo io')
                         // sostituiamo i valori semi corretti dalla search bar i migliori valori che siamo riusciti a trovare
                         this.store.searched_text = partialMatch;
@@ -46,26 +51,31 @@ import { store } from "../store";
 
 
                     //se siamo in una pagina che sia search
-                    if(store.page_name !== 'Search') {
+                    if(store.page_name !== 'Search') 
+                    {
                         //vai alla pagina search
                         console.log('vado?')
                         const city = this.store.searched_text;
                         this.$router.push({ name: 'apartments_search', params: { city: city } });
-                    }else {
+                    }
+                    else 
+                    {
                         const currentCity = this.store.searched_text;
                         this.$router.replace({ ...this.$route, params: { ...this.$route.params, city: currentCity } });
                     }
                     
-
-                    axios.get(store.api_url_root + 'apartments?filter=all&city=' + this.store.searched_text ).then(res => {
-                        console.log(res)
-                        store.apartments = res.data.apartments
+                    this.store.current_s_page = 1;
+                    this.store.prepare_reactive_call("all");
+                    // axios.get(store.api_url_root + 'apartments?filter=all&city=' + this.store.searched_text ).then(res => 
+                    // {
+                    //     console.log(res)
+                    //     store.apartments = res.data.apartments
                         
-                        store.searched_city = this.store.searched_text
-                        console.log(store.searched_city)
+                    //     store.searched_city = this.store.searched_text
+                    //     console.log(store.searched_city)
 
 
-                    }) 
+                    // }) 
                 }
                 
 
