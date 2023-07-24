@@ -62,7 +62,7 @@ import axios from "axios";
 </script>
 
 <template>
-    <div class="container">
+    <div v-if="!store.axios_running" class="container">
         <h1>
             {{ store.one_apartment.title }}
         </h1>
