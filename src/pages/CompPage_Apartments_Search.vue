@@ -1,10 +1,15 @@
 <script>
 import axios from 'axios';
+import Comp_OnLoading from '../components/Comp_OnLoading.vue';
 import { store } from '../store';
 
     export default
     {
         name    : "CompPage_Apartments_Search",
+        components :
+        {
+            Comp_OnLoading
+        },
         data()
         {
             return {
@@ -64,6 +69,10 @@ import { store } from '../store';
             </div>
         </div>
     </div>
+    <Comp_OnLoading v-else 
+        :hg_color = "'blue'"
+        :big = "false"
+    />
 </template>
 
 <style lang="scss">

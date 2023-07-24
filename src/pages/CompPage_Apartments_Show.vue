@@ -1,6 +1,7 @@
 <script>
 import { router } from '../router';
 import MessageForm from "../components/Comp_MessageForm.vue";
+import Comp_OnLoading from "../components/Comp_OnLoading.vue";
 import { store } from '../store';
 import axios from "axios";
 
@@ -9,6 +10,7 @@ import axios from "axios";
         name    : "CompPage_Apartments_Show",
         components : {
             MessageForm,
+            Comp_OnLoading
         },
         data()
         {
@@ -135,6 +137,10 @@ import axios from "axios";
             </div>
         </div>
     </div>
+    <Comp_OnLoading v-else 
+        :hg_color = "'blue'"
+        :big = "false"
+    />
 </template>
 
 <style lang="scss">
