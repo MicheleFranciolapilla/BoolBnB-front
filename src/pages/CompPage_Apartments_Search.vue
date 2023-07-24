@@ -12,19 +12,22 @@ import { store } from '../store';
             }
         },
         methods: {
-            createPage(){
-                const city = this.$route.params.city;
-                axios.get(store.api_url_root + 'apartments?filter=all&city=' + city).then(res => {
-                    store.apartments = res.data.apartments
-                    store.searched_city = city
-                })
+            createPage()
+            {
+                // const city = this.$route.params.city;
+                // axios.get(store.api_url_root + 'apartments?filter=all&city=' + city).then(res => {
+                //     store.apartments = res.data.apartments
+                //     store.searched_city = city
+                // })
             }
         },
         created()
         {
-            store.page_name = "Search";
-            this.createPage();
-            
+            this.store.page_name = "Search";
+            // this.store.current_s_page = 1;
+            this.store.city_to_search = this.$route.params.city;
+            this.store.prepare_reactive_call("all");
+            // this.createPage();
         }
     }
 </script>

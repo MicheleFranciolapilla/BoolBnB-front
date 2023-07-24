@@ -131,7 +131,7 @@
                     params    = {
                                   'filter'  : "all",
                                   'page'    : this.store.current_s_page,
-                                  'city'    : this.store.searched_text
+                                  'city'    : this.store.city_to_search
                                 };
                     break;
 
