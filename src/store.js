@@ -23,12 +23,12 @@ export const store = reactive(
         reactive_calls  :   false,
         calls_params    :   {
                                 call_type   : 0, 
-                                filter      : "",
-                                page        : 1,
-                                single      : false,
+                                // filter      : "",
+                                // page        : 1,
+                                // single      : false,
                                 id          : 0   
                             },
-        call_types_str  :   [
+        call_type_array :   [
                                 'sponsored',
                                 'single',
                                 'all'
@@ -151,11 +151,14 @@ export const store = reactive(
 
 
 
-        prepare_reactive_call(param_filter, param_page, single = false, id = 0)
+        prepare_reactive_call(call_type_str, id = 0)
         {
-            this.calls_params.filter = param_filter;
-            this.calls_params.page = param_page;
-            this.calls_params.single = single;
+            let index = this.call_type_array.indexOf(call_type_str.toLowerCase());
+            if ( index < 0)
+            {
+                index = 0;
+            }
+            this.calls_params.call_type = index;
             this.calls_params.id = id;
             this.reactive_calls = true;
         },

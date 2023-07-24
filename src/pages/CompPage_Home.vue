@@ -16,7 +16,9 @@
             this.store.page_name = "Home";
             store.searched_text = "";
             console.log("ready for calling");
-            this.axios_update("",1);
+            this.store.currentpage = 1;
+            this.prepare_reactive_call("sponsored");
+            // this.axios_update("",1);
         },
         methods: 
         {
