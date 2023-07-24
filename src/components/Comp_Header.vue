@@ -67,16 +67,6 @@ import { store } from "../store";
                     this.store.current_s_page = 1;
                     this.store.city_to_search = this.store.searched_text;
                     this.store.prepare_reactive_call("all");
-                    // axios.get(store.api_url_root + 'apartments?filter=all&city=' + this.store.searched_text ).then(res => 
-                    // {
-                    //     console.log(res)
-                    //     store.apartments = res.data.apartments
-                        
-                    //     store.searched_city = this.store.searched_text
-                    //     console.log(store.searched_city)
-
-
-                    // }) 
                 }
                 
 
