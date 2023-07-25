@@ -41,13 +41,4 @@ const router = createRouter(
                     ] 
     });
 
-    // store.watch( state => state.axios_running, (axios_running) =>
-    //     {
-    //         if ((!axios_running) && (Object.keys(store.one_apartment).length !== 0))
-    //         {
-    //             const current_route = router.currentRoute.value;
-    //             router.push({ ...current_route, params: { ...current_route.params, slug: store.one_apartment.slug } });
-    //         }
-    //     });
-
     export { router };

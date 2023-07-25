@@ -19,6 +19,12 @@ import axios from "axios";
                 direct_call : false,
             }
         },
+        beforeRouteUpdate(to, from, next) 
+        {
+            const title_data = to.params.slug.replaceAll("-", " ");
+            document.title = `BoolB&B | ${title_data}`;
+            next();
+        },
         watch:
         {
             'store.axios_running' (new_value)
@@ -30,10 +36,8 @@ import axios from "axios";
                     if (Object.keys(this.store.one_apartment).length !== 0)
                     {
                         const apt_slug = this.store.one_apartment.slug;
-                        const new_title = "BoolBnB | " + apt_slug;
                         const current_route = router.currentRoute.value;
                         router.replace({ ...current_route, params:{ ...current_route.params, slug: apt_slug } });
-                        document.title  = new_title;
                     }
                 }
             }
