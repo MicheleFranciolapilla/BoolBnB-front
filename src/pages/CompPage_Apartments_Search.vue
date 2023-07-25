@@ -31,7 +31,7 @@ import { store } from '../store';
 <template>
     <h1>Risultati per "{{ store.searched_city }}"</h1>
     
-    <div v-if="!store.axios_running" class="row mx-auto">
+    <div class="row mx-auto">
         <div class="row">
             <div class="col-6 row">
                 <div v-for="(apartment, index) in store.apartments " :key='index' class="p-1 col-6">
@@ -69,9 +69,10 @@ import { store } from '../store';
             </div>
         </div>
     </div>
-    <Comp_OnLoading v-else 
-        :hg_color = "'blue'"
-        :big = "false"
+    <Comp_OnLoading v-if="store.axios_running" 
+        :hg_color = "'white'"
+        :big = "true"
+        :message = "''"
     />
 </template>
 

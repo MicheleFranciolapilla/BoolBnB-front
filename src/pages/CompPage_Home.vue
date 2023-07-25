@@ -34,7 +34,7 @@
 </script>
 
 <template>
-    <div v-if="!store.axios_running">
+    <div>
 
         <div>
             <nav aria-label="Page navigation">
@@ -87,9 +87,10 @@
             </div>
         </div>
     </div>
-    <Comp_OnLoading v-else 
-        :hg_color = "'blue'"
-        :big = "false"
+    <Comp_OnLoading v-if="store.axios_running" 
+        :hg_color = "'white'"
+        :big = "true"
+        :message = "''"
     />
 </template>
 
