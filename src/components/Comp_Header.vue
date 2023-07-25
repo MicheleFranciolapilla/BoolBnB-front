@@ -79,28 +79,33 @@ import { store } from "../store";
                 .then(data => {
                     let results = data.results;
                     // Create a Map to store unique elements
+                    console.log(results)
                     const uniqueElements = new Map();
                     results.forEach(element => {
                     // Check if the element type is "Geography" or "Street"
                     if (element.type === "Geography" || element.type === "Street") {
-                        let address, latitude, longitude;
-                         // Extract data based on the element type
+                        let address, city, type, latitude, longitude;
+                        // Extract data based on the element type
                         if (element.type === "Geography") {
-                          address = element.address.municipality;
-                          latitude = element.position.lat;
-                          longitude = element.position.lon;
+                            address = element.address.municipality;
+                            city = element.address.municipality;
+                            type = element.type;
+                            latitude = element.position.lat;
+                            longitude = element.position.lon;
                         } else if (element.type === "Street") {
-                          address = element.address.freeformAddress;
-                          latitude = element.position.lat;
-                          longitude = element.position.lon;
+                            address = element.address.freeformAddress;
+                            type = element.type;
+                            city = element.address.municipality;
+                            latitude = element.position.lat;
+                            longitude = element.position.lon;
                         }
-                    // Check if address, latitude, and longitude are not undefined
-                    if (address && latitude !== undefined && longitude !== undefined) {
-                        // Create a unique key using address, latitude, and longitude
-                        const key = `${address}_${latitude}_${longitude}`;
-                        // Add to the Map only if it's a unique combination
-                        if (!uniqueElements.has(key)) {
-                            uniqueElements.set(key, { address, latitude, longitude });
+                        // Check if address, city, type, latitude, and longitude are not undefined
+                        if (address && city && type && latitude !== undefined && longitude !== undefined) {
+                            // Create a unique key using address, city, type, latitude, and longitude
+                            const key = `${address}_${city}_${type}_${latitude}_${longitude}`;
+                            // Add to the Map only if it's a unique combination
+                            if (!uniqueElements.has(key)) {
+                                uniqueElements.set(key, { address, city, type, latitude, longitude });
                             }
                         }
                     }
@@ -128,6 +133,16 @@ import { store } from "../store";
                     
                       // Append the option to the hintList
                     hintList.appendChild(option);
+
+                    if (element.type === "Street") {
+                        if (element.address === store.searched_text) {
+                            store.cityQuery = element;
+                        }
+                    } else if (element.type === "Geography") {
+                        if (element.address === store.searched_text) {
+                            store.cityQuery = element;
+                        }
+                    }
                 });                              
             })
             .catch(error => {
@@ -155,6 +170,9 @@ import { store } from "../store";
 
             console.log(distanceInKilometers);
             return distanceInKilometers;
+            },
+            createRequest(){
+
             }
         },
     }
@@ -191,7 +209,6 @@ import { store } from "../store";
                     </ul>
                 </li>
             </ul>
-            <button @click="calcolatoreLatLon(41.89056, 12.49427, 41.89695, 12.48223)">vai</button>
             <form class="d-flex" role="search" @submit.prevent="Start_search">
                 <input v-model="store.searched_text" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" list="cities" @keyup="Searched_hint()">
                 <datalist id="cities">
@@ -202,6 +219,15 @@ import { store } from "../store";
                 </button>
             </form>
         </div>
+    </div>
+    <div class="row">
+        <div>
+            <input type="checkbox">
+            <span>
+
+            </span>
+
+        </div>        
     </div>
 </nav>
 

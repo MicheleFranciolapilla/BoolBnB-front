@@ -148,7 +148,8 @@ export const store = reactive(
         searched_text   :   '',
         searched_city   :   '',  
         city_to_search  :   '',
-        RaccoltaIndirizzi: '',
+        RaccoltaIndirizzi:  '',
+        cityQuery        :  '',
 
 
 
