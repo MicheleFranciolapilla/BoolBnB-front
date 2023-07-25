@@ -133,7 +133,7 @@
                                   'city'    : this.store.cityQuery['city'],
                                   'long'    : this.store.cityQuery['longitude'],
                                   'lat'     : this.store.cityQuery['latitude'],
-                                  'range'   : 10
+                                  'range'   : this.store.selected_range
                                 };
                     break;
 

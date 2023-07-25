@@ -150,6 +150,7 @@ export const store = reactive(
         city_to_search  :   '',
         RaccoltaIndirizzi:  '',
         cityQuery        :  '',
+        selected_range   :   10,     
 
 
 

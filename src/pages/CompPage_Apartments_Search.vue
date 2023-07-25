@@ -1,5 +1,5 @@
 <script>
-import axios from 'axios';
+import axios, { Axios } from 'axios';
 import Comp_OnLoading from '../components/Comp_OnLoading.vue';
 import { store } from '../store';
 
@@ -13,7 +13,33 @@ import { store } from '../store';
         data()
         {
             return {
-                store
+                store,
+                filter: '',
+                city: '',
+                address: '',
+                lat: '', 
+                long: '',
+                range: ''
+            }
+        },
+        methods: {
+            createAPT(){
+                const params = {
+                  filter: this.filter,
+                  city: this.city,
+                  lat: this.lat,
+                  long: this.long,
+                  range: this.range
+                }
+
+                axios.get(store.api_url_root + 'apartments', {params : params }).then(res => {
+                    console.log(res)
+                    store.apartments = res.data.apartments
+                })
+
+                store.selected_range = this.range
+                store.searched_text = this.address
+                store.searched_city = this.address
             }
         },
         created()
@@ -24,12 +50,23 @@ import { store } from '../store';
                 this.store.city_to_search = this.$route.params.city;
                 this.store.prepare_reactive_call("all");
             }
+
+            this.filter = this.$route.params.filter
+            this.city = this.$route.params.city
+            this.lat = this.$route.params.lat
+            this.long = this.$route.params.long
+            this.range = this.$route.params.range
+            this.address = this.$route.params.address
+
+            this.createAPT()
         }
+        
     }
 </script>
 
 <template>
     <h1>Risultati per "{{ store.searched_city }}"</h1>
+    
     
     <div class="row mx-auto">
         <div class="row">

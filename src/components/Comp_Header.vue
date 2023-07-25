@@ -1,5 +1,6 @@
 <script>
     // import axios from "axios";
+import { all } from "axios";
 import { store } from "../store";
     export default
     {
@@ -59,12 +60,12 @@ import { store } from "../store";
                         //vai alla pagina search
                         console.log('vado?')
                         const city = this.store.searched_text;
-                        this.$router.push({ name: 'apartments_search', params: { city: city } });
+                        this.$router.push({ name: 'apartments_search', params: { filter: 'all', city: city, address: store.cityQuery.address, lat: store.cityQuery.latitude, long: store.cityQuery.longitude, range: store.selected_range } });
                     }
                     else 
                     {
                         const currentCity = this.store.searched_text;
-                        this.$router.replace({ ...this.$route, params: { ...this.$route.params, city: currentCity } });
+                        this.$router.replace({ ...this.$route, params: { ...this.$route.params, filter: 'all', city: store.cityQuery.city, address: store.cityQuery.address, lat: store.cityQuery.latitude, long: store.cityQuery.longitude, range: store.selected_range } });
                     }
                 }
                 
@@ -206,7 +207,7 @@ import { store } from "../store";
                     </ul>
                 </li>
             </ul>
-            <form class="d-flex" role="search" @submit.prevent="Start_search">
+            <form v-if="(store.page_name !== 'Search')" class="d-flex" role="search" @submit.prevent="Start_search">
                 <input v-model="store.searched_text" autocomplete="off" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" list="cities" @keyup="Searched_hint()">
                 <datalist id="cities">
                   <option v-for="(city, index) in store.all_cities" :key="index" :value="city">{{ city }}</option>
@@ -218,5 +219,23 @@ import { store } from "../store";
         </div>
     </div>
 </nav>
+<div v-if="(store.page_name == 'Search')" class="container my-3" >
+    <form  class="d-flex w-50 mx-auto" role="search" @submit.prevent="Start_search">
+        <input v-model="store.searched_text" autocomplete="off" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" list="cities" @keyup="Searched_hint()">
+        <datalist id="cities">
+          <option v-for="(city, index) in store.all_cities" :key="index" :value="city">{{ city }}</option>
+        </datalist>
+        <button class="btn" type="submit" @click.prevent="Start_search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+    </form>
+    <span>
+        range di ricerca
+    </span>
+    <input type="range" id="range" name="range" min="1" max="20" v-model="store.selected_range" step="0.5">    
+    <span>
+        {{ store.selected_range }}Km
+    </span>
+</div>
 
 </template>
