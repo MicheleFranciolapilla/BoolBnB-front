@@ -97,7 +97,7 @@
 <style lang="scss">
     .img-box {
     object-fit: cover;
-    object-position: top;
+    object-position: bottom;
     width: 100%;
     height: 100%;
     display: block;

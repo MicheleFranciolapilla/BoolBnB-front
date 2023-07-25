@@ -39,8 +39,12 @@ import { store } from '../store';
                         <router-link :to="{name: 'apartments_show', params: { id: apartment.id, slug:apartment.slug}}" class="text-decoration-none text-black" @click="store.prepare_reactive_call('single',apartment.id)">
                             <div class="row">
                                 <div class="col-12">
-                                    <div class="overflow-hidden rounded-4" style="height: 200px;">
-                                        <img :src="`http://127.0.0.1:8000/storage/${apartment.cover_img}`" alt="" class="img-box">
+                                    <p class="text-end">
+                                        <i>
+                                        Distanza : {{ apartment.distance }}Km
+                                    </i></p>
+                                    <div class="overflow-hidden rounded-4" style="height: 150px;">
+                                        <img :src="`http://127.0.0.1:8000/storage/${apartment.cover_img}`" alt="" class="img-box"  style="width: 100%;">
                                     </div>
                                 </div>
                                 <div>                        
