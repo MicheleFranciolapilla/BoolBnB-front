@@ -130,7 +130,10 @@
                     end_point = "apartments";
                     params    = {
                                   'filter'  : "all",
-                                  'city'    : this.store.city_to_search
+                                  'city'    : this.store.cityQuery['city'],
+                                  'long'    : this.store.cityQuery['longitude'],
+                                  'lat'     : this.store.cityQuery['latitude'],
+                                  'range'   : 2
                                 };
                     break;
 
