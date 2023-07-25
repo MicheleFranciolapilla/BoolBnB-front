@@ -95,14 +95,14 @@
               }
               else
               {
-                this.store.api_error.error_index = 1;
+                this.store.api_error.error_index = -100;
                 this.store.api_error.error_msg = "Elenco servizi non ricevuto";
               }
               this.store.axios_running = false;
             })
           .catch( error =>
             {
-              this.store.api_error.error_index = -1;
+              this.store.api_error.error_index = -100;
               this.store.api_error.error_msg = "Errore nella chiamata per ottenimento servizi";
               this.store.axios_running = false;
             });
@@ -141,32 +141,32 @@
               if (res.data.success)
               {
                 this.store.api_error.error_index = 0;
-                if (this.store.calls_params.call_type != 1)
+                switch (this.store.calls_params.call_type)
                 {
-                  this.store.apartments = res.data.apartments;
-                  if (this.store.calls_params.call_type == 0)
-                    this.store.maxPage = res.data.apartments.last_page;
-                  else if (this.store.calls_params.call_type == 2)
-                  {
-                    this.store.max_s_page = res.data.apartments.last_page;
-                    this.store.searched_city = this.store.city_to_search;
-                  }
-                }
-                else
-                {
-                  this.store.one_apartment = res.data.apartment;
+                  case 0  : //sponsored
+                            this.store.apartments = res.data.apartments;
+                            this.store.maxPage = res.data.apartments.last_page;
+                            break;
+                  case 1  : //single
+                            this.store.one_apartment = res.data.apartment;
+                            break;
+                  case 2  : //all
+                            this.store.apartments = res.data.apartments;
+                            this.store.searched_city = this.store.city_to_search;
+                            break;
                 }
               }
               else
               {
-                this.store.api_error.error_index = 2;
+                // La seguente assegnazione di errore viene implementata per poter distinguere il tipo di richiesta axios che ha prodotto l'errore specifico. Inoltre l'aggiunta del valore (1) al call_type dipende dal fatto che il valore (0) è già occupato dalla condizione di mancanza di errore
+                this.store.api_error.error_index = this.store.calls_params.call_type + 1;
                 this.store.api_error.error_msg = "Nessun appartamento con le caratteristiche richieste";
               }
               this.store.axios_running = false;
             })
             .catch( error =>
               {
-                this.store.api_error.error_index = -2;
+                this.store.api_error.error_index = -1 * (this.store.calls_params.call_type + 1);
                 this.store.api_error.error_msg = "Errore nella chiamata per ottenimento appartamenti";
               });
         }
