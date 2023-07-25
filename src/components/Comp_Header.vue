@@ -11,8 +11,9 @@ import { store } from "../store";
             }
         },
         mounted(){
-
+            
         },
+
         methods:{
             Start_search() {
                 console.log('funziona')
@@ -69,8 +70,110 @@ import { store } from "../store";
                 
 
 
+            },
+            Searched_hint(){
+                if (store.searched_text.length > 1) {
+                const tomTomUrl = `https://api.tomtom.com/search/2/geocode/${store.searched_text}.json?key=mDuLGwpUfBez8sET5BVhGMRbc4FRXzB4&countrySet=IT&limit=100&minFuzzyLevel=2&typeahead=false`;
+                fetch(tomTomUrl)
+                .then(response => response.json())
+                .then(data => {
+                    let results = data.results;
+                    // Create a Map to store unique elements
+                    console.log(results)
+                    const uniqueElements = new Map();
+                    results.forEach(element => {
+                    // Check if the element type is "Geography" or "Street"
+                    if (element.type === "Geography" || element.type === "Street") {
+                        let address, city, type, latitude, longitude;
+                        // Extract data based on the element type
+                        if (element.type === "Geography") {
+                            address = element.address.municipality;
+                            city = element.address.municipality;
+                            type = element.type;
+                            latitude = element.position.lat;
+                            longitude = element.position.lon;
+                        } else if (element.type === "Street") {
+                            address = element.address.freeformAddress;
+                            type = element.type;
+                            city = element.address.municipality;
+                            latitude = element.position.lat;
+                            longitude = element.position.lon;
+                        }
+                        // Check if address, city, type, latitude, and longitude are not undefined
+                        if (address && city && type && latitude !== undefined && longitude !== undefined) {
+                            // Create a unique key using address, city, type, latitude, and longitude
+                            const key = `${address}_${city}_${type}_${latitude}_${longitude}`;
+                            // Add to the Map only if it's a unique combination
+                            if (!uniqueElements.has(key)) {
+                                uniqueElements.set(key, { address, city, type, latitude, longitude });
+                            }
+                        }
+                    }
+                });
+                const uniqueElementsArray = Array.from(uniqueElements.values());
+                const customSort = (a, b) => {
+                const scoreA = a.address.toLowerCase().includes(store.searched_text.toLowerCase()) ? 1 : 0;
+                const scoreB = b.address.toLowerCase().includes(store.searched_text.toLowerCase()) ? 1 : 0;
+                if (scoreA !== scoreB) {
+                  return scoreB - scoreA;
+                }
+                return a.address.localeCompare(b.address);
+                };
+                uniqueElementsArray.sort(customSort);
+                store.RaccoltaIndirizzi = uniqueElementsArray            
+                let hintList = document.getElementById('cities');
+                hintList.innerHTML = '';
+                store.RaccoltaIndirizzi.forEach(element => {
+                      // Create a new option element
+                    const option = document.createElement('option');
+                    
+                      // Set the value and text of the option to the address property
+                    option.value = element.address;
+                    option.textContent = element.address;
+                    
+                      // Append the option to the hintList
+                    hintList.appendChild(option);
+
+                    if (element.type === "Street") {
+                        if (element.address === store.searched_text) {
+                            store.cityQuery = element;
+                        }
+                    } else if (element.type === "Geography") {
+                        if (element.address === store.searched_text) {
+                            store.cityQuery = element;
+                        }
+                    }
+                });                              
+            })
+            .catch(error => {
+                console.error("Error fetching data:", error);
+                });
             }
+            },    
+            calcolatoreLatLon(lat1, lon1, lat2, lon2){
+            const R = 6371e3; // metres
+    
+            const φ1 = lat1 * Math.PI / 180; // φ, λ in radians
+            const φ2 = lat2 * Math.PI / 180;
+            const Δφ = (lat2 - lat1) * Math.PI / 180;
+            const Δλ = (lon2 - lon1) * Math.PI / 180;
+    
+            const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+              Math.cos(φ1) * Math.cos(φ2) *
+              Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+    
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    
+            const d = R * c; // in metres
             
+            const distanceInKilometers = (d / 1000).toFixed(1);
+
+            console.log(distanceInKilometers);
+            return distanceInKilometers;
+            },
+            createRequest(){
+
+            }
         },
     }
 </script>
@@ -107,7 +210,7 @@ import { store } from "../store";
                 </li>
             </ul>
             <form class="d-flex" role="search" @submit.prevent="Start_search">
-                <input v-model="store.searched_text" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" list="cities">
+                <input v-model="store.searched_text" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" list="cities" @keyup="Searched_hint()">
                 <datalist id="cities">
                   <option v-for="(city, index) in store.all_cities" :key="index" :value="city">{{ city }}</option>
                 </datalist>
@@ -116,6 +219,15 @@ import { store } from "../store";
                 </button>
             </form>
         </div>
+    </div>
+    <div class="row">
+        <div>
+            <input type="checkbox">
+            <span>
+
+            </span>
+
+        </div>        
     </div>
 </nav>
 
