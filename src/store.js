@@ -149,10 +149,11 @@ export const store = reactive(
         searched_city   :   '',  
         city_to_search  :   '',
         RaccoltaIndirizzi:  '',
-        cityQuery        :  '',
+        cityQuery        :  {},
         last_valid_route :   null,
         selected_range   :   10,
         selected_services:   [], 
+        direct_search_only_city : false,
 
 
 

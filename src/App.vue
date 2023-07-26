@@ -128,13 +128,24 @@
                     break; 
           case 2  : //all
                     end_point = "apartments";
-                    params    = {
+                    if (this.store.direct_search_only_city)
+                    {
+                      params  = { 
+                                  'filter'  : "all",
+                                  'city'    : this.store.city_to_search,
+                                };
+                    }
+                    else
+                    {
+                      params  = {
                                   'filter'  : "all",
                                   'city'    : this.store.cityQuery['city'],
                                   'long'    : this.store.cityQuery['longitude'],
                                   'lat'     : this.store.cityQuery['latitude'],
                                   'range'   : this.store.selected_range
                                 };
+                    }
+
                     break;
 
         }

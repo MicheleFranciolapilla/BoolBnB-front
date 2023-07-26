@@ -60,7 +60,7 @@ import { store } from "../store";
 
             ready_for_call()
             {
-                console.log("cityquery da ready for call: ", store.cityQuery);
+                // console.log("cityquery da ready for call: ", store.cityQuery);
                 if (this.click_on_hint)
                 {
                     this.store.city_to_search = this.store.cityQuery.city;
@@ -75,7 +75,6 @@ import { store } from "../store";
                                 name: 'apartments_search',
                                 query: 
                                 {
-                                    filter: 'all', 
                                     city: store.cityQuery.city,
                                     lat: store.cityQuery.latitude,
                                     long: store.cityQuery.longitude, 
@@ -92,7 +91,6 @@ import { store } from "../store";
                                 query: 
                                 {
                                     ...this.$route.query,
-                                    filter: 'all',
                                     city: store.cityQuery.city,
                                     address: store.cityQuery.address,
                                     lat: store.cityQuery.latitude,
@@ -120,7 +118,7 @@ import { store } from "../store";
                             {
                                 let results = data.results;
                                 // Create a Map to store unique elements
-                                console.log(results)
+                                // console.log(results)
                                 const uniqueElements = new Map();
                                 results.forEach(element => 
                                     {
@@ -177,21 +175,20 @@ import { store } from "../store";
                                 {
                                     // Create a new option element
                                     let option = document.createElement('option');
-                                    option.addEventListener("click", (ev) =>
-                                    {
-                                        this.click_on_hint = true;
-                                    });
+
                                     // Set the value and text of the option to the address property
                                     option.value = element.address;
                                     option.textContent = element.address;
                                     // Append the option to the hintList
                                     hintList.appendChild(option);
 
+
                                     if (element.type === "Street") 
                                     {
                                         if (element.address === store.searched_text) 
                                         {
                                             store.cityQuery = element;
+                                            this.click_on_hint = true;
                                         }
                                     } 
                                     else if (element.type === "Geography") 
@@ -199,39 +196,18 @@ import { store } from "../store";
                                         if (element.address === store.searched_text) 
                                         {
                                             store.cityQuery = element;
+                                            this.click_on_hint = true;
                                         }
                                     }
                                 });   
-                                console.log("valore di city query: ",store.cityQuery);                         
+                                // console.log("valore di city query: ",store.cityQuery);                         
                             })
                             .catch(error => 
                             {
                                 console.error("Error fetching data:", error);
                             });
                 }
-            },    
-
-            calcolatoreLatLon(lat1, lon1, lat2, lon2){
-            const R = 6371e3; // metres
-    
-            const φ1 = lat1 * Math.PI / 180; // φ, λ in radians
-            const φ2 = lat2 * Math.PI / 180;
-            const Δφ = (lat2 - lat1) * Math.PI / 180;
-            const Δλ = (lon2 - lon1) * Math.PI / 180;
-    
-            const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
-              Math.cos(φ1) * Math.cos(φ2) *
-              Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
-    
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    
-            const d = R * c; // in metres
-            
-            const distanceInKilometers = (d / 1000).toFixed(1);
-
-            console.log(distanceInKilometers);
-            return distanceInKilometers;
-            },
+            },  
         },
     }
 </script>

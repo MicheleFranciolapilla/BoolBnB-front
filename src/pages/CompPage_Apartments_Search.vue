@@ -22,51 +22,62 @@ import { store } from '../store';
                 range: ''
             }
         },
-        methods: {
-            createAPT(){
-                const params = {
-                  filter: this.filter,
-                  city: this.city,
-                  lat: this.lat,
-                  long: this.long,
-                  range: this.range
-                }
+        // methods: {
+        //     createAPT(){
+        //         const params = {
+        //           filter: this.filter,
+        //           city: this.city,
+        //           lat: this.lat,
+        //           long: this.long,
+        //           range: this.range
+        //         }
                 
-                console.log(store.api_url_root + 'apartments', {params : params })
-                axios.get(store.api_url_root + 'apartments', {params : params }).then(res => {
-                    console.log(res)
-                    store.apartments = res.data.apartments
-                })
+        //         console.log(store.api_url_root + 'apartments', {params : params })
+        //         axios.get(store.api_url_root + 'apartments', {params : params }).then(res => {
+        //             console.log(res)
+        //             store.apartments = res.data.apartments
+        //         })
 
-                store.selected_range = this.range
-                store.searched_text = this.address
-                store.searched_city = this.address
-            }
-        },
+        //         store.selected_range = this.range
+        //         store.searched_text = this.address
+        //         store.searched_city = this.address
+        //     }
+        // },
         created()
         {
             this.store.page_name = "Search";
             if (this.store.calls_params.call_type !== this.store.call_type_array.indexOf('all'))
             {
-                this.store.city_to_search = this.$route.params.city;
+                if (((!this.$route.hasOwnProperty('city')) && (window.location.search.length < 1)) ||
+                    ((this.$route.hasOwnProperty('city')) && (window.location.search.length > 0)))
+                {
+                    console.log("hai digitato come il cazzo quindi te ne vai alla home");
+                }
+                else if (this.$route.hasOwnProperty('city'))
+                {
+                    this.store.city_to_search = this.$route.params.city;
+                    this.store.direct_search_only_city = true;
+                    console.log("solo parametro");
+                }
+                else
+                {
+                    console.log("solo query");
+                    console.log(this.$route.query.city);
+                    this.store.cityQuery['city'] = this.$route.query.city;
+                    this.store.cityQuery['latitude'] = this.$route.query.lat;
+                    this.store.cityQuery['longitude'] = this.$route.query.long;
+                    this.store.selected_range = this.$route.query.range;
+                    this.store.city_to_search = this.store.cityQuery['city'];
+                }
                 this.store.prepare_reactive_call("all");
             }
-
-            this.filter = this.$route.query.filter;
-            this.city = this.$route.query.city;
-            this.lat = this.$route.query.lat;
-            this.long = this.$route.query.long;
-            this.range = this.$route.query.range;
-            this.address = this.$route.query.address;
-
-            this.createAPT()
         }
         
     }
 </script>
 
 <template>
-    <h1>Risultati per "{{ store.searched_city }}"</h1>
+    <h1>Risultati per "{{ store.city_to_search }}"</h1>
     
     
     <div v-if="!store.axios_running" class="row mx-auto">
