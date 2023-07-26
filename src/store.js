@@ -150,6 +150,7 @@ export const store = reactive(
         city_to_search  :   '',
         RaccoltaIndirizzi:  '',
         cityQuery        :  '',
+        last_valid_route :   null,
 
 
 
@@ -175,5 +176,6 @@ export const store = reactive(
         {
             this.api_error.error_index = 0;
             this.api_error.error_msg = "";
+            this.$router.history.back();
         }
     });

@@ -41,7 +41,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="error_modal_label">Errore{{ (fatal_error) ? (' CRITICO ') : ('') }}</h5>
-                        <button v-if="!fatal_error" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button v-if="!fatal_error" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" v-on:click="store.reset_error()"></button>
                     </div>
                     <div class="modal-body">
                         <h6>{{ store.api_error.error_msg }}</h6>
