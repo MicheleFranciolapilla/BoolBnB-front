@@ -87,10 +87,9 @@ import { store } from "../store";
                     {
                         this.$router.replace(
                             {
-                                ...this.$route,
+                                name: 'apartments_search',
                                 query: 
                                 {
-                                    ...this.$route.query,
                                     city: store.cityQuery.city,
                                     address: store.cityQuery.address,
                                     lat: store.cityQuery.latitude,
