@@ -143,7 +143,8 @@
                                   'city'    : this.store.cityQuery['city'],
                                   'long'    : this.store.cityQuery['longitude'],
                                   'lat'     : this.store.cityQuery['latitude'],
-                                  'range'   : this.store.selected_range
+                                  'range'   : this.store.selected_range,
+                                  'service' : this.store.selected_services
                                 };
                     }
 
