@@ -1,5 +1,6 @@
 <script>
     // import axios from "axios";
+import { all } from "axios";
 import { store } from "../store";
     export default
     {
@@ -59,12 +60,33 @@ import { store } from "../store";
                         //vai alla pagina search
                         console.log('vado?')
                         const city = this.store.searched_text;
-                        this.$router.push({ name: 'apartments_search', params: { city: city } });
+                        this.$router.push({ 
+                            name: 'apartments_search',
+                            query: {
+                                filter: 'all', 
+                                city: store.cityQuery.city,
+                                lat: store.cityQuery.latitude,
+                                long: store.cityQuery.longitude, 
+                                range: store.selected_range,
+                                address: store.cityQuery.address, 
+                            }
+                        });
                     }
                     else 
                     {
                         const currentCity = this.store.searched_text;
-                        this.$router.replace({ ...this.$route, params: { ...this.$route.params, city: currentCity } });
+                        this.$router.replace({
+                          ...this.$route,
+                          query: {
+                            ...this.$route.query,
+                            filter: 'all',
+                            city: store.cityQuery.city,
+                            address: store.cityQuery.address,
+                            lat: store.cityQuery.latitude,
+                            long: store.cityQuery.longitude,
+                            range: store.selected_range,
+                          },
+                        });
                     }
                 }
                 
@@ -72,15 +94,16 @@ import { store } from "../store";
 
             },
             Searched_hint(){
-                if (store.searched_text.length >= 4) {
+                if (store.searched_text.length > 1) {
                 const tomTomUrl = `https://api.tomtom.com/search/2/geocode/${store.searched_text}.json?key=mDuLGwpUfBez8sET5BVhGMRbc4FRXzB4&countrySet=IT&limit=100&minFuzzyLevel=2&typeahead=false`;
                 fetch(tomTomUrl)
                 .then(response => response.json())
                 .then(data => {
                     let results = data.results;
                     // Create a Map to store unique elements
+                    console.log(results)
                     const uniqueElements = new Map();
-                    results.forEach((element,index) => {
+                    results.forEach(element => {
                     // Check if the element type is "Geography" or "Street"
                     if (element.type === "Geography" || element.type === "Street") {
                         let address, city, type, latitude, longitude;
@@ -99,39 +122,30 @@ import { store } from "../store";
                             longitude = element.position.lon;
                         }
                         // Check if address, city, type, latitude, and longitude are not undefined
-                        if (address && city && type && latitude !== undefined && longitude !== undefined) 
-                        {
+                        if (address && city && type && latitude !== undefined && longitude !== undefined) {
                             // Create a unique key using address, city, type, latitude, and longitude
                             const key = `${address}_${city}_${type}_${latitude}_${longitude}`;
                             // Add to the Map only if it's a unique combination
-                            if (!uniqueElements.has(key)) 
-                            {
+                            if (!uniqueElements.has(key)) {
                                 uniqueElements.set(key, { address, city, type, latitude, longitude });
                             }
                         }
                     }
                 });
                 const uniqueElementsArray = Array.from(uniqueElements.values());
-                console.log("uniqueelementsarray prima di ordinamento: ", uniqueElementsArray);
-
-                const customSort = (a, b) => 
-                {
-                const scoreA = a.city.toLowerCase().includes(store.searched_text.toLowerCase()) ? 1 : 0;
-                const scoreB = b.city.toLowerCase().includes(store.searched_text.toLowerCase()) ? 1 : 0;
-                if (scoreA !== scoreB) 
-                {
+                const customSort = (a, b) => {
+                const scoreA = a.address.toLowerCase().includes(store.searched_text.toLowerCase()) ? 1 : 0;
+                const scoreB = b.address.toLowerCase().includes(store.searched_text.toLowerCase()) ? 1 : 0;
+                if (scoreA !== scoreB) {
                   return scoreB - scoreA;
                 }
                 return a.address.localeCompare(b.address);
                 };
-
                 uniqueElementsArray.sort(customSort);
-                console.log("dopo ordinamento: ",uniqueElementsArray);
                 store.RaccoltaIndirizzi = uniqueElementsArray            
                 let hintList = document.getElementById('cities');
                 hintList.innerHTML = '';
-                store.RaccoltaIndirizzi.forEach(element => 
-                {
+                store.RaccoltaIndirizzi.forEach(element => {
                       // Create a new option element
                     const option = document.createElement('option');
                     
@@ -142,16 +156,12 @@ import { store } from "../store";
                       // Append the option to the hintList
                     hintList.appendChild(option);
 
-                    if (element.type === "Street") 
-                    {
-                        if (element.address === store.searched_text) 
-                        {
+                    if (element.type === "Street") {
+                        if (element.address === store.searched_text) {
                             store.cityQuery = element;
                         }
-                    } else if (element.type === "Geography") 
-                    {
-                        if (element.address === store.searched_text) 
-                        {
+                    } else if (element.type === "Geography") {
+                        if (element.address === store.searched_text) {
                             store.cityQuery = element;
                         }
                     }
@@ -183,9 +193,6 @@ import { store } from "../store";
             console.log(distanceInKilometers);
             return distanceInKilometers;
             },
-            createRequest(){
-
-            }
         },
     }
 </script>
@@ -221,8 +228,8 @@ import { store } from "../store";
                     </ul>
                 </li>
             </ul>
-            <form class="d-flex" role="search" @submit.prevent="Start_search">
-                <input v-model="store.searched_text" class="form-control me-2" type="search" placeholder="Search" autocomplete="off" aria-label="Search" list="cities" @keyup="Searched_hint()">
+            <form v-if="(store.page_name !== 'Search')" class="d-flex" role="search" @submit.prevent="Start_search">
+                <input v-model="store.searched_text" autocomplete="off" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" list="cities" @keyup="Searched_hint()">
                 <datalist id="cities">
                   <option v-for="(city, index) in store.all_cities" :key="index" :value="city">{{ city }}</option>
                 </datalist>
@@ -232,15 +239,35 @@ import { store } from "../store";
             </form>
         </div>
     </div>
-    <div class="row">
-        <div>
-            <input type="checkbox">
-            <span>
-
-            </span>
-
-        </div>        
-    </div>
 </nav>
+<div v-if="(store.page_name == 'Search')" class="container my-3" >
+    <form  class="d-flex w-50 mx-auto" role="search" @submit.prevent="Start_search">
+        <input v-model="store.searched_text" autocomplete="off" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" list="cities" @keyup="Searched_hint()">
+        <datalist id="cities">
+          <option v-for="(city, index) in store.all_cities" :key="index" :value="city">{{ city }}</option>
+        </datalist>
+        <button class="btn" type="submit" @click.prevent="Start_search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+    </form>
+    <div>
+        <span>
+            range di ricerca
+        </span>
+        <input type="range" id="range" name="range" min="1" max="20" v-model="store.selected_range" step="0.5">    
+        <span>
+            {{ store.selected_range }}Km
+        </span>
+        <div>
+            <div class="row">
+                <div  v-for="(service, index) in store.services" :key="index" class="col-2">
+                    <input type="checkbox" name="services[]" :id="index" v-model="store.selected_services" :value="service.id">
+                    <span>{{ service.name }}</span>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 </template>

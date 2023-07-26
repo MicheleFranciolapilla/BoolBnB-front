@@ -1,5 +1,5 @@
 <script>
-import axios from 'axios';
+import axios, { Axios } from 'axios';
 import Comp_OnLoading from '../components/Comp_OnLoading.vue';
 import { store } from '../store';
 
@@ -13,7 +13,34 @@ import { store } from '../store';
         data()
         {
             return {
-                store
+                store,
+                filter: '',
+                city: '',
+                address: '',
+                lat: '', 
+                long: '',
+                range: ''
+            }
+        },
+        methods: {
+            createAPT(){
+                const params = {
+                  filter: this.filter,
+                  city: this.city,
+                  lat: this.lat,
+                  long: this.long,
+                  range: this.range
+                }
+                
+                console.log(store.api_url_root + 'apartments', {params : params })
+                axios.get(store.api_url_root + 'apartments', {params : params }).then(res => {
+                    console.log(res)
+                    store.apartments = res.data.apartments
+                })
+
+                store.selected_range = this.range
+                store.searched_text = this.address
+                store.searched_city = this.address
             }
         },
         created()
@@ -24,12 +51,23 @@ import { store } from '../store';
                 this.store.city_to_search = this.$route.params.city;
                 this.store.prepare_reactive_call("all");
             }
+
+            this.filter = this.$route.query.filter;
+            this.city = this.$route.query.city;
+            this.lat = this.$route.query.lat;
+            this.long = this.$route.query.long;
+            this.range = this.$route.query.range;
+            this.address = this.$route.query.address;
+
+            this.createAPT()
         }
+        
     }
 </script>
 
 <template>
     <h1>Risultati per "{{ store.searched_city }}"</h1>
+    
     
     <div class="row mx-auto">
         <div class="row">
@@ -39,8 +77,12 @@ import { store } from '../store';
                         <router-link :to="{name: 'apartments_show', params: { id: apartment.id, slug:apartment.slug}}" class="text-decoration-none text-black" @click="store.prepare_reactive_call('single',apartment.id)">
                             <div class="row">
                                 <div class="col-12">
-                                    <div class="overflow-hidden rounded-4" style="height: 200px;">
-                                        <img :src="`http://127.0.0.1:8000/storage/${apartment.cover_img}`" alt="" class="img-box">
+                                    <p class="text-end">
+                                        <i>
+                                        Distanza : {{ apartment.distance }}Km
+                                    </i></p>
+                                    <div class="overflow-hidden rounded-4" style="height: 150px;">
+                                        <img :src="`http://127.0.0.1:8000/storage/${apartment.cover_img}`" alt="" class="img-box"  style="width: 100%;">
                                     </div>
                                 </div>
                                 <div>                        
