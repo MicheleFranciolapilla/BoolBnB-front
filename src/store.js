@@ -151,6 +151,8 @@ export const store = reactive(
         RaccoltaIndirizzi:  '',
         cityQuery        :  '',
         last_valid_route :   null,
+        selected_range   :   10,
+        selected_services:   [], 
 
 
 
