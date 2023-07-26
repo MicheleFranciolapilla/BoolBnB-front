@@ -144,6 +144,8 @@
               if (res.data.success)
               {
                 this.store.api_error.error_index = 0;
+                this.store.last_valid_route = this.$router.currentRoute;
+                console.log("Rotta ",this.store.last_valid_route," salvata con l'esito positivo della chiamata con endpoint: ",end_point," e parametri: ",params);
                 switch (this.store.calls_params.call_type)
                 {
                   case 0  : //sponsored
