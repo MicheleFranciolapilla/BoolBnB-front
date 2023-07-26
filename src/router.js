@@ -3,7 +3,6 @@ import { createRouter, createWebHistory } from "vue-router";
 import CompPage_Home from "./pages/CompPage_Home.vue";
 import CompPage_Apartments_Search from "./pages/CompPage_Apartments_Search.vue";
 import CompPage_Apartments_Show from "./pages/CompPage_Apartments_Show.vue";
-import { watch } from "vue";
 
 const router = createRouter(
     {

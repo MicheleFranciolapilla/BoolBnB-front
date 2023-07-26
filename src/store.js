@@ -176,6 +176,5 @@ export const store = reactive(
         {
             this.api_error.error_index = 0;
             this.api_error.error_msg = "";
-            this.$router.history.back();
         }
     });

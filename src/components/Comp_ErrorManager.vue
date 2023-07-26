@@ -15,7 +15,7 @@
         {
             'store.api_error.error_index' (new_value)
             {
-                if (new_value !== 0)
+                if (new_value === -100)
                 {
                     this.fatal_error = (this.store.api_error.error_index == -100);
                     this.store.invoke_error();
