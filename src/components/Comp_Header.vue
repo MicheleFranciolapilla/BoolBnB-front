@@ -19,6 +19,21 @@ import { store } from "../store";
         methods:
         {
 
+            services_changed()
+            {
+                for (let i = 0; i < this.store.selected_services.length - 1; i++)
+                    for (let j = i + 1; j <= this.store.selected_services.length - 1; j++)
+                    {
+                        if (this.store.selected_services[i] > this.store.selected_services[j])
+                        {
+                            let change_var = this.store.selected_services[i];
+                            this.store.selected_services[i] = this.store.selected_services[j];
+                            this.store.selected_services[j] = change_var;
+                        }
+                    }
+                this.ready_for_call(false);
+            },
+
             ready_for_call(from_search_bar = true)
             {
                 // console.log("cityquery da ready for call: ", store.cityQuery);
@@ -56,6 +71,7 @@ import { store } from "../store";
                                     lat: store.cityQuery.latitude,
                                     long: store.cityQuery.longitude,
                                     range: store.selected_range,
+                                    services: store.selected_services
                                 },
                             });
                     }
@@ -237,7 +253,7 @@ import { store } from "../store";
         <div>
             <div class="row">
                 <div  v-for="(service, index) in store.services" :key="index" class="col-2">
-                    <input type="checkbox" name="services[]" :id="index" v-model="store.selected_services" :value="service.id">
+                    <input type="checkbox" name="services[]" :id="index" v-model="store.selected_services" :value="service.id" v-on:change="services_changed()">
                     <span>{{ service.name }}</span>
 
                 </div>
