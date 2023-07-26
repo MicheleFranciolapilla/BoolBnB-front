@@ -250,13 +250,24 @@ import { store } from "../store";
           <i class="fa-solid fa-magnifying-glass"></i>
         </button>
     </form>
-    <span>
-        range di ricerca
-    </span>
-    <input type="range" id="range" name="range" min="1" max="20" v-model="store.selected_range" step="0.5">    
-    <span>
-        {{ store.selected_range }}Km
-    </span>
+    <div>
+        <span>
+            range di ricerca
+        </span>
+        <input type="range" id="range" name="range" min="1" max="20" v-model="store.selected_range" step="0.5">    
+        <span>
+            {{ store.selected_range }}Km
+        </span>
+        <div>
+            <div class="row">
+                <div  v-for="(service, index) in store.services" :key="index" class="col-2">
+                    <input type="checkbox" name="services[]" :id="index" v-model="store.selected_services" :value="service.id">
+                    <span>{{ service.name }}</span>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 </template>
