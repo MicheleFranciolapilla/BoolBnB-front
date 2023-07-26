@@ -31,7 +31,8 @@ import { store } from '../store';
                   long: this.long,
                   range: this.range
                 }
-
+                
+                console.log(store.api_url_root + 'apartments', {params : params })
                 axios.get(store.api_url_root + 'apartments', {params : params }).then(res => {
                     console.log(res)
                     store.apartments = res.data.apartments
@@ -51,12 +52,12 @@ import { store } from '../store';
                 this.store.prepare_reactive_call("all");
             }
 
-            this.filter = this.$route.params.filter
-            this.city = this.$route.params.city
-            this.lat = this.$route.params.lat
-            this.long = this.$route.params.long
-            this.range = this.$route.params.range
-            this.address = this.$route.params.address
+            this.filter = this.$route.query.filter;
+            this.city = this.$route.query.city;
+            this.lat = this.$route.query.lat;
+            this.long = this.$route.query.long;
+            this.range = this.$route.query.range;
+            this.address = this.$route.query.address;
 
             this.createAPT()
         }

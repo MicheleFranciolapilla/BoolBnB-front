@@ -60,12 +60,33 @@ import { store } from "../store";
                         //vai alla pagina search
                         console.log('vado?')
                         const city = this.store.searched_text;
-                        this.$router.push({ name: 'apartments_search', params: { filter: 'all', city: city, address: store.cityQuery.address, lat: store.cityQuery.latitude, long: store.cityQuery.longitude, range: store.selected_range } });
+                        this.$router.push({ 
+                            name: 'apartments_search',
+                            query: {
+                                filter: 'all', 
+                                city: store.cityQuery.city,
+                                lat: store.cityQuery.latitude,
+                                long: store.cityQuery.longitude, 
+                                range: store.selected_range,
+                                address: store.cityQuery.address, 
+                            }
+                        });
                     }
                     else 
                     {
                         const currentCity = this.store.searched_text;
-                        this.$router.replace({ ...this.$route, params: { ...this.$route.params, filter: 'all', city: store.cityQuery.city, address: store.cityQuery.address, lat: store.cityQuery.latitude, long: store.cityQuery.longitude, range: store.selected_range } });
+                        this.$router.replace({
+                          ...this.$route,
+                          query: {
+                            ...this.$route.query,
+                            filter: 'all',
+                            city: store.cityQuery.city,
+                            address: store.cityQuery.address,
+                            lat: store.cityQuery.latitude,
+                            long: store.cityQuery.longitude,
+                            range: store.selected_range,
+                          },
+                        });
                     }
                 }
                 

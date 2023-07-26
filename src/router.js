@@ -18,7 +18,7 @@ const router = createRouter(
                                             }
                         },
                         {
-                            path        :   '/search/:filter/:city/:address/:lat/:long/:range',
+                            path        :   '/search',
                             name        :   'apartments_search',
                             component   :   CompPage_Apartments_Search,
                             meta        :   {
