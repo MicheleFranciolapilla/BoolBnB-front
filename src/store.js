@@ -152,6 +152,8 @@ export const store = reactive(
         cityQuery        :  {},
         last_valid_route :   null,
         selected_range   :   10,
+        min_range         : 0.5,
+        max_range         : 25,       
         selected_services:   [], 
         direct_search_only_city : false,
 

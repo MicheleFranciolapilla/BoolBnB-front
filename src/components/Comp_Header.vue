@@ -9,7 +9,7 @@ import { store } from "../store";
         {
             return {
                 store,
-                click_on_hint   : false,   
+                click_on_hint   : false,
             }
         },
         mounted(){
@@ -18,50 +18,11 @@ import { store } from "../store";
 
         methods:
         {
-            Start_search() 
-            {
-                console.log('funziona')
-                //primo check x vedere se è stato inserito testo
-                if(store.searched_text !== '')
-                {
 
-                    //creiamo un variabile che associato il valore inserite nella barra di ricerca e lo rende lowercase
-                    const searchTextLower = this.store.searched_text.toLowerCase();
-                    //controlliamo se esiste un match perfetto nell'array delle città se esiste la variabile extacMatch ne associa il valore rispettivo dall'array
-                    const exactMatch = this.store.all_cities.find(city => city.toLowerCase() === searchTextLower);
-
-                    //se esiste un match perfetto
-                    if (exactMatch) 
-                    {
-                        console.log('sono uguali')
-                        //sostituisce il valore scritto nella searchbar al match perfetto
-                        this.store.searched_text = exactMatch;
-
-                        //se non esiste un match perfett
-                    } 
-                    else 
-                    {
-                        console.log('non sono uguali')
-                        //controlliamo se esiste un match parziale (per una cittò scritta a metà magarai..) e ne associamo i valori
-                        const partialMatch = this.store.all_cities.find(city => city.toLowerCase().includes(searchTextLower));
-                    
-                        //se esiste un match parziale
-                        if (partialMatch) 
-                        {
-                            console.log('allora ci pensoo io')
-                            // sostituiamo i valori semi corretti dalla search bar i migliori valori che siamo riusciti a trovare
-                            this.store.searched_text = partialMatch;
-                        }
-                    }
-
-
-                }
-            },
-
-            ready_for_call()
+            ready_for_call(from_search_bar = true)
             {
                 // console.log("cityquery da ready for call: ", store.cityQuery);
-                if (this.click_on_hint)
+                if (((this.click_on_hint) && (from_search_bar)) || (!from_search_bar))
                 {
                     this.store.city_to_search = this.store.cityQuery.city;
                     this.store.prepare_reactive_call("all");
@@ -99,7 +60,7 @@ import { store } from "../store";
                             });
                     }
                 }
-                else
+                else if ((!this.click_on_hint) && (from_search_bar))
                 {
                     console.log("devi selezionare dalla lista");
                 }
@@ -268,7 +229,8 @@ import { store } from "../store";
         <span>
             range di ricerca
         </span>
-        <input type="range" id="range" name="range" min="1" max="20" v-model="store.selected_range" step="0.5">    
+        <input type="range" id="range" name="range" :min="store.min_range" :max="store.max_range" v-model="store.selected_range" step="0.5"
+         v-on:change="ready_for_call(false)">    
         <span>
             {{ store.selected_range }}Km
         </span>

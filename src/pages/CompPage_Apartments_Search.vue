@@ -22,27 +22,6 @@ import { store } from '../store';
                 range: ''
             }
         },
-        // methods: {
-        //     createAPT(){
-        //         const params = {
-        //           filter: this.filter,
-        //           city: this.city,
-        //           lat: this.lat,
-        //           long: this.long,
-        //           range: this.range
-        //         }
-                
-        //         console.log(store.api_url_root + 'apartments', {params : params })
-        //         axios.get(store.api_url_root + 'apartments', {params : params }).then(res => {
-        //             console.log(res)
-        //             store.apartments = res.data.apartments
-        //         })
-
-        //         store.selected_range = this.range
-        //         store.searched_text = this.address
-        //         store.searched_city = this.address
-        //     }
-        // },
         created()
         {
             this.store.page_name = "Search";
@@ -69,7 +48,23 @@ import { store } from '../store';
                         this.store.cityQuery['city'] = this.$route.query.city;
                         this.store.cityQuery['latitude'] = this.$route.query.lat;
                         this.store.cityQuery['longitude'] = this.$route.query.long;
+                        this.store.cityQuery['address'] = this.$route.query.address;
                         this.store.selected_range = this.$route.query.range;
+                        if (this.store.selected_range > this.store.max_range)
+                            this.store.selected_range = this.store.max_range;
+                        else if (this.store.selected_range < this.store.min_range)
+                                this.store.selected_range = this.store.min_range;
+                        this.$router.replace({                                
+                                                name: 'apartments_search',
+                                                query: 
+                                                {
+                                                    city: store.cityQuery.city,
+                                                    address: store.cityQuery.address,
+                                                    lat: store.cityQuery.latitude,
+                                                    long: store.cityQuery.longitude,
+                                                    range: store.selected_range,
+                                                }
+                                            });
                         this.store.city_to_search = this.store.cityQuery['city'];
                     }
                     this.store.prepare_reactive_call("all");
@@ -81,7 +76,7 @@ import { store } from '../store';
 </script>
 
 <template>
-    <h1>Risultati per "{{ store.city_to_search }}"</h1>
+    <h1>Risultati per "{{ store.searched_city }}"</h1>
     
     
     <div v-if="!store.axios_running" class="row mx-auto">

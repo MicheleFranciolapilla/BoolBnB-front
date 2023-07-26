@@ -169,7 +169,7 @@
                             break;
                   case 2  : //all
                             this.store.apartments = res.data.apartments;
-                            this.store.searched_city = this.store.city_to_search;
+                            this.store.searched_city = this.store.cityQuery.address;
                             break;
                 }
               }
