@@ -68,7 +68,7 @@ import axios from "axios";
 </script>
 
 <template>
-    <div class="container">
+    <div v-if="!store.axios_running" class="container">
         <h1>
             {{ store.one_apartment.title }}
         </h1>
@@ -141,7 +141,7 @@ import axios from "axios";
             </div>
         </div>
     </div>
-    <Comp_OnLoading v-if="store.axios_running" 
+    <Comp_OnLoading v-else 
         :hg_color = "'white'"
         :big = "true"
         :message = "''"

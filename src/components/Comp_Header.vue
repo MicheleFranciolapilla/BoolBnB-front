@@ -8,15 +8,18 @@ import { store } from "../store";
         data()
         {
             return {
-                store   
+                store,
+                click_on_hint   : false,   
             }
         },
         mounted(){
             
         },
 
-        methods:{
-            Start_search() {
+        methods:
+        {
+            Start_search() 
+            {
                 console.log('funziona')
                 //primo check x vedere se è stato inserito testo
                 if(store.searched_text !== '')
@@ -31,147 +34,183 @@ import { store } from "../store";
                     if (exactMatch) 
                     {
                         console.log('sono uguali')
-                    //sostituisce il valore scritto nella searchbar al match perfetto
-                      this.store.searched_text = exactMatch;
+                        //sostituisce il valore scritto nella searchbar al match perfetto
+                        this.store.searched_text = exactMatch;
 
-                      //se non esiste un match perfett
+                        //se non esiste un match perfett
                     } 
                     else 
                     {
                         console.log('non sono uguali')
                         //controlliamo se esiste un match parziale (per una cittò scritta a metà magarai..) e ne associamo i valori
-                      const partialMatch = this.store.all_cities.find(city => city.toLowerCase().includes(searchTextLower));
+                        const partialMatch = this.store.all_cities.find(city => city.toLowerCase().includes(searchTextLower));
                     
-                      //se esiste un match parziale
-                      if (partialMatch) 
-                      {
-                        console.log('allora ci pensoo io')
-                        // sostituiamo i valori semi corretti dalla search bar i migliori valori che siamo riusciti a trovare
-                        this.store.searched_text = partialMatch;
-                      }
+                        //se esiste un match parziale
+                        if (partialMatch) 
+                        {
+                            console.log('allora ci pensoo io')
+                            // sostituiamo i valori semi corretti dalla search bar i migliori valori che siamo riusciti a trovare
+                            this.store.searched_text = partialMatch;
+                        }
                     }
 
-                    this.store.city_to_search = this.store.searched_text;
+
+                }
+            },
+
+            ready_for_call()
+            {
+                console.log("cityquery da ready for call: ", store.cityQuery);
+                if (this.click_on_hint)
+                {
+                    this.store.city_to_search = this.store.cityQuery.city;
                     this.store.prepare_reactive_call("all");
 
                     //se siamo in una pagina che sia search
                     if(store.page_name !== 'Search') 
                     {
                         //vai alla pagina search
-                        console.log('vado?')
-                        const city = this.store.searched_text;
-                        this.$router.push({ 
-                            name: 'apartments_search',
-                            query: {
-                                filter: 'all', 
-                                city: store.cityQuery.city,
-                                lat: store.cityQuery.latitude,
-                                long: store.cityQuery.longitude, 
-                                range: store.selected_range,
-                                address: store.cityQuery.address, 
-                            }
-                        });
+                        this.$router.push(
+                            { 
+                                name: 'apartments_search',
+                                query: 
+                                {
+                                    filter: 'all', 
+                                    city: store.cityQuery.city,
+                                    lat: store.cityQuery.latitude,
+                                    long: store.cityQuery.longitude, 
+                                    range: store.selected_range,
+                                    address: store.cityQuery.address, 
+                                }
+                            });
                     }
                     else 
                     {
-                        const currentCity = this.store.searched_text;
-                        this.$router.replace({
-                          ...this.$route,
-                          query: {
-                            ...this.$route.query,
-                            filter: 'all',
-                            city: store.cityQuery.city,
-                            address: store.cityQuery.address,
-                            lat: store.cityQuery.latitude,
-                            long: store.cityQuery.longitude,
-                            range: store.selected_range,
-                          },
-                        });
+                        this.$router.replace(
+                            {
+                                ...this.$route,
+                                query: 
+                                {
+                                    ...this.$route.query,
+                                    filter: 'all',
+                                    city: store.cityQuery.city,
+                                    address: store.cityQuery.address,
+                                    lat: store.cityQuery.latitude,
+                                    long: store.cityQuery.longitude,
+                                    range: store.selected_range,
+                                },
+                            });
                     }
                 }
-                
-
-
+                else
+                {
+                    console.log("devi selezionare dalla lista");
+                }
             },
-            Searched_hint(){
-                if (store.searched_text.length > 1) {
-                const tomTomUrl = `https://api.tomtom.com/search/2/geocode/${store.searched_text}.json?key=mDuLGwpUfBez8sET5BVhGMRbc4FRXzB4&countrySet=IT&limit=100&minFuzzyLevel=2&typeahead=false`;
-                fetch(tomTomUrl)
-                .then(response => response.json())
-                .then(data => {
-                    let results = data.results;
-                    // Create a Map to store unique elements
-                    console.log(results)
-                    const uniqueElements = new Map();
-                    results.forEach(element => {
-                    // Check if the element type is "Geography" or "Street"
-                    if (element.type === "Geography" || element.type === "Street") {
-                        let address, city, type, latitude, longitude;
-                        // Extract data based on the element type
-                        if (element.type === "Geography") {
-                            address = element.address.municipality;
-                            city = element.address.municipality;
-                            type = element.type;
-                            latitude = element.position.lat;
-                            longitude = element.position.lon;
-                        } else if (element.type === "Street") {
-                            address = element.address.freeformAddress;
-                            type = element.type;
-                            city = element.address.municipality;
-                            latitude = element.position.lat;
-                            longitude = element.position.lon;
-                        }
-                        // Check if address, city, type, latitude, and longitude are not undefined
-                        if (address && city && type && latitude !== undefined && longitude !== undefined) {
-                            // Create a unique key using address, city, type, latitude, and longitude
-                            const key = `${address}_${city}_${type}_${latitude}_${longitude}`;
-                            // Add to the Map only if it's a unique combination
-                            if (!uniqueElements.has(key)) {
-                                uniqueElements.set(key, { address, city, type, latitude, longitude });
-                            }
-                        }
-                    }
-                });
-                const uniqueElementsArray = Array.from(uniqueElements.values());
-                const customSort = (a, b) => {
-                const scoreA = a.address.toLowerCase().includes(store.searched_text.toLowerCase()) ? 1 : 0;
-                const scoreB = b.address.toLowerCase().includes(store.searched_text.toLowerCase()) ? 1 : 0;
-                if (scoreA !== scoreB) {
-                  return scoreB - scoreA;
-                }
-                return a.address.localeCompare(b.address);
-                };
-                uniqueElementsArray.sort(customSort);
-                store.RaccoltaIndirizzi = uniqueElementsArray            
-                let hintList = document.getElementById('cities');
-                hintList.innerHTML = '';
-                store.RaccoltaIndirizzi.forEach(element => {
-                      // Create a new option element
-                    const option = document.createElement('option');
-                    
-                      // Set the value and text of the option to the address property
-                    option.value = element.address;
-                    option.textContent = element.address;
-                    
-                      // Append the option to the hintList
-                    hintList.appendChild(option);
 
-                    if (element.type === "Street") {
-                        if (element.address === store.searched_text) {
-                            store.cityQuery = element;
-                        }
-                    } else if (element.type === "Geography") {
-                        if (element.address === store.searched_text) {
-                            store.cityQuery = element;
-                        }
-                    }
-                });                              
-            })
-            .catch(error => {
-                console.error("Error fetching data:", error);
-                });
-            }
+            Searched_hint()
+            {
+                this.click_on_hint = false;
+                if (store.searched_text.length > 3) 
+                {
+                    const tomTomUrl = `https://api.tomtom.com/search/2/geocode/${store.searched_text}.json?key=mDuLGwpUfBez8sET5BVhGMRbc4FRXzB4&countrySet=IT&limit=100&minFuzzyLevel=2&typeahead=false`;
+                    fetch(tomTomUrl)
+                        .then(response => response.json())
+                            .then(data => 
+                            {
+                                let results = data.results;
+                                // Create a Map to store unique elements
+                                console.log(results)
+                                const uniqueElements = new Map();
+                                results.forEach(element => 
+                                    {
+                                        // Check if the element type is "Geography" or "Street"
+                                        if (element.type === "Geography" || element.type === "Street") 
+                                        {
+                                            let address, city, type, latitude, longitude;
+                                            // Extract data based on the element type
+                                            if (element.type === "Geography") 
+                                            {
+                                                address = element.address.municipality;
+                                                city = element.address.municipality;
+                                                type = element.type;
+                                                latitude = element.position.lat;
+                                                longitude = element.position.lon;
+                                            } 
+                                            else if (element.type === "Street") 
+                                            {
+                                                address = element.address.freeformAddress;
+                                                type = element.type;
+                                                city = element.address.municipality;
+                                                latitude = element.position.lat;
+                                                longitude = element.position.lon;
+                                            }
+                                            // Check if address, city, type, latitude, and longitude are not undefined
+                                            if (address && city && type && latitude !== undefined && longitude !== undefined) 
+                                            {
+                                                // Create a unique key using address, city, type, latitude, and longitude
+                                                const key = `${address}_${city}_${type}_${latitude}_${longitude}`;
+                                                // Add to the Map only if it's a unique combination
+                                                if (!uniqueElements.has(key)) 
+                                                {
+                                                    uniqueElements.set(key, { address, city, type, latitude, longitude });
+                                                }
+                                            }
+                                        }
+                                    });
+                                const uniqueElementsArray = Array.from(uniqueElements.values());
+                                const customSort = (a, b) => 
+                                {
+                                    const scoreA = a.address.toLowerCase().includes(store.searched_text.toLowerCase()) ? 1 : 0;
+                                    const scoreB = b.address.toLowerCase().includes(store.searched_text.toLowerCase()) ? 1 : 0;
+                                    if (scoreA !== scoreB) 
+                                    {
+                                        return scoreB - scoreA;
+                                    }
+                                    return a.address.localeCompare(b.address);
+                                };
+                                uniqueElementsArray.sort(customSort);
+                                store.RaccoltaIndirizzi = uniqueElementsArray            
+                                let hintList = document.getElementById('cities');
+                                hintList.innerHTML = '';
+                                store.RaccoltaIndirizzi.forEach(element => 
+                                {
+                                    // Create a new option element
+                                    let option = document.createElement('option');
+                                    option.addEventListener("click", (ev) =>
+                                    {
+                                        this.click_on_hint = true;
+                                    });
+                                    // Set the value and text of the option to the address property
+                                    option.value = element.address;
+                                    option.textContent = element.address;
+                                    // Append the option to the hintList
+                                    hintList.appendChild(option);
+
+                                    if (element.type === "Street") 
+                                    {
+                                        if (element.address === store.searched_text) 
+                                        {
+                                            store.cityQuery = element;
+                                        }
+                                    } 
+                                    else if (element.type === "Geography") 
+                                    {
+                                        if (element.address === store.searched_text) 
+                                        {
+                                            store.cityQuery = element;
+                                        }
+                                    }
+                                });   
+                                console.log("valore di city query: ",store.cityQuery);                         
+                            })
+                            .catch(error => 
+                            {
+                                console.error("Error fetching data:", error);
+                            });
+                }
             },    
+
             calcolatoreLatLon(lat1, lon1, lat2, lon2){
             const R = 6371e3; // metres
     
@@ -228,12 +267,12 @@ import { store } from "../store";
                     </ul>
                 </li>
             </ul>
-            <form v-if="(store.page_name !== 'Search')" class="d-flex" role="search" @submit.prevent="Start_search">
+            <form v-if="(store.page_name !== 'Search')" class="d-flex" role="search" @submit.prevent="ready_for_call()">
                 <input v-model="store.searched_text" autocomplete="off" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" list="cities" @keyup="Searched_hint()">
                 <datalist id="cities">
                   <option v-for="(city, index) in store.all_cities" :key="index" :value="city">{{ city }}</option>
                 </datalist>
-                <button class="btn" type="submit" @click.prevent="Start_search">
+                <button class="btn" type="submit" @click.prevent="ready_for_call()">
                   <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
             </form>
@@ -241,12 +280,12 @@ import { store } from "../store";
     </div>
 </nav>
 <div v-if="(store.page_name == 'Search')" class="container my-3" >
-    <form  class="d-flex w-50 mx-auto" role="search" @submit.prevent="Start_search">
+    <form  class="d-flex w-50 mx-auto" role="search" @submit.prevent="ready_for_call()">
         <input v-model="store.searched_text" autocomplete="off" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" list="cities" @keyup="Searched_hint()">
         <datalist id="cities">
           <option v-for="(city, index) in store.all_cities" :key="index" :value="city">{{ city }}</option>
         </datalist>
-        <button class="btn" type="submit" @click.prevent="Start_search">
+        <button class="btn" type="submit" @click.prevent="ready_for_call()">
           <i class="fa-solid fa-magnifying-glass"></i>
         </button>
     </form>

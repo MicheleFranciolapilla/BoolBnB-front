@@ -174,6 +174,7 @@
                 this.store.api_error.error_index = -1 * (this.store.calls_params.call_type + 1);
                 this.store.api_error.error_msg = "Errore nella chiamata per ottenimento appartamenti";
               });
+            console.log("chiamata axios da ap.vue ultimata");
         }
     }
   }
