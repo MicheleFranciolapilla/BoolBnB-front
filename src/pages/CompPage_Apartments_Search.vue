@@ -52,24 +52,28 @@ import { store } from '../store';
                     ((this.$route.params.city) && (window.location.search.length > 0)))
                 {
                     console.log("hai digitato come il cazzo quindi te ne vai alla home");
+                    this.$router.push({ name: 'home' });
                 }
-                else if (this.$route.params.city)
+                else 
                 {
-                    this.store.city_to_search = this.$route.params.city;
-                    this.store.direct_search_only_city = true;
-                    console.log("solo parametro");
+                    if (this.$route.params.city)
+                    {
+                        this.store.city_to_search = this.$route.params.city;
+                        this.store.direct_search_only_city = true;
+                        console.log("solo parametro");
+                    }
+                    else
+                    {
+                        console.log("solo query");
+                        console.log(this.$route.query.city);
+                        this.store.cityQuery['city'] = this.$route.query.city;
+                        this.store.cityQuery['latitude'] = this.$route.query.lat;
+                        this.store.cityQuery['longitude'] = this.$route.query.long;
+                        this.store.selected_range = this.$route.query.range;
+                        this.store.city_to_search = this.store.cityQuery['city'];
+                    }
+                    this.store.prepare_reactive_call("all");
                 }
-                else
-                {
-                    console.log("solo query");
-                    console.log(this.$route.query.city);
-                    this.store.cityQuery['city'] = this.$route.query.city;
-                    this.store.cityQuery['latitude'] = this.$route.query.lat;
-                    this.store.cityQuery['longitude'] = this.$route.query.long;
-                    this.store.selected_range = this.$route.query.range;
-                    this.store.city_to_search = this.store.cityQuery['city'];
-                }
-                this.store.prepare_reactive_call("all");
             }
         }
         
