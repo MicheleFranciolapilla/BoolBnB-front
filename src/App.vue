@@ -108,6 +108,16 @@
             });
       },
 
+      compact_services()
+      {
+        let result = "";
+        this.store.selected_services.forEach(element => 
+        {
+          result += "-" + element;
+        });
+        return result.substring(1);
+      },
+
       get_apartments()
       {
         this.store.axios_running = true;
@@ -144,7 +154,7 @@
                                   'long'    : this.store.cityQuery['longitude'],
                                   'lat'     : this.store.cityQuery['latitude'],
                                   'range'   : this.store.selected_range,
-                                  'service' : this.store.selected_services
+                                  'service' : this.compact_services()
                                 };
                     }
 

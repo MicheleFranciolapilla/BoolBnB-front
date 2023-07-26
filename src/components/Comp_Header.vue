@@ -31,6 +31,7 @@ import { store } from "../store";
                             this.store.selected_services[j] = change_var;
                         }
                     }
+                console.log(this.store.selected_services);
                 this.ready_for_call(false);
             },
 
