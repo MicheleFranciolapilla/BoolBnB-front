@@ -134,6 +134,7 @@
                                   'filter'  : "all",
                                   'city'    : this.store.city_to_search,
                                 };
+                      this.store.direct_search_only_city = false;
                     }
                     else
                     {

@@ -48,12 +48,12 @@ import { store } from '../store';
             this.store.page_name = "Search";
             if (this.store.calls_params.call_type !== this.store.call_type_array.indexOf('all'))
             {
-                if (((!this.$route.hasOwnProperty('city')) && (window.location.search.length < 1)) ||
-                    ((this.$route.hasOwnProperty('city')) && (window.location.search.length > 0)))
+                if ((!(this.$route.params.city) && (window.location.search.length < 1)) ||
+                    ((this.$route.params.city) && (window.location.search.length > 0)))
                 {
                     console.log("hai digitato come il cazzo quindi te ne vai alla home");
                 }
-                else if (this.$route.hasOwnProperty('city'))
+                else if (this.$route.params.city)
                 {
                     this.store.city_to_search = this.$route.params.city;
                     this.store.direct_search_only_city = true;
