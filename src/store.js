@@ -156,6 +156,15 @@ export const store = reactive(
         max_range         : 25,       
         selected_services:   [], 
         direct_search_only_city : false,
+        nostiMarker : [
+            { position: { lat: 40.7128, lng: -74.0060 }, title: 'New York', link: 'https://www.example.com/newyork' },
+            { position: { lat: 34.0522, lng: -118.2437 }, title: 'Los Angeles', link: 'https://www.example.com/losangeles' },
+            // Aggiungi altri marker 
+        ],
+        nostraMap : {
+            center: { lat: 0, lng: 0 },
+            zoom: 4,
+        },
 
 
 
