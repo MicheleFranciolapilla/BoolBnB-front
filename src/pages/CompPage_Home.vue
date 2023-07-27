@@ -35,10 +35,47 @@
 
 <template>
     <div>
+        <div class="row container mx-auto">
+            <div v-for="(apartment, index) in store.apartments.data " :key='index' class="p-1 col-sm-12 col-md-6 col-xl-4">
+                <router-link :to="{name: 'apartments_show', params: { id: apartment.id, slug:apartment.slug}}" class="text-decoration-none text-black" @click="store.prepare_reactive_call('single',apartment.id)">
+                    <div class=" p-2 my-1">
+                        <div class="overflow-hidden rounded-4 image_container" style="height: 300px;">
+                        <img :src="`http://127.0.0.1:8000/storage/${apartment.cover_img}`" alt="" class="img-box">
+                        <img v-for="(image, indexImg) in apartment.pictures" :key="indexImg" :src="`http://127.0.0.1:8000/storage/${image.picture_url}`" alt="">
+                        <div class="next"><i class="fa-solid fa-circle-chevron-right"></i></div>
+                        <div class="prev"><i class="fa-solid fa-circle-chevron-left"></i></div>
+                        <div class="icon-dot">
+                            <i class="fa-solid fa-circle icon-0" style="font-size: 6px; opacity: 50%;"></i>
+                            <i v-for="(i, index) in apartment.pictures" :key="index" class="fa-solid fa-circle" :class="'icon-' + (index + 1)" style="margin-left: 5px; font-size: 6px; opacity: 50%;"></i>
+                        </div>
 
-        <div>
+                    </div>
+                        <div class="mt-2">                        
+                            <div>
+                                <b>
+                                    {{ apartment.title }}, 
+                                </b>
+                                <span class="ms-2">
+                                    <b>
+                                        <i>
+                                            {{ apartment.city }}
+                                        </i>
+                                    </b>
+                                </span>
+                            </div>
+                            <div>
+                                <i>
+                                    {{ apartment.address }}
+                                </i>
+                            </div>
+                        </div>
+                    </div>
+                </router-link>
+            </div>
+        </div>
+        <div class="mt-3">
             <nav aria-label="Page navigation">
-              <ul class="pagination    ">
+              <ul class="pagination mx-auto" style="max-width: 15%;">
                 <li class="page-item" :class="(this.store.currentpage === 1) ? 'disabled' : ''">
                   <a class="page-link"  @click.prevent="page_update(this.store.currentpage - 1)" href="#" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
@@ -54,39 +91,6 @@
                 </li>
               </ul>
             </nav> 
-        </div>
-
-        <div class="row container mx-auto">
-            <div v-for="(apartment, index) in store.apartments.data " :key='index' class="p-1 col-4">
-                <router-link :to="{name: 'apartments_show', params: { id: apartment.id, slug:apartment.slug}}" class="text-decoration-none text-black" @click="store.prepare_reactive_call('single',apartment.id)">
-                    <div class=" p-2 my-1">
-                        <div class="overflow-hidden rounded-4" style="height: 300px;">
-                            <img :src="`http://127.0.0.1:8000/storage/${apartment.cover_img}`" alt="" class="img-box">
-                            <img v-for="(image, index) in apartment.pictures" :src="`http://127.0.0.1:8000/storage/${image.picture_url}`" alt="">
-                            
-                        </div>
-                        <div class="mt-3">                        
-                            <p>
-                                <b>
-                                    {{ apartment.title }}, 
-                                </b>
-                                <span class="ms-2">
-                                    <b>
-                                        <i>
-                                            {{ apartment.city }}
-                                        </i>
-                                    </b>
-                                </span>
-                            </p>
-                            <p class="mt-0">
-                                <i>
-                                    {{ apartment.address }}
-                                </i>
-                            </p>
-                        </div>
-                    </div>
-                </router-link>
-            </div>
         </div>
     </div>
     <Comp_OnLoading v-if="store.axios_running" 
