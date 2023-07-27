@@ -1,4 +1,8 @@
 // Importazione dei parziali
 @import "./scss_partials/_variables.scss";
 @import "./scss_partials/_mixin.scss";
+@import "./partials/home.scss";
+@import "./partials/show.scss";
+@import "./partials/search.scss";
+@import "./partials/header.scss";
 @import "../../../node_modules/bootstrap/scss/bootstrap.scss";
