@@ -200,10 +200,10 @@ import { store } from "../store";
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <router-link class="nav-link active" aria-current="page" to="/">Home</router-link>
+                    <router-link v-if="store.page_name != 'Home'" class="nav-link active" aria-current="page" to="/">Home</router-link>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Area personali</a>
                     <ul class="dropdown-menu">
                         <li>
                             <a class="dropdown-item" href="http://127.0.0.1:8000/login">Login</a>
@@ -211,12 +211,12 @@ import { store } from "../store";
                         <li>
                             <a class="dropdown-item" href="http://127.0.0.1:8000/register">Registrazione</a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <hr class="dropdown-divider">
                         </li>
                         <li>
                             <a class="dropdown-item" href="#">Profilo</a>
-                        </li>
+                        </li> -->
                     </ul>
                 </li>
             </ul>
