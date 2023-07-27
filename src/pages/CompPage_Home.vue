@@ -40,16 +40,9 @@
                 <router-link :to="{name: 'apartments_show', params: { id: apartment.id, slug:apartment.slug}}" class="text-decoration-none text-black" @click="store.prepare_reactive_call('single',apartment.id)">
                     <div class=" p-2 my-1">
                         <div class="overflow-hidden rounded-4 image_container" style="height: 300px;">
-                        <img :src="`http://127.0.0.1:8000/storage/${apartment.cover_img}`" alt="" class="img-box">
-                        <img v-for="(image, indexImg) in apartment.pictures" :key="indexImg" :src="`http://127.0.0.1:8000/storage/${image.picture_url}`" alt="">
-                        <div class="next"><i class="fa-solid fa-circle-chevron-right"></i></div>
-                        <div class="prev"><i class="fa-solid fa-circle-chevron-left"></i></div>
-                        <div class="icon-dot">
-                            <i class="fa-solid fa-circle icon-0" style="font-size: 6px; opacity: 50%;"></i>
-                            <i v-for="(i, index) in apartment.pictures" :key="index" class="fa-solid fa-circle" :class="'icon-' + (index + 1)" style="margin-left: 5px; font-size: 6px; opacity: 50%;"></i>
+                            <img :src="`http://127.0.0.1:8000/storage/${apartment.cover_img}`" alt="" class="img-box">
+                            <img v-for="(image, index) in apartment.pictures" :src="`http://127.0.0.1:8000/storage/${image.picture_url}`" alt=""> 
                         </div>
-
-                    </div>
                         <div class="mt-2">                        
                             <div>
                                 <b>
