@@ -30,7 +30,7 @@ import { store } from '../store';
                 if ((!(this.$route.params.city) && (window.location.search.length < 1)) ||
                     ((this.$route.params.city) && (window.location.search.length > 0)))
                 {
-                    console.log("hai digitato come il cazzo quindi te ne vai alla home");
+                    console.log("hai digitato ad capocchiam quindi te ne vai alla home");
                     this.$router.push({ name: 'home' });
                 }
                 else 
@@ -54,6 +54,8 @@ import { store } from '../store';
                             this.store.selected_range = this.store.max_range;
                         else if (this.store.selected_range < this.store.min_range)
                                 this.store.selected_range = this.store.min_range;
+                        if (this.$route.query.services)
+                            this.store.selected_services = this.$route.query.services;
                         this.$router.replace({                                
                                                 name: 'apartments_search',
                                                 query: 
@@ -63,6 +65,7 @@ import { store } from '../store';
                                                     lat: store.cityQuery.latitude,
                                                     long: store.cityQuery.longitude,
                                                     range: store.selected_range,
+                                                    services: store.selected_services
                                                 }
                                             });
                         this.store.city_to_search = this.store.cityQuery['city'];
@@ -80,7 +83,11 @@ import { store } from '../store';
                 {
                     apartment.sponsors.forEach( sponsor => 
                     {
-                        
+                        const now = new Date;
+                        const now_time = now.getTime();
+                        console.log("now", now_time);
+                        const expire_date = sponsor.pivot.expire_at;
+                        console.log(expire_date);
                     });
                 }
                 // if (apartment.sponsors.length === 0)
