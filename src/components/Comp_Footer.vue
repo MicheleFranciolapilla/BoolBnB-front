@@ -24,45 +24,49 @@
     <footer>
         <div class="container d-flex justify-content-between align-items-center">
             <section>
-                <div class="">
+                <div class="mt-2">
                     <ul>
-                        <li>Contatti Github</li>
-                        <li>
+                        <li id="paragrafi">Progetto di</li>
+                        <li class="mt-2">
                             <a href="https://github.com/MicheleFranciolapilla">Michele Franciolapilla</a>
                         </li>
-                        <li>                        
+                        <li class="mt-2">                        
                             <a href="https://github.com/LeonardoRinaldi92">Leonardo Rinaldi</a>
                         </li>
-                        <li>
+                        <li class="mt-2">
                             <a href="https://github.com/edoardope">Edoardo Penco</a>
                         </li>
-                        <li>
+                        <li class="mt-2">
                             <a href="https://github.com/RiccardoSignorini">Riccardo Signorini</a>
                         </li>
-                        <li>
+                        <li class="mt-2">
                             <a href="https://github.com/AndreaFerrini">Andrea Ferrini</a>
                         </li>
                     </ul>       
                 </div>
             </section>
             <section>
-                <div class="">
+                <div class="mt-2">
                     <ul>
-                        <li>Norme</li>
-                        <li>Termini</li>
-                        <li>Privacy</li>
-                        <li>Impostazione Cookies</li>
-                        <li>Sicurezza</li>
-                        <li>Licenze</li>
+                        <li class="mt-2" id="paragrafi">Norme</li>
+                        <li class="mt-2">Termini</li>
+                        <li class="mt-2">Privacy</li>
+                        <li class="mt-2">Cookies</li>
+                        <li class="mt-2">Sicurezza</li>
+                        <li class="mt-2">Licenze</li>
                     </ul>
                 </div>
             </section>
         </div>
-        <div class="container d-flex">
-            <img class="img-fluid" src="public\Logo BoolBnB.png" alt="">
-        
+        <div class="container d-flex justify-content-between align-items-center">
+            <div>
+                <img class="img-fluid" src="public\BoolBnB.png" alt="">
+                <span>&#169; BoolBnB 2023</span>
+            </div>
             <div class="registrazione">
-                <a class="btn btn-primary" href="http://127.0.0.1:8000/register">Registrati</a>
+                <button class="btn btn-primary">
+                    <a href="http://127.0.0.1:8000/register">Registrati</a>
+                </button>
             </div>
         </div>
     </footer>
@@ -72,7 +76,33 @@
 <style>
 
 footer {
-    background-color: rgb(24, 22, 22);
+    background-color: rgb(0,85,46);
+    color: white;
+}
+
+li{
+    list-style-type: none;
+    color: rgb(214,222,35);
+}
+
+a{
+    text-decoration: none !important;
+    color: rgb(214,222,35) !important;
+}
+
+
+img{
+    width: 100px;
+    height: 100px;
+}
+
+.btn{
+    color: rgb(208,219,35) !important;
+    border-color: rgb(208,219,35) !important;
+    background-color: rgb(0,85,46) !important;
+}
+
+#paragrafi{
     color: white;
 }
 
