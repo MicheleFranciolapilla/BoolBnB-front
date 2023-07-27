@@ -124,7 +124,7 @@ import axios from "axios";
         <div>
 
             <!-- offcanvas del carosello -->
-            <div v-if="showCarousel" class="modal show d-block" tabindex="-1">
+            <div v-if="showCarousel" class="modal show d-block" tabindex="-1" id="background">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content">
 
@@ -237,6 +237,10 @@ import axios from "axios";
 
 .modal-open {
   overflow: hidden;
+}
+
+#background{
+    background-color: rgba(0, 0, 0, 0.394)!important;
 }
 
 </style>
