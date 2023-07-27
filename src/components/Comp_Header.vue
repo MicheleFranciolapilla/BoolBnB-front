@@ -191,25 +191,25 @@ import { store } from "../store";
 
 <template>
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">BoolB&B</a>
+<nav class="navbar navbar-expand-lg bg-body-tertiary"  style="background-color: rgb(29,116,101)!important;" id="navBarTop">
+    <div class="container-fluid" style="background-color: rgb(29,116,101);">
+        <a class="navbar-brand text-white" href="#">BoolB&B</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse text-white" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <router-link v-if="store.page_name != 'Home'" class="nav-link active" aria-current="page" to="/">Home</router-link>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Area personali</a>
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Area personali</a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a class="dropdown-item" href="http://127.0.0.1:8000/login">Login</a>
+                            <a class="dropdown-item text-white" href="http://127.0.0.1:8000/login">Login</a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="http://127.0.0.1:8000/register">Registrazione</a>
+                            <a class="dropdown-item text-white" href="http://127.0.0.1:8000/register">Registrazione</a>
                         </li>
                         <!-- <li>
                             <hr class="dropdown-divider">
@@ -221,12 +221,12 @@ import { store } from "../store";
                 </li>
             </ul>
             <form v-if="(store.page_name !== 'Search')" class="d-flex" role="search" @submit.prevent="ready_for_call()">
-                <input v-model="store.searched_text" autocomplete="off" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" list="cities" @keyup="Searched_hint()">
+                <input v-model="store.searched_text" autocomplete="off" class="form-control" type="search" placeholder="Cerca un'appartamento..." aria-label="Search" list="cities" @keyup="Searched_hint()" style="width: 300px;">
                 <datalist id="cities">
                   <option v-for="(city, index) in store.all_cities" :key="index" :value="city">{{ city }}</option>
                 </datalist>
                 <button class="btn" type="submit" @click.prevent="ready_for_call()">
-                  <i class="fa-solid fa-magnifying-glass"></i>
+                  <i class="fa-solid fa-magnifying-glass text-white ms-0"></i>
                 </button>
             </form>
         </div>
@@ -234,7 +234,7 @@ import { store } from "../store";
 </nav>
 <div v-if="(store.page_name == 'Search')" class="container my-3" >
     <form  class="d-flex w-50 mx-auto" role="search" @submit.prevent="ready_for_call()">
-        <input v-model="store.searched_text" autocomplete="off" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" list="cities" @keyup="Searched_hint()">
+        <input v-model="store.searched_text" autocomplete="off" class="form-control me-2" type="search" placeholder="Cerca un'appartamento..." aria-label="Search" list="cities" @keyup="Searched_hint()">
         <datalist id="cities">
           <option v-for="(city, index) in store.all_cities" :key="index" :value="city">{{ city }}</option>
         </datalist>

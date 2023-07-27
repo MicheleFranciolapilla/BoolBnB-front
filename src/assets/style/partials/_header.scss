@@ -1,0 +1,34 @@
+
+
+#navBarTop {
+    position: fixed!important;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+}
+
+.show{
+    background-color:  rgb(29,116,101)!important;
+    border:none!important;
+}
+
+.navbar-toggler {
+    color: white!important;
+    border: 0.5px solid rgb(255, 255, 255)!important;
+    z-index: 999999;
+}
+
+.navbar-toggler-icon {
+    color: white!important;
+}
+
+
+
+.dropdown-item:hover {
+    background-color: rgb(23, 94, 82)!important;
+} 
+
+.fa-magnifying-glass:hover{
+    color: rgb(16, 71, 62)!important;
+}
+

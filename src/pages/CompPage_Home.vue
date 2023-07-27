@@ -43,6 +43,7 @@
                             <img :src="`http://127.0.0.1:8000/storage/${apartment.cover_img}`" alt="" class="img-box">
                             <img v-for="(image, index) in apartment.pictures" :src="`http://127.0.0.1:8000/storage/${image.picture_url}`" alt=""> 
                         </div>
+                        
                         <div class="mt-2">                        
                             <div>
                                 <b>
