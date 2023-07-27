@@ -30,7 +30,7 @@ import { store } from '../store';
                 if ((!(this.$route.params.city) && (window.location.search.length < 1)) ||
                     ((this.$route.params.city) && (window.location.search.length > 0)))
                 {
-                    console.log("hai digitato come il cazzo quindi te ne vai alla home");
+                    console.log("hai digitato ad capocchiam quindi te ne vai alla home");
                     this.$router.push({ name: 'home' });
                 }
                 else 
@@ -54,6 +54,8 @@ import { store } from '../store';
                             this.store.selected_range = this.store.max_range;
                         else if (this.store.selected_range < this.store.min_range)
                                 this.store.selected_range = this.store.min_range;
+                        if (this.$route.query.services)
+                            this.store.selected_services = this.$route.query.services;
                         this.$router.replace({                                
                                                 name: 'apartments_search',
                                                 query: 
@@ -63,12 +65,33 @@ import { store } from '../store';
                                                     lat: store.cityQuery.latitude,
                                                     long: store.cityQuery.longitude,
                                                     range: store.selected_range,
+                                                    services: store.selected_services
                                                 }
                                             });
                         this.store.city_to_search = this.store.cityQuery['city'];
                     }
                     this.store.prepare_reactive_call("all");
                 }
+            }
+        },
+        methods:
+        {
+            is_sponsorized(apartment)
+            {
+                let sponsorized = false;
+                if (apartment.sponsors.length !== 0)
+                {
+                    apartment.sponsors.forEach( sponsor => 
+                    {
+                        const expire_date_msec = Date.parse(sponsor.pivot.expire_at);
+                        console.log(expire_date_msec);
+                        const now = new Date();
+                        const now_msec = now.getTime();
+                        console.log(now_msec);
+                        console.log("-------------------------")
+                    });
+                }
+                return sponsorized;
             }
         }
         
@@ -83,7 +106,7 @@ import { store } from '../store';
         <div class="row">
             <div class="col-6 row">
                 <div v-for="(apartment, index) in store.apartments " :key='index' class="p-1 col-6">
-                    <div class=" p-2 my-1 card">
+                    <div class=" p-2 my-1 card" :class="(is_sponsorized(apartment)) ? ('sponsorized') : ('')">
                         <router-link :to="{name: 'apartments_show', params: { id: apartment.id, slug:apartment.slug}}" class="text-decoration-none text-black" @click="store.prepare_reactive_call('single',apartment.id)">
                             <div class="row">
                                 <div class="col-12">
@@ -129,5 +152,8 @@ import { store } from '../store';
 </template>
 
 <style lang="scss">
-
+    .sponsorized
+    {
+        border: 5px solid blue;
+    }
 </style>
