@@ -70,6 +70,25 @@ import { store } from '../store';
                     this.store.prepare_reactive_call("all");
                 }
             }
+        },
+        methods:
+        {
+            is_sponsorized(apartment)
+            {
+                let sponsorized = false;
+                if (apartment.sponsors.length !== 0)
+                {
+                    apartment.sponsors.forEach( sponsor => 
+                    {
+                        
+                    });
+                }
+                // if (apartment.sponsors.length === 0)
+                //     console.log(apartment, " niente");
+                // else
+                //     console.log(apartment, "OK");
+                return sponsorized;
+            }
         }
         
     }
@@ -83,7 +102,7 @@ import { store } from '../store';
         <div class="row">
             <div class="col-6 row">
                 <div v-for="(apartment, index) in store.apartments " :key='index' class="p-1 col-6">
-                    <div class=" p-2 my-1 card">
+                    <div class=" p-2 my-1 card" :class="(is_sponsorized(apartment)) ? ('sponsorized') : ('')">
                         <router-link :to="{name: 'apartments_show', params: { id: apartment.id, slug:apartment.slug}}" class="text-decoration-none text-black" @click="store.prepare_reactive_call('single',apartment.id)">
                             <div class="row">
                                 <div class="col-12">
@@ -129,5 +148,8 @@ import { store } from '../store';
 </template>
 
 <style lang="scss">
-
+    .sponsorized
+    {
+        border: 5px solid blue;
+    }
 </style>
