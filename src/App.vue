@@ -4,6 +4,7 @@
   import Comp_Header from "./components/Comp_Header.vue";
   import Comp_OnLoading from "./components/Comp_OnLoading.vue";
   import Comp_ErrorManager from "./components/Comp_ErrorManager.vue";
+  
   export default
   {
     name        : "App",
@@ -17,7 +18,7 @@
     {
       return  {
                 store,
-                front_url_sent  : false
+                front_url_sent : false
               }
     },
     watch:
