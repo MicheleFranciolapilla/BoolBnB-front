@@ -4,6 +4,8 @@ import MessageForm from "../components/Comp_MessageForm.vue";
 import Comp_OnLoading from "../components/Comp_OnLoading.vue";
 import { store } from '../store';
 import axios from "axios";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
     export default
     {
@@ -17,6 +19,7 @@ import axios from "axios";
             return {
                 store,
                 direct_call : false,
+                showCarousel: false,
             }
         },
         beforeRouteUpdate(to, from, next) 
@@ -52,6 +55,13 @@ import axios from "axios";
                 this.store.prepare_reactive_call('single', this.$route.params.id); 
             }
         },
+        mounted()
+        {
+            this.$nextTick(() => {
+                this.showCarousel = true;
+                this.initCarousel();
+            });
+        },
         methods: 
         {
             condition_to_go()
@@ -62,8 +72,16 @@ import axios from "axios";
                     return true;
                 else
                     return false;
-            }
-        }
+            },
+            initCarousel() 
+            {
+                // Inizializza il carosello solo se l'elemento esiste nel DOM
+                const carouselElement = document.getElementById('carouselExampleFade');
+                if (carouselElement) {
+                    $(carouselElement).carousel();
+                }
+            },
+        },
     }
 </script>
 
@@ -98,6 +116,7 @@ import axios from "axios";
                 </div>
             </div>
         </div>
+
         <div class="row my-2">
             <div class="col-6">
                 <span><b>Stanze:</b> {{ store.one_apartment.number_of_rooms }}</span>
@@ -139,7 +158,31 @@ import axios from "axios";
             <div class="col-6">
                 <MessageForm />
             </div>
+            <!-- CAROSELLO DI TUTTE LE IMMAGINI -->
+            <div id="carouselExampleFade" class="carousel slide carousel-fade">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img :src="`http://127.0.0.1:8000/storage/${store.one_apartment.cover_img}`" class="d-block w-100" alt="">
+                    </div>
+                    <div v-for="(pictures, index) in store.one_apartment.pictures" :key="index" class="carousel-item">
+                        <img :src="`http://127.0.0.1:8000/storage/${pictures.picture_url}`" class="d-block w-100" alt="">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
         </div>
+
+
+        
+
+
     </div>
     <Comp_OnLoading v-else 
         :hg_color = "'white'"
