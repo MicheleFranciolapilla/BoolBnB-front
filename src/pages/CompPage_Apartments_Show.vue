@@ -4,9 +4,6 @@ import MessageForm from "../components/Comp_MessageForm.vue";
 import Comp_OnLoading from "../components/Comp_OnLoading.vue";
 import { store } from '../store';
 import axios from "axios";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-
     export default
     {
         name    : "CompPage_Apartments_Show",
