@@ -233,7 +233,7 @@ import { store } from "../store";
     </div>
 </nav>
 <div v-if="(store.page_name == 'Search')" class="container my-3" >
-    <form  class="d-flex w-50 mx-auto" role="search" @submit.prevent="ready_for_call()">
+    <form  class="d-flex w-50 mx-auto" role="search" @submit.prevent="ready_for_call()" style="margin-top: 100px;">
         <input v-model="store.searched_text" autocomplete="off" class="form-control me-2" type="search" placeholder="Cerca un'appartamento..." aria-label="Search" list="cities" @keyup="Searched_hint()">
         <datalist id="cities">
           <option v-for="(city, index) in store.all_cities" :key="index" :value="city">{{ city }}</option>

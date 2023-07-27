@@ -1,9 +1,15 @@
+//variabili per pagination
 $pagination-active-bg:   rgb(29,116,101);
 $pagination-active-border-color:rgb(23, 94, 82);
 $pagination-color:   rgb(23, 94, 82);
 $pagination-hover-color: rgb(29,116,101);
 $pagination-disabled-bg:  rgba(29, 116, 102, 0.226);
 $pagination-focus-box-shadow: 0 0 0 0.25rem  rgba(29, 116, 102, 0.226);
+
+//variabili per navbar
+
+
+
 
 // Importazione dei parziali
 @import "./scss_partials/_variables.scss";
