@@ -4,6 +4,7 @@
   import Comp_Header from "./components/Comp_Header.vue";
   import Comp_OnLoading from "./components/Comp_OnLoading.vue";
   import Comp_ErrorManager from "./components/Comp_ErrorManager.vue";
+  import Comp_Footer from "./components/Comp_Footer.vue";
   export default
   {
     name        : "App",
@@ -11,7 +12,8 @@
     {
       Comp_Header,
       Comp_OnLoading,
-      Comp_ErrorManager
+      Comp_ErrorManager,
+      Comp_Footer
     },
     data()
     {
@@ -221,6 +223,7 @@
     <Comp_Header/>
     <h1 class="text-center">Welcome to Bool B&B</h1>
     <router-view></router-view>
+    <Comp_Footer/>
   </div>
   
 </template>
