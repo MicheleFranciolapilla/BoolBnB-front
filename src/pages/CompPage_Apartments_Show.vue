@@ -72,10 +72,14 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
                 event.preventDefault();
 
                 this.showCarousel = true;
+
+                document.body.classList.add('modal-open');
             },
             closeCarousel() 
             {
                 this.showCarousel = false;
+
+                document.body.classList.remove('modal-open');
             },
         },
     }
@@ -119,6 +123,52 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
             </div>
         </div>
 
+
+        <div>
+
+            <!-- offcanvas del carosello -->
+            <div v-if="showCarousel" class="modal show d-block" tabindex="-1">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <!-- header -->
+                        <div class="modal-header">
+                            <h5 class="modal-title text-center">{{ store.one_apartment.title }}</h5>
+                            <button type="button" class="btn-close" @click="closeCarousel"></button>
+                        </div>
+
+                        <!-- carosello -->
+                        <div id="carouselExampleFade" class="carousel slide carousel-fade">
+                            <div class="carousel-inner">
+
+                                <!-- immagini -->
+                                <div class="carousel-item active">
+                                    <img :src="`http://127.0.0.1:8000/storage/${store.one_apartment.cover_img}`" class="d-block w-100" alt="">
+                                </div>
+                                <div v-for="(pictures, index) in store.one_apartment.pictures" :key="index" class="carousel-item">
+                                    <img :src="`http://127.0.0.1:8000/storage/${pictures.picture_url}`" class="d-block w-100" alt="">
+                                </div>
+
+                            </div>
+
+                            <!-- button prev/next -->
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
         <div class="row my-2">
             <div class="col-6">
                 <span><b>Stanze:</b> {{ store.one_apartment.number_of_rooms }}</span>
@@ -161,78 +211,10 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
                 <MessageForm />
             </div>
 
-
-
-            <div>
-
-                <!-- Offcanvas del carosello -->
-                <div v-if="showCarousel" class="modal show d-block" tabindex="-1">
-                    <div class="modal-dialog modal-lg modal-dialog-centered">
-                        <div class="modal-content">
-
-                            <!-- Header -->
-                            <div class="modal-header">
-                                <h5 class="modal-title text-center">{{ store.one_apartment.title }}</h5>
-                                <button type="button" class="btn-close" @click="closeCarousel"></button>
-                            </div>
-
-                            <div id="carouselExampleFade" class="carousel slide carousel-fade">
-                                <div class="carousel-inner">
-
-                                    <!-- immagini -->
-                                    <div class="carousel-item active">
-                                        <img :src="`http://127.0.0.1:8000/storage/${store.one_apartment.cover_img}`" class="d-block w-100" alt="">
-                                    </div>
-                                    <div v-for="(pictures, index) in store.one_apartment.pictures" :key="index" class="carousel-item">
-                                        <img :src="`http://127.0.0.1:8000/storage/${pictures.picture_url}`" class="d-block w-100" alt="">
-                                    </div>
-
-                                </div>
-
-                                <!-- button prev/next -->
-                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sfondo oscurato -->
+            <!-- Sfondo oscurato per carosello -->
             <div v-if="showCarousel" class="modal-backdrop show"></div>
 
-
-            <!-- CAROSELLO DI TUTTE LE IMMAGINI -->
-            <!-- <div id="carouselExampleFade" class="carousel slide carousel-fade">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img :src="`http://127.0.0.1:8000/storage/${store.one_apartment.cover_img}`" class="d-block w-100" alt="">
-                    </div>
-                    <div v-for="(pictures, index) in store.one_apartment.pictures" :key="index" class="carousel-item">
-                        <img :src="`http://127.0.0.1:8000/storage/${pictures.picture_url}`" class="d-block w-100" alt="">
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div> -->
         </div>
-
-
-        
-
 
     </div>
     <Comp_OnLoading v-else 
@@ -254,6 +236,10 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 .img-3 {
     border-bottom-right-radius: 30px;
+}
+
+.modal-open {
+  overflow: hidden;
 }
 
 </style>
