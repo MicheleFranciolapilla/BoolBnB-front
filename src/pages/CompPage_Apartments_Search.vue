@@ -83,17 +83,14 @@ import { store } from '../store';
                 {
                     apartment.sponsors.forEach( sponsor => 
                     {
-                        const now = new Date;
-                        const now_time = now.getTime();
-                        console.log("now", now_time);
-                        const expire_date = sponsor.pivot.expire_at;
-                        console.log(expire_date);
+                        const expire_date_msec = Date.parse(sponsor.pivot.expire_at);
+                        console.log(expire_date_msec);
+                        const now = new Date();
+                        const now_msec = now.getTime();
+                        console.log(now_msec);
+                        console.log("-------------------------")
                     });
                 }
-                // if (apartment.sponsors.length === 0)
-                //     console.log(apartment, " niente");
-                // else
-                //     console.log(apartment, "OK");
                 return sponsorized;
             }
         }
