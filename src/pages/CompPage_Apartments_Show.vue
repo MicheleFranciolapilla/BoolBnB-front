@@ -46,6 +46,7 @@ import axios from "axios";
         },
         mounted() 
         {
+                        this.mapConfig()
         },
         created()
         {
@@ -56,16 +57,24 @@ import axios from "axios";
                 this.direct_call = true;
                 this.store.prepare_reactive_call('single', this.$route.params.id); 
             }
+
         },
         methods: 
         {
             //configurazione mappa
             mapConfig() {
-                console.log(store.latitude)
+                
                 store.nostraMap = { 
-                    center: { lat: 41.13, lng: 12.16 },
-                    zoom: 12,
+                    center: { lat: store.latitude, lng:store.longitude },
+                    zoom: 20,
                 };
+                this.creaMarker()
+            },
+            creaMarker(){
+                store.nostiMarker = [
+                    { position: { lat: store.latitude, lng: store.longitude }, title: store.one_apartment.title }
+            // Aggiungi altri marker 
+                ]
             },
             condition_to_go()
             {
@@ -96,7 +105,7 @@ import axios from "axios";
 </script>
 
 <template>
-    <div v-if="!store.axios_running" class="container" @wheel="mapConfig()">
+    <div v-if="!store.axios_running" class="container">
         <h1>
             {{ store.one_apartment.title }}
         </h1>

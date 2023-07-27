@@ -180,6 +180,7 @@
                             this.store.one_apartment = res.data.apartment;
                             store.latitude = parseFloat(res.data.apartment.latitude)
                             store.longitude = parseFloat(res.data.apartment.longitude)
+                            console.log(store.latitude, store.longitude)
                             break;
                   case 2  : //all
                             this.store.apartments = res.data.apartments;
