@@ -8,7 +8,6 @@
             return  {
                         store,
                         fatal_error     : false,
-                        close_delay     : 3000
                     }
         },
         watch:
@@ -24,9 +23,9 @@
         },
         methods:
         {
-            timed_abort()
+            reload_page()
             {
-                setTimeout( () => { window.close(); }, this.close_delay);
+                location.reload();
             }
         }
     }
@@ -47,15 +46,15 @@
                         <h6>{{ store.api_error.error_msg }}</h6>
                         <div v-if="fatal_error">
                             <hr>
-                            <h6>Premere su "Abbandona" per chiudere l'applicazione (chiusura in {{ close_delay / 1000 }} secondi) oppure eseguire il refresh.</h6>
+                            <h6>Premere su "Ricarica la pagina" per eseguire il refresh.</h6>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button v-if="!fatal_error" type="button" class="btn btn-primary" data-bs-dismiss="modal" v-on:click="store.reset_error()">
                             Prosegui
                         </button>
-                        <button v-else type="button" class="btn btn-warning" data-bs-dismiss="modal" v-on:click="timed_abort()">
-                            Abbandona
+                        <button v-else type="button" class="btn btn-warning" data-bs-dismiss="modal" v-on:click="reload_page()">
+                            Ricarica la pagina
                         </button>
                     </div>
                 </div>
