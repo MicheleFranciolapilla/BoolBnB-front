@@ -9,13 +9,13 @@ const GOOGLE_MAPS_API_KEY = 'AIzaSyAAjut9fZcWuTjBKeprMbvu-eVfqLt3Nvc';
 
 let nostriMarker = ref(
     [
-        { position: { lat: parseFloat(store.one_apartment.latitude), lng: parseFloat(store.one_apartment.longitude) }, title: store.one_apartment.title, link: 'https://www.example.com/newyork' },
+        { position: { lat: parseFloat(store.one_apartment.latitude), lng: parseFloat(store.one_apartment.longitude) }, title: store.one_apartment.title },
     ]
 );
 
 let nostraMap = {
             center: { lat:  parseFloat(store.one_apartment.latitude), lng: parseFloat(store.one_apartment.longitude) },
-            zoom: 20,
+            zoom: 16,
         };
 
 
@@ -65,7 +65,10 @@ onMounted(async () => {
         // Aggiungi un listener per l'evento di click sul marker
         marker.addListener('click', () => {
             // Apri il link associato al marker in una nuova finestra
-            window.open(markerData.link, '_blank');
+            if(store.page_name == 'Search'){
+
+                window.open(markerData.link, '_blank');
+            }
         });
     });
 });

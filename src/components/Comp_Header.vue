@@ -249,8 +249,14 @@ import { store } from "../store";
         </button>
     </form>
     <div class="text-center mt-2">
-        <button class="btn btn-success">
-            Filtri Avanzati
+        <button class="btn btn-success" @click="(this.filter == true) ? this.filter = false : this.filter = true">
+            <span v-if="(!this.filter)">
+                Mostra Filtri Avanzati
+            </span>
+            <span v-else>
+                Nascondi Filtri Avanzati
+
+            </span>
         </button>
     </div>
     <div v-if="(this.filter)">
