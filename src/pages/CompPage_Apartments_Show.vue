@@ -258,7 +258,7 @@ import axios from "axios";
                 </div>
                 
 
-                <div class="offcanvas offcanvas-end mt-5" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
+                <div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
 
                     <MessageForm/>
 
