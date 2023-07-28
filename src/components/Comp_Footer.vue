@@ -57,6 +57,19 @@
                     </ul>
                 </div>
             </section>
+            <section>
+                <div class="mt-2">
+                    <ul>
+                        <li class="mt-2 text-center" id="paragrafi">Partner</li>
+                        <li>
+                            <img src="public\TomTom.png" alt="" id="logo-partner1">
+                        </li>
+                        <li>
+                            <img src="public\braintree-logo-black.png" alt="" id="logo-partner2">
+                        </li>
+                    </ul>
+                </div>
+            </section>
         </div>
         <div class="container d-flex justify-content-between align-items-center">
             <div>
@@ -64,7 +77,7 @@
                 <span>&#169; BoolBnB 2023</span>
             </div>
             <div class="registrazione">
-                <button class="btn btn-primary">
+                <button class="btn btn-primary" id="footer-button">
                     <a href="http://127.0.0.1:8000/register">Registrati</a>
                 </button>
             </div>
@@ -80,23 +93,33 @@ footer {
     color: white;
 }
 
-li{
+footer li{
     list-style-type: none;
     color: rgb(214,222,35);
 }
 
-a{
+footer a{
     text-decoration: none !important;
     color: rgb(214,222,35) !important;
 }
 
 
-img{
+footer img{
     width: 100px;
     height: 100px;
 }
 
-.btn{
+#logo-partner1{
+    width: 250px;
+    height: 100px;
+}
+
+#logo-partner2{
+    width: 250px;
+    height: 50px;
+}
+
+#footer-button{
     color: rgb(208,219,35) !important;
     border-color: rgb(208,219,35) !important;
     background-color: rgb(0,85,46) !important;
