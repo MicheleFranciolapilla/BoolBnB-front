@@ -71,12 +71,41 @@ import axios from "axios";
                 this.showCarousel = true;
 
                 document.body.classList.add('modal-open');
+
+                document.addEventListener('click', this.handleDocumentMouseClick.bind(this));
+            },
+            handleDocumentMouseClick(event) 
+            {
+                const carouselElement = document.getElementById('carouselExampleFade');
+                const overlayElement = document.querySelector('.overlay');
+
+                if (overlayElement && !carouselElement.contains(event.target) && !overlayElement.contains(event.target)) 
+                {
+                    this.closeCarousel();
+                }
+            },
+            handleCarouselClick(event) 
+            {
+                const carouselElement = document.getElementById('carouselExampleFade');
+                const overlayElement = document.querySelector('.overlay');
+
+                if (!carouselElement.contains(event.target) && !overlayElement.contains(event.target)) 
+                {
+                    this.closeCarousel();
+                }
             },
             closeCarousel() 
             {
                 this.showCarousel = false;
 
                 document.body.classList.remove('modal-open');
+
+                document.removeEventListener('click', this.handleDocumentMouseClick);
+            },
+            
+            handleMouseDown(event) 
+            {
+                event.stopPropagation();
             },
         },
     }
@@ -100,7 +129,7 @@ import axios from "axios";
         <div class="row">
             <div class="col-6 p-2">
                 <div class="overflow-hidden box-image-sx" style="height: 100%; max-height: 500px;">
-                    <a href="#" @click="openCarousel">
+                    <a href="#" @click.stop="openCarousel">
                         <img :src="`http://127.0.0.1:8000/storage/${store.one_apartment.cover_img}`" alt="" class="img-box">    
                     </a>
                     
@@ -110,7 +139,7 @@ import axios from "axios";
                 <div class="row">
                     <div v-for="(pictures, index) in store.one_apartment.pictures" :key="index" class="col-6 p-2">
                         <div class="overflow-hidden box-image-dx" style="height: 100%; max-height: 240px;">
-                            <a href="#" @click="openCarousel">
+                            <a href="#" @click.stop="openCarousel">
                                 <img :src="`http://127.0.0.1:8000/storage/${pictures.picture_url}`" alt="" :class="`img-box img-${index}`">    
                             </a>
                             
@@ -124,25 +153,27 @@ import axios from "axios";
         <div>
 
             <!-- offcanvas del carosello -->
-            <div v-if="showCarousel" class="modal show d-block" tabindex="-1" id="background">
+            <div v-if="showCarousel" class="modal show d-block background" tabindex="-1" @click="handleCarouselClick">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content">
 
                         <!-- header -->
-                        <div class="modal-header">
+                        <!-- <div class="modal-header">
                             <h5 class="modal-title text-center">{{ store.one_apartment.title }}</h5>
                             <button type="button" class="btn-close" @click="closeCarousel"></button>
-                        </div>
+                        </div> -->
 
                         <!-- carosello -->
                         <div id="carouselExampleFade" class="carousel slide carousel-fade">
                             <div class="carousel-inner">
 
                                 <!-- immagini -->
-                                <div class="carousel-item active">
+                                <div class="carousel-item active carousel-image-container">
+                                    <h5 class="carousel-title">{{ store.one_apartment.title }}</h5>
                                     <img :src="`http://127.0.0.1:8000/storage/${store.one_apartment.cover_img}`" class="d-block w-100" alt="">
                                 </div>
-                                <div v-for="(pictures, index) in store.one_apartment.pictures" :key="index" class="carousel-item">
+                                <div v-for="(pictures, index) in store.one_apartment.pictures" :key="index" class="carousel-item carousel-image-container">
+                                    <h5 class="carousel-title">{{ store.one_apartment.title }}</h5>
                                     <img :src="`http://127.0.0.1:8000/storage/${pictures.picture_url}`" class="d-block w-100" alt="">
                                 </div>
 
@@ -209,7 +240,10 @@ import axios from "axios";
             </div>
 
             <!-- Sfondo oscurato per carosello -->
-            <div v-if="showCarousel" class="modal-backdrop show"></div>
+            <!-- <div v-if="showCarousel" class="modal-backdrop show"></div> -->
+
+            <!-- Overlay -->
+            <div v-if="showCarousel" class="overlay" @click="closeCarousel" @mousedown="handleMouseDown"></div>
 
         </div>
 
@@ -239,8 +273,35 @@ import axios from "axios";
   overflow: hidden;
 }
 
-#background{
+.background{
     background-color: rgba(0, 0, 0, 0.394)!important;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+}
+
+.overlay.active {
+    display: block;
+}
+
+.carousel-image-container {
+    position: relative;
+
+    .carousel-title {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        color: #fff;
+        // font-size: 1.5rem;
+    }
 }
 
 </style>
