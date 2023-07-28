@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import CompPage_Home from "./pages/CompPage_Home.vue";
 import CompPage_Apartments_Search from "./pages/CompPage_Apartments_Search.vue";
 import CompPage_Apartments_Show from "./pages/CompPage_Apartments_Show.vue";
+import CompPage_Map from "./pages/CompPage_Map.vue";
 
 const router = createRouter(
     {
@@ -36,6 +37,14 @@ const router = createRouter(
                                                 document.title  = to.meta.page_title + to.params.slug.replaceAll("-", " ");
                                                 next();
                                             }
+                        },
+                        {
+                            path        :   '/map', 
+                            name        :   'map',
+                            component   :   CompPage_Map,
+                            meta        :   {
+                                                page_title  :   "map"  
+                                            },
                         }
                     ] 
       });

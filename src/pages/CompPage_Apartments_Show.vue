@@ -4,7 +4,6 @@ import MessageForm from "../components/Comp_MessageForm.vue";
 import Comp_OnLoading from "../components/Comp_OnLoading.vue";
 import { store } from '../store';
 import axios from "axios";
-
     export default
     {
         name    : "CompPage_Apartments_Show",
@@ -17,6 +16,7 @@ import axios from "axios";
             return {
                 store,
                 direct_call : false,
+                showCarousel: false,
             }
         },
         beforeRouteUpdate(to, from, next) 
@@ -62,8 +62,23 @@ import axios from "axios";
                     return true;
                 else
                     return false;
-            }
-        }
+            },
+            openCarousel(event) 
+            {
+                // evita di cambiare URL
+                event.preventDefault();
+
+                this.showCarousel = true;
+
+                document.body.classList.add('modal-open');
+            },
+            closeCarousel() 
+            {
+                this.showCarousel = false;
+
+                document.body.classList.remove('modal-open');
+            },
+        },
     }
 </script>
 
@@ -85,19 +100,72 @@ import axios from "axios";
         <div class="row">
             <div class="col-6 p-2">
                 <div class="overflow-hidden box-image-sx" style="height: 100%; max-height: 500px;">
-                    <img :src="`http://127.0.0.1:8000/storage/${store.one_apartment.cover_img}`" alt="" class="img-box">
+                    <a href="#" @click="openCarousel">
+                        <img :src="`http://127.0.0.1:8000/storage/${store.one_apartment.cover_img}`" alt="" class="img-box">    
+                    </a>
+                    
                 </div>
             </div>
             <div class="col-6">
                 <div class="row">
                     <div v-for="(pictures, index) in store.one_apartment.pictures" :key="index" class="col-6 p-2">
                         <div class="overflow-hidden box-image-dx" style="height: 100%; max-height: 240px;">
-                            <img :src="`http://127.0.0.1:8000/storage/${pictures.picture_url}`" alt="" :class="`img-box img-${index}`">
+                            <a href="#" @click="openCarousel">
+                                <img :src="`http://127.0.0.1:8000/storage/${pictures.picture_url}`" alt="" :class="`img-box img-${index}`">    
+                            </a>
+                            
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
+        <div>
+
+            <!-- offcanvas del carosello -->
+            <div v-if="showCarousel" class="modal show d-block" tabindex="-1" id="background">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <!-- header -->
+                        <div class="modal-header">
+                            <h5 class="modal-title text-center">{{ store.one_apartment.title }}</h5>
+                            <button type="button" class="btn-close" @click="closeCarousel"></button>
+                        </div>
+
+                        <!-- carosello -->
+                        <div id="carouselExampleFade" class="carousel slide carousel-fade">
+                            <div class="carousel-inner">
+
+                                <!-- immagini -->
+                                <div class="carousel-item active">
+                                    <img :src="`http://127.0.0.1:8000/storage/${store.one_apartment.cover_img}`" class="d-block w-100" alt="">
+                                </div>
+                                <div v-for="(pictures, index) in store.one_apartment.pictures" :key="index" class="carousel-item">
+                                    <img :src="`http://127.0.0.1:8000/storage/${pictures.picture_url}`" class="d-block w-100" alt="">
+                                </div>
+
+                            </div>
+
+                            <!-- button prev/next -->
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
         <div class="row my-2">
             <div class="col-6">
                 <span><b>Stanze:</b> {{ store.one_apartment.number_of_rooms }}</span>
@@ -139,7 +207,12 @@ import axios from "axios";
             <div class="col-6">
                 <MessageForm />
             </div>
+
+            <!-- Sfondo oscurato per carosello -->
+            <div v-if="showCarousel" class="modal-backdrop show"></div>
+
         </div>
+
     </div>
     <Comp_OnLoading v-else 
         :hg_color = "'white'"
@@ -160,6 +233,14 @@ import axios from "axios";
 
 .img-3 {
     border-bottom-right-radius: 30px;
+}
+
+.modal-open {
+  overflow: hidden;
+}
+
+#background{
+    background-color: rgba(0, 0, 0, 0.394)!important;
 }
 
 </style>
