@@ -120,16 +120,10 @@ import axios from "axios";
 
 <template>
     
-
-
-    <!-- <div class="offcanvas-header text-white">
-        <h5 class="offcanvas-title" id="staticBackdropLabel">Offcanvas</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div> -->
     <div class="offcanvas-body">
-        <div class="card p-4">
+        <div class="p-4">
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            <h4 class="text-center py-2">Contatta l'Host!</h4>
+            <h4 class="text-center py-2 text-white">Contatta l'Host!</h4>
 
             <form action="http://127.0.0.1:8000/api/messages" method="POST" class="row g-3">
 
@@ -138,35 +132,35 @@ import axios from "axios";
 
                 <!-- NOME -->
                 <div class="col-12">
-                    <label for="name" class="form-label">Nome:</label>
+                    <label for="name" class="form-label text-white">Nome:</label>
                     <input type="text" :class="this.nome" class="form-control" id="name" placeholder="Mario" name="nome" v-model="this.mess_name">
                     <span :class="this.nome == 'is-invalid' ? '' : 'd-none'" class="text-danger">Inserisci un nome</span>
                 </div>
 
                 <!-- COGNOME -->
                 <div class="col-12">
-                    <label for="surname" class="form-label">Cognome:</label>
+                    <label for="surname" class="form-label text-white">Cognome:</label>
                     <input type="text" :class="this.cognome" class="form-control" id="surname" placeholder="Rossi" name="cognome" v-model="this.mess_surname">
                     <span :class="this.cognome == 'is-invalid' ? '' : 'd-none'" class="text-danger">Inserisci un cognome</span>
                 </div>
 
                 <!-- EMAIL -->
                 <div class="col-12">
-                    <label for="email" class="form-label">Email:</label>
+                    <label for="email" class="form-label text-white">Email:</label>
                     <input type="email" :class="this.email" class="form-control" id="email" placeholder="mariorossi@gmail.com" name="email" v-model="this.mess_email">
                     <span :class="this.email == 'is-invalid' ? '' : 'd-none'" class="text-danger">Inserisci una email valida</span>
                 </div>
 
                 <!-- MESSAGGIO -->
                 <div class="col-12">
-                    <label for="email_body" class="form-label">Messaggio:</label>
+                    <label for="email_body" class="form-label text-white">Messaggio:</label>
                     <textarea id="email_body" :class="this.testo" name="email_body" rows="4" cols="50" class="form-control" placeholder="Scrivi..." v-model="this.mess_body"></textarea>
                     <span :class="this.testo == 'is-invalid' ? '' : 'd-none'" class="text-danger">Inserisci del testo</span>
                 </div>
 
                 <!-- INVIO MESSAGGIO -->
                 <div class="col-12 text-center py-2">
-                    <button type="submit" class="btn btn-success" @click.prevent="compose_params()">Invia messaggio</button>
+                    <button type="submit" class="btn btn-light" @click.prevent="compose_params()">Invia messaggio</button>
                 </div>
                             
                             <!-- <label for="name">Name:</label>
@@ -185,14 +179,19 @@ import axios from "axios";
             </form>
 
             <!-- MESSAGGIO AUTOMATICO INVIO MESSAGGIO -->
-            <div class="alert alert-warning alert-dismissible fade show m-3 text-white" role="alert" v-if="this.msg_response">
-                <strong>Messaggio inviato correttamente!</strong>
+            <div id="background" class="alert alert-warning alert-dismissible fade show m-3 text-black" role="alert" v-if="this.msg_response">
+                <span>Messaggio inviato correttamente!</span>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" @click="(this.msg_response = '' )"></button>
             </div>
         </div>
     </div>
+    
 </template>
 
 <style scoped lang="scss">
-
+    #background
+    {
+        background-color: white!important;
+        border: 3px solid red!important;
+    }
 </style>
