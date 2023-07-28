@@ -236,7 +236,7 @@
     <h1 class="text-center">Welcome to Bool B&B</h1>
   </div>
     <router-view></router-view>
-    <Comp_Footer/>
+    <Comp_Footer v-if="store.page_name !== '404'" />
   </div>
   
 </template>
