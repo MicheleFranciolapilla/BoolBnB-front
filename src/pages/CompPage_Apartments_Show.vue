@@ -2,6 +2,7 @@
 import { router } from '../router';
 import MessageForm from "../components/Comp_MessageForm.vue";
 import Comp_OnLoading from "../components/Comp_OnLoading.vue";
+import Comp_Map from "../components/Comp_Map.vue";
 import { store } from '../store';
 import axios from "axios";
     export default
@@ -9,7 +10,8 @@ import axios from "axios";
         name    : "CompPage_Apartments_Show",
         components : {
             MessageForm,
-            Comp_OnLoading
+            Comp_OnLoading,
+            Comp_Map,
         },
         data()
         {
@@ -42,6 +44,9 @@ import axios from "axios";
                 }
             }
         },
+        mounted() 
+        {
+        },
         created()
         {
             store.page_name = "Show";
@@ -51,9 +56,11 @@ import axios from "axios";
                 this.direct_call = true;
                 this.store.prepare_reactive_call('single', this.$route.params.id); 
             }
+
         },
         methods: 
         {
+            //configurazione mappa
             condition_to_go()
             {
                 if (Object.keys(this.store.one_apartment).length === 0)
@@ -212,6 +219,7 @@ import axios from "axios";
             <div v-if="showCarousel" class="modal-backdrop show"></div>
 
         </div>
+        <Comp_Map />
 
     </div>
     <Comp_OnLoading v-else 
