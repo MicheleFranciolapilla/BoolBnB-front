@@ -120,9 +120,28 @@ import axios from "axios";
 
 <template>
     <div v-if="!store.axios_running" class="container">
-        <h1>
-            {{ store.one_apartment.title }}
-        </h1>
+        <div class="d-flex justify-content-between mt-2 align-items-center">
+            <h1>
+                {{ store.one_apartment.title }}
+            </h1>    
+            <div>
+                <div class="text-center">
+                    <!-- btn per form msg -->
+                    <button class="btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
+                    Contatta l'Host!
+                    </button>    
+                </div>
+                
+
+                <div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel" style="width: 35vw;">
+
+                    <MessageForm/>
+
+                </div>
+            </div>    
+        </div>
+        
+        
         <p class="mt-3">
             <i>
                 {{store.one_apartment.address  }}
@@ -216,10 +235,12 @@ import axios from "axios";
 
         <hr>
 
-        <!-- mappa -->
-        <div style="height: 30vh;">
-            <Comp_Map />
-        </div>
+        <!-- descrizione apt -->
+        <p class="text-center">
+            <i>
+                "{{ store.one_apartment.description }}"
+            </i>
+        </p>
 
         <hr>
 
@@ -242,33 +263,15 @@ import axios from "axios";
             </div>
 
             <div class="col-6 my-3">
-
-                <!-- descrizione apt -->
-                <p class="text-center">
-                    <i>
-                        "{{ store.one_apartment.description }}"
-                    </i>
-                </p>
-
-                <div class="text-center">
-                    <!-- btn per form msg -->
-                    <button class="btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
-                    Contatta l'Host!
-                    </button>    
-                </div>
-                
-
-                <div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
-
-                    <MessageForm/>
-
+                 <!-- mappa -->
+                <div style="height: 50vh;">
+                    <Comp_Map />
                 </div>
             </div>
 
             <!-- Overlay -->
             <div v-if="showCarousel" class="overlay" @click="closeCarousel" @mousedown="handleMouseDown"></div>
-            
-            
+
         </div>
 
 
