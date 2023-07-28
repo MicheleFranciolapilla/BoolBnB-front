@@ -4,6 +4,7 @@ import CompPage_Home from "./pages/CompPage_Home.vue";
 import CompPage_Apartments_Search from "./pages/CompPage_Apartments_Search.vue";
 import CompPage_Apartments_Show from "./pages/CompPage_Apartments_Show.vue";
 import CompPage_Map from "./pages/CompPage_Map.vue";
+import CompPage_404 from "./pages/CompPage_404.vue";
 
 const router = createRouter(
     {
@@ -45,6 +46,14 @@ const router = createRouter(
                             meta        :   {
                                                 page_title  :   "map"  
                                             },
+                        },
+                        {
+                            path        :   '/not-found-404',
+                            name        :   'not-found',
+                            component   :   CompPage_404,
+                            meta        :   {
+                                                page_title : 'BoolB&B | 404'
+                                            }
                         }
                     ] 
       });

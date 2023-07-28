@@ -189,6 +189,8 @@
                 // La seguente assegnazione di errore viene implementata per poter distinguere il tipo di richiesta axios che ha prodotto l'errore specifico. Inoltre l'aggiunta del valore (1) al call_type dipende dal fatto che il valore (0) è già occupato dalla condizione di mancanza di errore
                 this.store.api_error.error_index = this.store.calls_params.call_type + 1;
                 this.store.api_error.error_msg = "Nessun appartamento con le caratteristiche richieste";
+                if (this.store.api_error.error_index !== 1)
+                  this.$router.push({ name : 'not-found' });
               }
               this.store.axios_running = false;
             })
@@ -196,8 +198,14 @@
               {
                 this.store.api_error.error_index = -1 * (this.store.calls_params.call_type + 1);
                 this.store.api_error.error_msg = "Errore nella chiamata per ottenimento appartamenti";
+                console.log("errore generale");
+                this.$router.push({ name : 'not-found' });
               });
             console.log("chiamata axios da ap.vue ultimata");
+        },
+        go_to_pages()
+        {
+          return (this.store.api_error.error_index !== -100);
         }
     }
   }
@@ -215,11 +223,13 @@
   />
 
   <div 
-    v-else-if="((!store.just_started) && (store.api_error.error_index == 0))" 
+    v-else-if="((!store.just_started) && (go_to_pages()))" 
     id="front_end"
   >
-    <Comp_Header/>
+  <div v-if="store.page_name !== '404'">
+    <Comp_Header />
     <h1 class="text-center">Welcome to Bool B&B</h1>
+  </div>
     <router-view></router-view>
   </div>
   
