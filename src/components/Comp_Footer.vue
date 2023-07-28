@@ -89,6 +89,8 @@
         <div class="container d-flex justify-content-between align-items-center">
             <div>
                 <img src="\BoolBnB.png" alt="">
+            </div>
+            <div>
                 <span>&#169; BoolBnB 2023</span>
             </div>
             <div class="registrazione">
@@ -120,7 +122,7 @@ footer a{
 
 
 footer img{
-    width: 50%;
+    width: 100%;
     height: 60px;
 }
 
@@ -153,6 +155,39 @@ footer hr{
 
 #paragrafi{
     color: white;
+}
+
+/*  */
+/* MEDIA */
+/*  */
+/* Dispositivo mobile */
+@media only screen and (max-width: 425px){
+
+    #logo-partner1{
+        width: 60%;
+        height: 60%;
+    }
+
+    #logo-partner2{
+        width: 60%;
+        height: 90%;
+    }
+
+}
+
+/* tablet */
+@media only screen and (min-width: 768px) {
+
+    #logo-partner1{
+        width: 100%;
+        height: 100%;
+    }
+
+    #logo-partner2{
+        width: 100%;
+        height: 100%;
+    }
+
 }
 
 </style>
