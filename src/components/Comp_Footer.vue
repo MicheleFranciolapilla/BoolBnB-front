@@ -114,7 +114,7 @@ footer a{
 
 
 footer img{
-    width: 100px;
+    width: 50%;
     height: 60px;
 }
 
@@ -123,13 +123,11 @@ footer hr{
 }
 
 #logo-partner1{
-    width: 250px;
-    height: 65px;
+    width: 50%;
 }
 
 #logo-partner2{
-    width: 250px;
-    height: 35px;
+    width: 60%;
 }
 
 #footer-button{
@@ -143,9 +141,10 @@ footer hr{
 }
 
 #footer-button a:hover{
-    color: rgb(29,116,101);
-    border-color: rgb(29,116,101);
+    color: rgb(3,97,57) !important;
+    border-color: rgb(3,97,57) !important;
 }
+
 #paragrafi{
     color: white;
 }
