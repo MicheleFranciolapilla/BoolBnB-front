@@ -164,12 +164,6 @@ import axios from "axios";
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content">
 
-                        <!-- header -->
-                        <!-- <div class="modal-header">
-                            <h5 class="modal-title text-center">{{ store.one_apartment.title }}</h5>
-                            <button type="button" class="btn-close" @click="closeCarousel"></button>
-                        </div> -->
-
                         <!-- carosello -->
                         <div id="carouselExampleFade" class="carousel slide carousel-fade">
                             <div class="carousel-inner">
