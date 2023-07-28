@@ -80,6 +80,7 @@ import Comp_Map from '../components/Comp_Map.vue';
         {
             is_sponsorized(apartment)
             {
+                let sponsorized = false;
                 if (apartment.sponsors.length !== 0)
                 {
                     apartment.sponsors.forEach( sponsor => 
@@ -106,7 +107,7 @@ import Comp_Map from '../components/Comp_Map.vue';
                         if (now_it_msec < expire_date_msec)
                         {
                             console.log("SPONSOR ATTIVO");
-                            return true;
+                            sponsorized = true;
                         }
                         else
                             console.log("SPONSOR SCADUTO");
@@ -114,7 +115,7 @@ import Comp_Map from '../components/Comp_Map.vue';
                         console.log("");
                     });
                 }
-                return false;
+                return sponsorized;
             }
         }
         
@@ -132,6 +133,12 @@ import Comp_Map from '../components/Comp_Map.vue';
             <div class="row pb-2" >
                 <div class="row box-sx px-3 col-5">
                     <div v-for="(apartment, index) in store.apartments " :key='index' class="px-1 col-6 mb-2 ">
+=======
+        <div class="row">
+            <div class="col-6 row">
+                <div v-for="(apartment, index) in store.apartments " :key='index' class="p-1 col-6">
+                    <div class="p-2 my-1 card" :class=" is_sponsorized(apartment) ? ('sponsorized') : ('')  ">
+>>>>>>> Gestione-errori-axios
                         <router-link :to="{name: 'apartments_show', params: { id: apartment.id, slug:apartment.slug}}" class="text-decoration-none text-black" @click="store.prepare_reactive_call('single',apartment.id)">
                             <div class="w-100 card p-1">
                                 <div class="px-1" style="height: 40px; line-height: 35px;">
