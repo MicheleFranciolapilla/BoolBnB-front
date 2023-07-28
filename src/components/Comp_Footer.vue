@@ -29,54 +29,57 @@
                             <ul>
                                 <li class="mt-1" id="paragrafi">Informazioni</li>
                             </ul>
-                        <div class="d-flex">
-                            <ul class="flex-column align-items-center">
-                                <li class="mt-1">
-                                    <a href="">Chi Siamo</a>
-                                </li>
-                                <li class="mt-1"></li>
-                                <li class="mt-1">Lavora con noi</li>
-                                <li class="mt-1">Marchio</li>
-                            </ul>
-                            <ul class="flex-column align-items-center">
-                                <li class="mt-1">Sede</li>
-                                <li class="mt-1">Assistenza</li>
-                            </ul>       
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <ul class="flex-column align-items-center">
+                                    <li class="mt-1">
+                                        <a href="">Chi Siamo</a>
+                                    </li>
+                                    <li class="mt-1"></li>
+                                    <li class="mt-1">Lavora con noi</li>
+                                    <li class="mt-1">Marchio</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <ul class="flex-column align-items-center">
+                                    <li class="mt-1">Sede</li>
+                                    <li class="mt-1">Assistenza</li>
+                                </ul>       
+                            </div>
                         </div>
                     </div>
                     <div class="col-6">
                             <ul>
                                 <li class="mt-1" id="paragrafi">Norme</li>
                             </ul>
-                        <div class="d-flex">
-                            <ul class="flex-column align-items-center">
-                                <li class="mt-1"> Privacy</li>
-                                <li class="mt-1">Termini</li>
-                                <li class="mt-1">Sicurezza</li>
-                            </ul>
-                            <ul class="flex-column align-items-center">
-                                <li class="mt-1">Licenze</li>
-                                <li class="mt-1">Cookie</li>
-                                <li class="mt-1">Piani</li>
-                            </ul>       
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <ul class="flex-column align-items-center">
+                                    <li class="mt-1"> Privacy</li>
+                                    <li class="mt-1">Termini</li>
+                                    <li class="mt-1">Sicurezza</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <ul class="flex-column align-items-center">
+                                    <li class="mt-1">Licenze</li>
+                                    <li class="mt-1">Cookie</li>
+                                    <li class="mt-1">Piani</li>
+                                </ul>       
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row col-12 col-md-3">
-                    <section>
-                        <div class="mt-2">
-                        
-                            <ul>
-                                <li class="mt-1 text-center" id="paragrafi">Partner</li>
-                                <li>
-                                    <img src="\TomTom.png" alt="" id="logo-partner1">
-                                </li>
-                                <li>
-                                    <img src="\braintree-logo-black.png" alt="" id="logo-partner2">
-                                </li>
-                            </ul>
+                <div class="row col-12 col-md-3 mx-auto">
+                    <div class="row">
+                        <span class="mt-1" id="paragrafi">Partner</span>
+                        <div class="col-12">
+                            <img src="\TomTom.png" alt=""  id="logo-partner1">
                         </div>
-                    </section>
+                        <div class="col-12">
+                            <img src="\braintree-logo-black.png" alt="" id="logo-partner2">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -126,11 +129,11 @@ footer hr{
 }
 
 #logo-partner1{
-    width: 50%;
+    width: 70%;
 }
 
 #logo-partner2{
-    width: 60%;
+    width: 70%;
 }
 
 #footer-button{
