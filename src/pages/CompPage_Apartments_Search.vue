@@ -126,23 +126,22 @@ import Comp_Map from '../components/Comp_Map.vue';
     
     
     <div v-if="!store.axios_running" class="row mx-auto">
-        <div class="row">
-            <div class="col-6 row">
-                <div v-for="(apartment, index) in store.apartments " :key='index' class="p-1 col-6">
-                    <div class="p-2 my-1 card">
+        <div class="container">
+
+            <div class="row pb-2">
+                <div class="col-5 row box-sx ">
+                    <div v-for="(apartment, index) in store.apartments " :key='index' class="col-6 p-0">
                         <router-link :to="{name: 'apartments_show', params: { id: apartment.id, slug:apartment.slug}}" class="text-decoration-none text-black" @click="store.prepare_reactive_call('single',apartment.id)">
-                            <div class="row">
-                                <div class="col-12">
-                                    <p class="text-end">
-                                        <i>
+                            <div class="w-100 card">
+                                <div class="text-end">
+                                    <i>
                                         Distanza : {{ apartment.distance }}Km
-                                    </i></p>
-                                    <div class="overflow-hidden rounded-4" v-bind:class="{ 'sponsorized' : is_sponsorized(apartment) }" style="height: 150px;">
-                                        <img :src="`http://127.0.0.1:8000/storage/${apartment.cover_img}`" alt="" class="img-box"  style="width: 100%;">
-                                    </div>
+                                    </i>
                                 </div>
-                                <div>                        
-                                    <p>
+                                <div class="overflow-hidden rounded-4" v-bind:class="{ 'sponsorized' : is_sponsorized(apartment) }" style="height: 150px;">
+                                    <img :src="`http://127.0.0.1:8000/storage/${apartment.cover_img}`" alt="" class="img-box"  style="width: 100%;">
+                                </div>
+                                    <div>                        
                                         <b>
                                             {{ apartment.title }}, 
                                         </b>
@@ -153,20 +152,19 @@ import Comp_Map from '../components/Comp_Map.vue';
                                                 </i>
                                             </b>
                                         </span>
-                                    </p>
-                                    <p class="mt-0">
-                                        <i>
-                                            {{ apartment.address }}
-                                        </i>
-                                    </p>
+                                        <div class="mt-0">
+                                            <i>
+                                                {{ apartment.address }}
+                                            </i>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
                         </router-link>
                     </div>
                 </div>
-            </div>
-            <div class="col-6">
-                <Comp_Map/>
+                <div class="col-7 px-0 ms-3" >
+                    <Comp_Map/>
+                </div>
             </div>
         </div>
     </div>
@@ -182,4 +180,13 @@ import Comp_Map from '../components/Comp_Map.vue';
     {
         border: 5px solid blue !important;
     }
+
+    .box-sx {
+        height: 100%;
+        overflow-y: scroll;
+        max-height: 80vh;
+    }
+    .box-sx::-webkit-scrollbar{
+  display: none;
+}
 </style>

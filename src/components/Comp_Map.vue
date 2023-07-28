@@ -30,8 +30,8 @@ onMounted(async () => {
     console.log(store.apartments)
     if(store.page_name == 'Search'){
         nostraMap = {
-            center: { lat:  parseFloat(store.cityQuery.latitude), lng: parseFloat(store.cityQuery.longitude) },
-            zoom: 14,
+            center: { lat:  parseFloat(store.cityQuery.latitude), lng: parseFloat(store.cityQuery.longitude)},
+            zoom: 12,
         };
 
         nostriMarker.value.pop();
@@ -72,7 +72,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div ref="mapDiv" style="width: 100%; height: 80vh" />
+    <div ref="mapDiv" style="width: 100%; height: 100%" />
 </template>
 
 <style lang="scss" scoped>

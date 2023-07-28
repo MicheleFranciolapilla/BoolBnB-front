@@ -220,6 +220,10 @@ import axios from "axios";
             </i>
         </p>
         <hr>
+        <div style="height: 30vh;">
+            <Comp_Map />
+        </div>
+        <hr>
         <div class="row pb-2">
             <div class="col-6">
                 <p>
@@ -244,7 +248,7 @@ import axios from "axios";
             <div v-if="showCarousel" class="overlay" @click="closeCarousel" @mousedown="handleMouseDown"></div>
 
         </div>
-        <Comp_Map />
+
 
     </div>
     <Comp_OnLoading v-else 
