@@ -172,9 +172,9 @@ import Comp_Map from '../components/Comp_Map.vue';
     }
 
     .box-sx {
-        height: 80vh;
+        height: 100vh;
         overflow-y: scroll;
-        max-height: 80vh;
+        max-height: 90vh;
     }
     .box-sx::-webkit-scrollbar{
   display: none;

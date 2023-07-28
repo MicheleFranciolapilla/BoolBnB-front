@@ -229,11 +229,10 @@
   <div 
     v-else-if="((!store.just_started) && (go_to_pages()))" 
     id="front_end"
-    style="margin-top: 100px;"
   >
   <div v-if="store.page_name !== '404'">
     <Comp_Header />
-    <h1 class="text-center">Welcome to Bool B&B</h1>
+    <h1 v-if="(store.page_name == 'Home')" class="text-center">Welcome to Bool B&B</h1>
   </div>
     <router-view></router-view>
     <Comp_Footer v-if="store.page_name !== '404'" />
