@@ -40,12 +40,12 @@
                                     <li class="mt-1">Marchio</li>
                                 </ul>
                             </div>
-                            <div class="col-md-6 col-12">
+                            <!-- <div class="col-md-6 col-12">
                                 <ul class="flex-column align-items-center">
                                     <li class="mt-1">Sede</li>
                                     <li class="mt-1">Assistenza</li>
                                 </ul>       
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <div class="col-6">
@@ -60,13 +60,13 @@
                                     <li class="mt-1">Sicurezza</li>
                                 </ul>
                             </div>
-                            <div class="col-md-6 col-12">
+                            <!-- <div class="col-md-6 col-12">
                                 <ul class="flex-column align-items-center">
                                     <li class="mt-1">Licenze</li>
                                     <li class="mt-1">Cookie</li>
                                     <li class="mt-1">Piani</li>
                                 </ul>       
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -176,7 +176,7 @@ footer hr{
 }
 
 /* tablet */
-@media only screen and (min-width: 768px) {
+@media only screen and (max-width: 768px) {
 
     #logo-partner1{
         width: 100%;
