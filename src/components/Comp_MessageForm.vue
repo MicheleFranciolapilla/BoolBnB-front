@@ -119,71 +119,79 @@ import axios from "axios";
 </script>
 
 <template>
-    <div class="card p-4">
-        
-        <h4 class="text-center py-2">Contatta l'Host!</h4>
+    
+    <div class="offcanvas-body">
+        <div class="p-4">
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <h4 class="text-center py-2 text-white">Contatta l'Host!</h4>
 
-        <form action="http://127.0.0.1:8000/api/messages" method="POST" class="row g-3">
+            <form action="http://127.0.0.1:8000/api/messages" method="POST" class="row g-3">
 
-            <!-- ID APPARTAMENTO -->
-            <input type="hidden" id="apartment_id" name="apartment_id" v-model="this.mess_apt_id">
+                <!-- ID APPARTAMENTO -->
+                <input type="hidden" id="apartment_id" name="apartment_id" v-model="this.mess_apt_id">
 
-            <!-- NOME -->
-            <div class="col-12">
-                <label for="name" class="form-label">Nome:</label>
-                <input type="text" :class="this.nome" class="form-control" id="name" placeholder="Mario" name="nome" v-model="this.mess_name">
-                <span :class="this.nome == 'is-invalid' ? '' : 'd-none'" class="text-danger">Inserisci un nome</span>
+                <!-- NOME -->
+                <div class="col-12">
+                    <label for="name" class="form-label text-white">Nome:</label>
+                    <input type="text" :class="this.nome" class="form-control" id="name" placeholder="Mario" name="nome" v-model="this.mess_name">
+                    <span :class="this.nome == 'is-invalid' ? '' : 'd-none'" class="text-danger">Inserisci un nome</span>
+                </div>
+
+                <!-- COGNOME -->
+                <div class="col-12">
+                    <label for="surname" class="form-label text-white">Cognome:</label>
+                    <input type="text" :class="this.cognome" class="form-control" id="surname" placeholder="Rossi" name="cognome" v-model="this.mess_surname">
+                    <span :class="this.cognome == 'is-invalid' ? '' : 'd-none'" class="text-danger">Inserisci un cognome</span>
+                </div>
+
+                <!-- EMAIL -->
+                <div class="col-12">
+                    <label for="email" class="form-label text-white">Email:</label>
+                    <input type="email" :class="this.email" class="form-control" id="email" placeholder="mariorossi@gmail.com" name="email" v-model="this.mess_email">
+                    <span :class="this.email == 'is-invalid' ? '' : 'd-none'" class="text-danger">Inserisci una email valida</span>
+                </div>
+
+                <!-- MESSAGGIO -->
+                <div class="col-12">
+                    <label for="email_body" class="form-label text-white">Messaggio:</label>
+                    <textarea id="email_body" :class="this.testo" name="email_body" rows="4" cols="50" class="form-control" placeholder="Scrivi..." v-model="this.mess_body"></textarea>
+                    <span :class="this.testo == 'is-invalid' ? '' : 'd-none'" class="text-danger">Inserisci del testo</span>
+                </div>
+
+                <!-- INVIO MESSAGGIO -->
+                <div class="col-12 text-center py-2">
+                    <button type="submit" class="btn btn-light" @click.prevent="compose_params()">Invia messaggio</button>
+                </div>
+                            
+                            <!-- <label for="name">Name:</label>
+                            <input type="text" id="name" name="nome" v-model="this.mess_name" required>
+
+                            <label for="surname">Surname:</label>
+                            <input type="text" id="surname" name="cognome" v-model="this.mess_surname" required>
+
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" required v-model="this.mess_email">
+
+                            <label for="email_body">Message:</label>
+                            <textarea id="email_body" name="email_body" rows="4" cols="50" v-model="this.mess_body" required></textarea>
+
+                            <input type="submit" value="Send Message" @click.prevent="compose_params()"> -->
+            </form>
+
+            <!-- MESSAGGIO AUTOMATICO INVIO MESSAGGIO -->
+            <div id="background" class="alert alert-warning alert-dismissible fade show m-3 text-black" role="alert" v-if="this.msg_response">
+                <span>Messaggio inviato correttamente!</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" @click="(this.msg_response = '' )"></button>
             </div>
-
-            <!-- COGNOME -->
-            <div class="col-12">
-                <label for="surname" class="form-label">Cognome:</label>
-                <input type="text" :class="this.cognome" class="form-control" id="surname" placeholder="Rossi" name="cognome" v-model="this.mess_surname">
-                <span :class="this.cognome == 'is-invalid' ? '' : 'd-none'" class="text-danger">Inserisci un cognome</span>
-            </div>
-
-            <!-- EMAIL -->
-            <div class="col-12">
-                <label for="email" class="form-label">Email:</label>
-                <input type="email" :class="this.email" class="form-control" id="email" placeholder="mariorossi@gmail.com" name="email" v-model="this.mess_email">
-                <span :class="this.email == 'is-invalid' ? '' : 'd-none'" class="text-danger">Inserisci una email valida</span>
-            </div>
-
-            <!-- MESSAGGIO -->
-            <div class="col-12">
-                <label for="email_body" class="form-label">Messaggio:</label>
-                <textarea id="email_body" :class="this.testo" name="email_body" rows="4" cols="50" class="form-control" placeholder="Scrivi..." v-model="this.mess_body"></textarea>
-                <span :class="this.testo == 'is-invalid' ? '' : 'd-none'" class="text-danger">Inserisci del testo</span>
-            </div>
-
-            <!-- INVIO MESSAGGIO -->
-            <div class="col-12 text-center py-2">
-                <button type="submit" class="btn btn-primary" @click.prevent="compose_params()">Invia messaggio</button>
-            </div>
-                        
-                        <!-- <label for="name">Name:</label>
-                        <input type="text" id="name" name="nome" v-model="this.mess_name" required>
-
-                        <label for="surname">Surname:</label>
-                        <input type="text" id="surname" name="cognome" v-model="this.mess_surname" required>
-
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" required v-model="this.mess_email">
-
-                        <label for="email_body">Message:</label>
-                        <textarea id="email_body" name="email_body" rows="4" cols="50" v-model="this.mess_body" required></textarea>
-
-                        <input type="submit" value="Send Message" @click.prevent="compose_params()"> -->
-        </form>
-
-        <!-- MESSAGGIO AUTOMATICO INVIO MESSAGGIO -->
-        <div class="alert alert-warning alert-dismissible fade show m-3" role="alert" v-if="this.msg_response">
-            <strong>Messaggio inviato correttamente!</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" @click="(this.msg_response = '' )"></button>
         </div>
     </div>
+    
 </template>
 
 <style scoped lang="scss">
-
+    #background
+    {
+        background-color: white!important;
+        border: 3px solid red!important;
+    }
 </style>
