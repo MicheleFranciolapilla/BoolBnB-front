@@ -119,7 +119,7 @@
         return result.substring(1);
       },
 
-      get_apartments()
+      async get_apartments()
       {
         this.store.axios_running = true;
         let end_point = "";
@@ -160,7 +160,7 @@
                     }
                     break;
         }
-        axios.get(`${this.store.api_url_root}${end_point}`, { params })
+        await axios.get(`${this.store.api_url_root}${end_point}`, { params })
           .then( res =>
             {
               if (res.data.success)
