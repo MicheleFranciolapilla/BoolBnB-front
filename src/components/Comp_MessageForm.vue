@@ -119,7 +119,17 @@ import axios from "axios";
 </script>
 
 <template>
-    <div class="card p-4">
+    
+
+
+    <!-- <div class="offcanvas-header text-white">
+        <h5 class="offcanvas-title" id="staticBackdropLabel">Offcanvas</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div> -->
+    <div class="offcanvas-body">
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        
+        <div class="card p-4">
         
         <h4 class="text-center py-2">Contatta l'Host!</h4>
 
@@ -180,6 +190,7 @@ import axios from "axios";
         <div class="alert alert-warning alert-dismissible fade show m-3" role="alert" v-if="this.msg_response">
             <strong>Messaggio inviato correttamente!</strong>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" @click="(this.msg_response = '' )"></button>
+        </div>
         </div>
     </div>
 </template>

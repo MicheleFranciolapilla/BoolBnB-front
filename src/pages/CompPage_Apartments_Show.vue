@@ -213,17 +213,17 @@ import axios from "axios";
                 </span>
             </div>
         </div>
+
         <hr>
-        <p class="text-center">
-            <i>
-                "{{ store.one_apartment.description }}"
-            </i>
-        </p>
-        <hr>
+
+        <!-- mappa -->
         <div style="height: 30vh;">
             <Comp_Map />
         </div>
+
         <hr>
+
+        <!-- servizi -->
         <div class="row pb-2">
             <div class="col-6">
                 <p>
@@ -232,7 +232,7 @@ import axios from "axios";
                     </b>
                 </p>
                 <div class="row">
-                    <div v-for="(service, index) in store.one_apartment.services" class="col-6 mt-2">
+                    <div v-for="(service, index) in store.one_apartment.services" class="col-6 my-2">
                         <i :class="service.icon" class="fa-xl"></i>
                         <span class="ms-2">
                             {{ service.name }}
@@ -240,13 +240,42 @@ import axios from "axios";
                     </div>
                 </div>
             </div>
-            <div class="col-6">
-                <MessageForm />
+
+            <div class="col-6 my-3">
+
+                <!-- descrizione apt -->
+                <p class="text-center">
+                    <i>
+                        "{{ store.one_apartment.description }}"
+                    </i>
+                </p>
+
+                <div class="text-center">
+                    <!-- btn per form msg -->
+                    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
+                    Contatta l'Host!
+                    </button>    
+                </div>
+                
+
+                <div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
+                    <!-- <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="staticBackdropLabel">Offcanvas</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        <MessageForm />
+                        
+                    </div> -->
+                    <MessageForm />
+                </div>
             </div>
 
             <!-- Overlay -->
             <div v-if="showCarousel" class="overlay" @click="closeCarousel" @mousedown="handleMouseDown"></div>
-
+            
+            
         </div>
 
 
@@ -303,23 +332,7 @@ import axios from "axios";
         top: 10px;
         left: 10px;
         color: #fff;
-        // font-size: 1.5rem;
     }
-}
-
-.modal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-#modal-carousel {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  height: 100%;
 }
 
 </style>
