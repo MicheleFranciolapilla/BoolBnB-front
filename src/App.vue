@@ -222,9 +222,9 @@
   <div 
     v-else-if="((!store.just_started) && (store.api_error.error_index == 0))" 
     id="front_end"
+    style="margin-top: 100px;"
   >
     <Comp_Header/>
-    <h1 class="text-center">Welcome to Bool B&B</h1>
     <router-view></router-view>
     <Comp_Footer/>
   </div>
