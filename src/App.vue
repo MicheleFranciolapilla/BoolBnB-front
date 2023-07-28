@@ -158,9 +158,7 @@
                                   'service' : this.compact_services()
                                 };
                     }
-
                     break;
-
         }
         axios.get(`${this.store.api_url_root}${end_point}`, { params })
           .then( res =>
@@ -168,8 +166,9 @@
               if (res.data.success)
               {
                 this.store.api_error.error_index = 0;
-                // this.store.last_valid_route = this.$router.currentRoute;
-                // console.log("Rotta ",this.store.last_valid_route," salvata con l'esito positivo della chiamata con endpoint: ",end_point," e parametri: ",params);
+                console.log("Sto per mostrare l'attuale path:");
+                this.store.last_valid_route = this.$route.fullPath;
+                console.log(this.store.last_valid_route);
                 switch (this.store.calls_params.call_type)
                 {
                   case 0  : //sponsored

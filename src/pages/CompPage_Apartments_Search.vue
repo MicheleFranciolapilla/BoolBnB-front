@@ -78,6 +78,7 @@ import { store } from '../store';
         {
             is_sponsorized(apartment)
             {
+                let sponsorized = false;
                 if (apartment.sponsors.length !== 0)
                 {
                     apartment.sponsors.forEach( sponsor => 
@@ -104,7 +105,7 @@ import { store } from '../store';
                         if (now_it_msec < expire_date_msec)
                         {
                             console.log("SPONSOR ATTIVO");
-                            return true;
+                            sponsorized = true;
                         }
                         else
                             console.log("SPONSOR SCADUTO");
@@ -112,7 +113,7 @@ import { store } from '../store';
                         console.log("");
                     });
                 }
-                return false;
+                return sponsorized;
             }
         }
         
@@ -127,15 +128,16 @@ import { store } from '../store';
         <div class="row">
             <div class="col-6 row">
                 <div v-for="(apartment, index) in store.apartments " :key='index' class="p-1 col-6">
-                    <div class="p-2 my-1 card">
+                    <div class="p-2 my-1 card" :class=" is_sponsorized(apartment) ? ('sponsorized') : ('')  ">
                         <router-link :to="{name: 'apartments_show', params: { id: apartment.id, slug:apartment.slug}}" class="text-decoration-none text-black" @click="store.prepare_reactive_call('single',apartment.id)">
                             <div class="row">
                                 <div class="col-12">
                                     <p class="text-end">
                                         <i>
                                         Distanza : {{ apartment.distance }}Km
-                                    </i></p>
-                                    <div class="overflow-hidden rounded-4" v-bind:class="{ 'sponsorized' : is_sponsorized(apartment) }" style="height: 150px;">
+                                        </i>
+                                    </p>
+                                    <div class="overflow-hidden rounded-4" style="height: 150px;">
                                         <img :src="`http://127.0.0.1:8000/storage/${apartment.cover_img}`" alt="" class="img-box"  style="width: 100%;">
                                     </div>
                                 </div>
