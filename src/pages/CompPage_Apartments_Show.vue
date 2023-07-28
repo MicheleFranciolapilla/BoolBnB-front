@@ -252,23 +252,16 @@ import axios from "axios";
 
                 <div class="text-center">
                     <!-- btn per form msg -->
-                    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
+                    <button class="btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
                     Contatta l'Host!
                     </button>    
                 </div>
                 
 
-                <div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
-                    <!-- <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="staticBackdropLabel">Offcanvas</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                    </div>
-                    <div class="offcanvas-body">
-                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                        <MessageForm />
-                        
-                    </div> -->
-                    <MessageForm />
+                <div class="offcanvas offcanvas-end mt-5" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
+
+                    <MessageForm/>
+
                 </div>
             </div>
 
