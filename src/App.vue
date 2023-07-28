@@ -4,6 +4,7 @@
   import Comp_Header from "./components/Comp_Header.vue";
   import Comp_OnLoading from "./components/Comp_OnLoading.vue";
   import Comp_ErrorManager from "./components/Comp_ErrorManager.vue";
+  import Comp_Footer from "./components/Comp_Footer.vue";
   export default
   {
     name        : "App",
@@ -12,7 +13,7 @@
       Comp_Header,
       Comp_OnLoading,
       Comp_ErrorManager,
-      Comp_Footer
+      Comp_Footer,
     },
     data()
     {
