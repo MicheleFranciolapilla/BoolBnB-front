@@ -10,6 +10,7 @@ import axios from "axios";
             return {
                 store,
                 direct_call : false,
+
                 mess_name : "",
                 mess_surname : "",
                 mess_email : "",
@@ -98,7 +99,16 @@ import axios from "axios";
 
                     // store.api_url_root + "messages?apartment_id=" + this.mess_apt_id + "&email=" + this.mess_email + "&email_body=" + this.mess_body + "&nome=" + this.mess_name + "&cognome=" + this.mess_surname
                     axios.post(store.api_url_root + "messages", params).then(res => {
-                        this.msg_response = res.data.success
+                        if(res.data.success)
+                        {
+                            this.msg_response = true;
+                            setTimeout(() => 
+                            {
+                                this.msg_response = false;
+                            }, 
+                            5000);
+                        }
+                        
                         console.log(this.msg_response)
                     })
 
@@ -122,7 +132,14 @@ import axios from "axios";
     
     <div class="offcanvas-body">
         <div class="p-4">
+
+            <!-- MESSAGGIO AUTOMATICO INVIO MESSAGGIO -->
+            <div id="background" class="alert alert-warning alert-dismissible fade show m-3 text-black" role="alert" v-show="msg_response">
+                <span>Messaggio inviato correttamente!</span>
+            </div>
+
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            
             <h4 class="text-center py-2 text-white">Contatta l'Host!</h4>
 
             <form action="http://127.0.0.1:8000/api/messages" method="POST" class="row g-3">
@@ -154,7 +171,7 @@ import axios from "axios";
                 <!-- MESSAGGIO -->
                 <div class="col-12">
                     <label for="email_body" class="form-label text-white">Messaggio:</label>
-                    <textarea id="email_body" :class="this.testo" name="email_body" rows="4" cols="50" class="form-control" placeholder="Scrivi..." v-model="this.mess_body"></textarea>
+                    <textarea id="email_body" :class="this.testo" name="email_body" rows="8" cols="80" class="form-control" placeholder="Scrivi..." v-model="this.mess_body"></textarea>
                     <span :class="this.testo == 'is-invalid' ? '' : 'd-none'" class="text-danger">Inserisci del testo</span>
                 </div>
 
@@ -178,11 +195,6 @@ import axios from "axios";
                             <input type="submit" value="Send Message" @click.prevent="compose_params()"> -->
             </form>
 
-            <!-- MESSAGGIO AUTOMATICO INVIO MESSAGGIO -->
-            <div id="background" class="alert alert-warning alert-dismissible fade show m-3 text-black" role="alert" v-if="this.msg_response">
-                <span>Messaggio inviato correttamente!</span>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" @click="(this.msg_response = '' )"></button>
-            </div>
         </div>
     </div>
     
@@ -192,6 +204,5 @@ import axios from "axios";
     #background
     {
         background-color: white!important;
-        border: 3px solid red!important;
     }
 </style>
