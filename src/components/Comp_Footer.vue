@@ -71,7 +71,7 @@
                 </div>
             </section>
         </div>
-        <div class="container d-flex justify-content-between align-items-center">
+        <div class="container d-flex justify-content-between align-items-center mt-4">
             <div>
                 <img class="img-fluid" src="public\BoolBnB.png" alt="">
                 <span>&#169; BoolBnB 2023</span>
@@ -116,13 +116,22 @@ footer img{
 
 #logo-partner2{
     width: 250px;
-    height: 50px;
+    height: 60px;
 }
 
 #footer-button{
     color: rgb(208,219,35) !important;
     border-color: rgb(208,219,35) !important;
     background-color: rgb(0,85,46) !important;
+}
+
+#footer-button:hover{
+    background-color: rgb(208,219,35) !important;
+}
+
+#footer-button a:hover{
+    color: rgb(0,85,46) !important;
+    border-color: rgb(0,85,46) !important;
 }
 
 #paragrafi{
