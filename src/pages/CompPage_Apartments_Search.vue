@@ -133,20 +133,14 @@ import Comp_Map from '../components/Comp_Map.vue';
             <div class="row pb-2" >
                 <div class="row box-sx px-3 col-5">
                     <div v-for="(apartment, index) in store.apartments " :key='index' class="px-1 col-6 mb-2 ">
-=======
-        <div class="row">
-            <div class="col-6 row">
-                <div v-for="(apartment, index) in store.apartments " :key='index' class="p-1 col-6">
-                    <div class="p-2 my-1 card" :class=" is_sponsorized(apartment) ? ('sponsorized') : ('')  ">
->>>>>>> Gestione-errori-axios
                         <router-link :to="{name: 'apartments_show', params: { id: apartment.id, slug:apartment.slug}}" class="text-decoration-none text-black" @click="store.prepare_reactive_call('single',apartment.id)">
-                            <div class="w-100 card p-1">
+                            <div class="w-100 card p-1" :class=" is_sponsorized(apartment) ? ('sponsorized') : ('')  ">
                                 <div class="px-1" style="height: 40px; line-height: 35px;">
                                     <b>
                                         {{ apartment.title }} 
                                     </b>
                                 </div>
-                                <div class="overflow-hidden rounded-1" v-bind:class="{ 'sponsorized' : is_sponsorized(apartment) }" style="height: 150px;">
+                                <div class="overflow-hidden rounded-1"  style="height: 150px;">
                                     <img :src="`http://127.0.0.1:8000/storage/${apartment.cover_img}`" alt="" class="img-box"  style="width: 100%;">
                                 </div>                    
                                     <div style="height: 40px; line-height: 40px;">
