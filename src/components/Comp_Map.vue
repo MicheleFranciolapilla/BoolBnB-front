@@ -7,19 +7,51 @@ import { store } from '../store';
 
 const GOOGLE_MAPS_API_KEY = 'AIzaSyAAjut9fZcWuTjBKeprMbvu-eVfqLt3Nvc';
 
-const nostiMarker = ref(
-    store.nostiMarker
+let nostriMarker = ref(
+    [
+        { position: { lat: parseFloat(store.one_apartment.latitude), lng: parseFloat(store.one_apartment.longitude) }, title: store.one_apartment.title, link: 'https://www.example.com/newyork' },
+    ]
 );
 
-const nostraMap = store.nostraMap;
+let nostraMap = {
+            center: { lat:  parseFloat(store.one_apartment.latitude), lng: parseFloat(store.one_apartment.longitude) },
+            zoom: 20,
+        };
+
 
 
 const loader = new Loader({ apiKey: GOOGLE_MAPS_API_KEY });
 const mapDiv = ref(null);
-const markers = nostiMarker
+const markers = nostriMarker
 
 onMounted(async () => {
     await loader.load();
+
+    console.log(store.apartments)
+    if(store.page_name == 'Search'){
+        nostraMap = {
+            center: { lat:  parseFloat(store.cityQuery.latitude), lng: parseFloat(store.cityQuery.longitude) },
+            zoom: 14,
+        };
+
+        nostriMarker.value.pop();
+        const updatedMarkerArray = [...nostriMarker.value];
+        
+        Object.values(store.apartments).forEach(apartment =>
+        {
+            let newApt = 
+            { 
+                position: { lat: parseFloat(apartment.latitude), lng: parseFloat(apartment.longitude) }, title: apartment.title, link: 'https://www.example.com/newyork' 
+            };
+            updatedMarkerArray.push(newApt);
+        });
+
+        nostriMarker.value = updatedMarkerArray;
+
+    }
+
+    console.log(nostriMarker)
+     
     const map = new google.maps.Map(mapDiv.value, nostraMap);
 
     // Aggiungi i marker alla mappa

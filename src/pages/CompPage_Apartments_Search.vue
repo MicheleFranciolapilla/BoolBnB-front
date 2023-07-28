@@ -2,13 +2,15 @@
 import axios, { Axios } from 'axios';
 import Comp_OnLoading from '../components/Comp_OnLoading.vue';
 import { store } from '../store';
+import Comp_Map from '../components/Comp_Map.vue';
 
     export default
     {
         name    : "CompPage_Apartments_Search",
         components :
         {
-            Comp_OnLoading
+            Comp_OnLoading,
+            Comp_Map
         },
         data()
         {
@@ -141,6 +143,9 @@ import { store } from '../store';
                         </router-link>
                     </div>
                 </div>
+            </div>
+            <div class="col-6">
+                <Comp_Map/>
             </div>
         </div>
     </div>
