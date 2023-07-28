@@ -22,60 +22,63 @@
 
 <template>
     <footer>
-        <div class="container d-flex justify-content-between align-items-center">
-            <section>
-                <div class="text-center">
-                    <ul>
-                        <li class="mt-1" id="paragrafi">Informazioni</li>
-                    </ul>
+        <div class="container">
+            <div class="row justify-content-between align-items-center">
+                <div class="row col-12 col-md-9">
+                    <div class="col-6">
+                            <ul>
+                                <li class="mt-1" id="paragrafi">Informazioni</li>
+                            </ul>
+                        <div class="d-flex">
+                            <ul class="flex-column align-items-center">
+                                <li class="mt-1">
+                                    <a href="">Chi Siamo</a>
+                                </li>
+                                <li class="mt-1"></li>
+                                <li class="mt-1">Lavora con noi</li>
+                                <li class="mt-1">Marchio</li>
+                            </ul>
+                            <ul class="flex-column align-items-center">
+                                <li class="mt-1">Sede</li>
+                                <li class="mt-1">Assistenza</li>
+                            </ul>       
+                        </div>
+                    </div>
+                    <div class="col-6">
+                            <ul>
+                                <li class="mt-1" id="paragrafi">Norme</li>
+                            </ul>
+                        <div class="d-flex">
+                            <ul class="flex-column align-items-center">
+                                <li class="mt-1"> Privacy</li>
+                                <li class="mt-1">Termini</li>
+                                <li class="mt-1">Sicurezza</li>
+                            </ul>
+                            <ul class="flex-column align-items-center">
+                                <li class="mt-1">Licenze</li>
+                                <li class="mt-1">Cookie</li>
+                                <li class="mt-1">Piani</li>
+                            </ul>       
+                        </div>
+                    </div>
                 </div>
-                <div class="d-flex">
-                    <ul class="flex-column align-items-center">
-                        <li class="mt-1">
-                            <a href="">Chi Siamo</a>
-                        </li>
-                        <li class="mt-1"></li>
-                        <li class="mt-1">Lavora con noi</li>
-                        <li class="mt-1">Marchio</li>
-                    </ul>
-                    <ul class="flex-column align-items-center">
-                        <li class="mt-1">Sede</li>
-                        <li class="mt-1">Assistenza</li>
-                    </ul>       
+                <div class="row col-12 col-md-3">
+                    <section>
+                        <div class="mt-2">
+                        
+                            <ul>
+                                <li class="mt-1 text-center" id="paragrafi">Partner</li>
+                                <li>
+                                    <img src="\TomTom.png" alt="" id="logo-partner1">
+                                </li>
+                                <li>
+                                    <img src="\braintree-logo-black.png" alt="" id="logo-partner2">
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
                 </div>
-            </section>
-            <section>
-                <div class="text-center">
-                    <ul>
-                        <li class="mt-1" id="paragrafi">Norme</li>
-                    </ul>
-                </div>
-                <div class="d-flex">
-                    <ul class="flex-column align-items-center">
-                        <li class="mt-1"> Privacy</li>
-                        <li class="mt-1">Termini</li>
-                        <li class="mt-1">Sicurezza</li>
-                    </ul>
-                    <ul class="flex-column align-items-center">
-                        <li class="mt-1">Licenze</li>
-                        <li class="mt-1">Cookie</li>
-                        <li class="mt-1">Piani</li>
-                    </ul>       
-                </div>
-            </section>
-            <section>
-                <div class="mt-2">
-                    <ul>
-                        <li class="mt-1 text-center" id="paragrafi">Partner</li>
-                        <li>
-                            <img src="\TomTom.png" alt="" id="logo-partner1">
-                        </li>
-                        <li>
-                            <img src="\braintree-logo-black.png" alt="" id="logo-partner2">
-                        </li>
-                    </ul>
-                </div>
-            </section>
+            </div>
         </div>
         <div class="container">
             <hr>
