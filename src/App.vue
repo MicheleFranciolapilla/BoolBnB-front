@@ -231,14 +231,10 @@
     id="front_end"
     style="margin-top: 100px;"
   >
-<<<<<<< HEAD
-    <Comp_Header/>
-=======
   <div v-if="store.page_name !== '404'">
     <Comp_Header />
     <h1 class="text-center">Welcome to Bool B&B</h1>
   </div>
->>>>>>> Gestione-errori-axios
     <router-view></router-view>
     <Comp_Footer/>
   </div>
