@@ -24,43 +24,49 @@
     <footer>
         <div class="container d-flex justify-content-between align-items-center">
             <section>
-                <div class="mt-2">
+                <div class="text-center">
                     <ul>
-                        <li id="paragrafi">Progetto di</li>
-                        <li class="mt-2">
-                            <a href="https://github.com/MicheleFranciolapilla">Michele Franciolapilla</a>
+                        <li class="mt-1" id="paragrafi">Informazioni</li>
+                    </ul>
+                </div>
+                <div class="d-flex">
+                    <ul class="flex-column align-items-center">
+                        <li class="mt-1">
+                            <a href="">Chi Siamo</a>
                         </li>
-                        <li class="mt-2">                        
-                            <a href="https://github.com/LeonardoRinaldi92">Leonardo Rinaldi</a>
-                        </li>
-                        <li class="mt-2">
-                            <a href="https://github.com/edoardope">Edoardo Penco</a>
-                        </li>
-                        <li class="mt-2">
-                            <a href="https://github.com/RiccardoSignorini">Riccardo Signorini</a>
-                        </li>
-                        <li class="mt-2">
-                            <a href="https://github.com/AndreaFerrini">Andrea Ferrini</a>
-                        </li>
+                        <li class="mt-1"></li>
+                        <li class="mt-1">Lavora con noi</li>
+                        <li class="mt-1">Marchio</li>
+                    </ul>
+                    <ul class="flex-column align-items-center">
+                        <li class="mt-1">Sede</li>
+                        <li class="mt-1">Assistenza</li>
+                    </ul>       
+                </div>
+            </section>
+            <section>
+                <div class="text-center">
+                    <ul>
+                        <li class="mt-1" id="paragrafi">Norme</li>
+                    </ul>
+                </div>
+                <div class="d-flex">
+                    <ul class="flex-column align-items-center">
+                        <li class="mt-1"> Privacy</li>
+                        <li class="mt-1">Termini</li>
+                        <li class="mt-1">Sicurezza</li>
+                    </ul>
+                    <ul class="flex-column align-items-center">
+                        <li class="mt-1">Licenze</li>
+                        <li class="mt-1">Cookie</li>
+                        <li class="mt-1">Piani</li>
                     </ul>       
                 </div>
             </section>
             <section>
                 <div class="mt-2">
                     <ul>
-                        <li class="mt-2" id="paragrafi">Norme</li>
-                        <li class="mt-2">Termini</li>
-                        <li class="mt-2">Privacy</li>
-                        <li class="mt-2">Cookies</li>
-                        <li class="mt-2">Sicurezza</li>
-                        <li class="mt-2">Licenze</li>
-                    </ul>
-                </div>
-            </section>
-            <section>
-                <div class="mt-2">
-                    <ul>
-                        <li class="mt-2 text-center" id="paragrafi">Partner</li>
+                        <li class="mt-1 text-center" id="paragrafi">Partner</li>
                         <li>
                             <img src="public\TomTom.png" alt="" id="logo-partner1">
                         </li>
@@ -71,9 +77,12 @@
                 </div>
             </section>
         </div>
-        <div class="container d-flex justify-content-between align-items-center mt-4">
+        <div class="container">
+            <hr>
+        </div>
+        <div class="container d-flex justify-content-between align-items-center">
             <div>
-                <img class="img-fluid" src="public\BoolBnB.png" alt="">
+                <img src="public\BoolBnB.png" alt="">
                 <span>&#169; BoolBnB 2023</span>
             </div>
             <div class="registrazione">
@@ -89,7 +98,7 @@
 <style>
 
 footer {
-    background-color: rgb(0,85,46);
+    background-color: rgb(29,116,101);
     color: white;
 }
 
@@ -106,23 +115,27 @@ footer a{
 
 footer img{
     width: 100px;
-    height: 100px;
+    height: 60px;
+}
+
+footer hr{
+    color: rgb(214,222,35);
 }
 
 #logo-partner1{
     width: 250px;
-    height: 100px;
+    height: 65px;
 }
 
 #logo-partner2{
     width: 250px;
-    height: 60px;
+    height: 35px;
 }
 
 #footer-button{
     color: rgb(208,219,35) !important;
     border-color: rgb(208,219,35) !important;
-    background-color: rgb(0,85,46) !important;
+    background-color: rgb(29,116,101);
 }
 
 #footer-button:hover{
@@ -130,10 +143,9 @@ footer img{
 }
 
 #footer-button a:hover{
-    color: rgb(0,85,46) !important;
-    border-color: rgb(0,85,46) !important;
+    color: rgb(29,116,101);
+    border-color: rgb(29,116,101);
 }
-
 #paragrafi{
     color: white;
 }
