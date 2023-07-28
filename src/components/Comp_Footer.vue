@@ -68,10 +68,10 @@
                     <ul>
                         <li class="mt-1 text-center" id="paragrafi">Partner</li>
                         <li>
-                            <img src="public\TomTom.png" alt="" id="logo-partner1">
+                            <img src="\TomTom.png" alt="" id="logo-partner1">
                         </li>
                         <li>
-                            <img src="public\braintree-logo-black.png" alt="" id="logo-partner2">
+                            <img src="\braintree-logo-black.png" alt="" id="logo-partner2">
                         </li>
                     </ul>
                 </div>
@@ -82,7 +82,7 @@
         </div>
         <div class="container d-flex justify-content-between align-items-center">
             <div>
-                <img src="public\BoolBnB.png" alt="">
+                <img src="\BoolBnB.png" alt="">
                 <span>&#169; BoolBnB 2023</span>
             </div>
             <div class="registrazione">
