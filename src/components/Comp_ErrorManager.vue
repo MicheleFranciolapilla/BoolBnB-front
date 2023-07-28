@@ -48,6 +48,10 @@
                             <hr>
                             <h6>Premere su "Ricarica la pagina" per eseguire il refresh.</h6>
                         </div>
+                        <div v-else>
+                            <hr>
+                            <h6>Premere su "Prosegui" per tornare alla videata precedente</h6>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button v-if="!fatal_error" type="button" class="btn btn-primary" data-bs-dismiss="modal" v-on:click="store.reset_error()">
