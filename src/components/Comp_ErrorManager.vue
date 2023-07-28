@@ -14,6 +14,7 @@
         {
             'store.api_error.error_index' (new_value)
             {
+                // if (![0,1].includes(new_value))
                 if (new_value === -100)
                 {
                     this.fatal_error = (this.store.api_error.error_index == -100);
@@ -47,6 +48,10 @@
                         <div v-if="fatal_error">
                             <hr>
                             <h6>Premere su "Ricarica la pagina" per eseguire il refresh.</h6>
+                        </div>
+                        <div v-else>
+                            <hr>
+                            <h6>Premere su "Prosegui" per tornare alla videata precedente</h6>
                         </div>
                     </div>
                     <div class="modal-footer">

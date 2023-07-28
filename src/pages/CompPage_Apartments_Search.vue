@@ -80,6 +80,7 @@ import Comp_Map from '../components/Comp_Map.vue';
         {
             is_sponsorized(apartment)
             {
+                let sponsorized = false;
                 if (apartment.sponsors.length !== 0)
                 {
                     apartment.sponsors.forEach( sponsor => 
@@ -106,7 +107,7 @@ import Comp_Map from '../components/Comp_Map.vue';
                         if (now_it_msec < expire_date_msec)
                         {
                             console.log("SPONSOR ATTIVO");
-                            return true;
+                            sponsorized = true;
                         }
                         else
                             console.log("SPONSOR SCADUTO");
@@ -114,7 +115,7 @@ import Comp_Map from '../components/Comp_Map.vue';
                         console.log("");
                     });
                 }
-                return false;
+                return sponsorized;
             }
         }
         
@@ -122,51 +123,38 @@ import Comp_Map from '../components/Comp_Map.vue';
 </script>
 
 <template>
-    <h1>Risultati per "{{ store.searched_city }}"</h1>
+
+    <h2 class="text-center mb-4">Risultati per "{{ store.searched_city }}"</h2>
     
     
     <div v-if="!store.axios_running" class="row mx-auto">
-        <div class="row">
-            <div class="col-6 row">
-                <div v-for="(apartment, index) in store.apartments " :key='index' class="p-1 col-6">
-                    <div class="p-2 my-1 card">
+        <div class="container px-3">
+
+            <div class="row pb-2" >
+                <div class="row box-sx px-3 col-5">
+                    <div v-for="(apartment, index) in store.apartments " :key='index' class="px-1 col-6 mb-2 ">
                         <router-link :to="{name: 'apartments_show', params: { id: apartment.id, slug:apartment.slug}}" class="text-decoration-none text-black" @click="store.prepare_reactive_call('single',apartment.id)">
-                            <div class="row">
-                                <div class="col-12">
-                                    <p class="text-end">
-                                        <i>
-                                        Distanza : {{ apartment.distance }}Km
-                                    </i></p>
-                                    <div class="overflow-hidden rounded-4" v-bind:class="{ 'sponsorized' : is_sponsorized(apartment) }" style="height: 150px;">
-                                        <img :src="`http://127.0.0.1:8000/storage/${apartment.cover_img}`" alt="" class="img-box"  style="width: 100%;">
-                                    </div>
+                            <div class="w-100 card p-1" :class=" is_sponsorized(apartment) ? ('sponsorized') : ('')  ">
+                                <div class="px-1" style="height: 40px; line-height: 35px;">
+                                    <b>
+                                        {{ apartment.title }} 
+                                    </b>
                                 </div>
-                                <div>                        
-                                    <p>
-                                        <b>
-                                            {{ apartment.title }}, 
-                                        </b>
-                                        <span class="ms-2">
-                                            <b>
-                                                <i>
-                                                    {{ apartment.city }}
-                                                </i>
-                                            </b>
-                                        </span>
-                                    </p>
-                                    <p class="mt-0">
+                                <div class="overflow-hidden rounded-1"  style="height: 150px;">
+                                    <img :src="`http://127.0.0.1:8000/storage/${apartment.cover_img}`" alt="" class="img-box"  style="width: 100%;">
+                                </div>                    
+                                    <div style="height: 40px; line-height: 40px;">
                                         <i>
                                             {{ apartment.address }}
                                         </i>
-                                    </p>
+                                    </div>
                                 </div>
-                            </div>
                         </router-link>
                     </div>
                 </div>
-            </div>
-            <div class="col-6">
-                <Comp_Map/>
+                <div class="px-0 ms-3 col-7" >
+                    <Comp_Map/>
+                </div>
             </div>
         </div>
     </div>
@@ -182,4 +170,13 @@ import Comp_Map from '../components/Comp_Map.vue';
     {
         border: 5px solid blue !important;
     }
+
+    .box-sx {
+        height: 80vh;
+        overflow-y: scroll;
+        max-height: 80vh;
+    }
+    .box-sx::-webkit-scrollbar{
+  display: none;
+}
 </style>

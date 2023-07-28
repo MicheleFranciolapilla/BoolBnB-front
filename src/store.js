@@ -184,6 +184,10 @@ export const store = reactive(
         {
             this.api_error.error_index = 0;
             this.api_error.error_msg = "";
-        }
+            if (this.last_valid_route !== null)
+                this.$router.push({ name : 'not-found' });
+            else
+                this.$router.push({ name : 'home' });
+        },
 
     });

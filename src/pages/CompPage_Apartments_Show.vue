@@ -160,7 +160,7 @@ import axios from "axios";
         <div>
 
             <!-- offcanvas del carosello -->
-            <div v-if="showCarousel" class="modal show d-block background" tabindex="-1" @click="handleCarouselClick">
+            <div v-if="showCarousel" class="modal show d-block background" id="modal-carousel" tabindex="-1" @click="handleCarouselClick">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content">
 
@@ -220,6 +220,10 @@ import axios from "axios";
             </i>
         </p>
         <hr>
+        <div style="height: 30vh;">
+            <Comp_Map />
+        </div>
+        <hr>
         <div class="row pb-2">
             <div class="col-6">
                 <p>
@@ -240,14 +244,11 @@ import axios from "axios";
                 <MessageForm />
             </div>
 
-            <!-- Sfondo oscurato per carosello -->
-            <!-- <div v-if="showCarousel" class="modal-backdrop show"></div> -->
-
             <!-- Overlay -->
             <div v-if="showCarousel" class="overlay" @click="closeCarousel" @mousedown="handleMouseDown"></div>
 
         </div>
-        <Comp_Map />
+
 
     </div>
     <Comp_OnLoading v-else 
@@ -304,6 +305,21 @@ import axios from "axios";
         color: #fff;
         // font-size: 1.5rem;
     }
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#modal-carousel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 100%;
 }
 
 </style>
