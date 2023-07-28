@@ -122,47 +122,36 @@ import Comp_Map from '../components/Comp_Map.vue';
 </script>
 
 <template>
-    <h1>Risultati per "{{ store.searched_city }}"</h1>
+
+    <h2 class="text-center mb-4">Risultati per "{{ store.searched_city }}"</h2>
     
     
     <div v-if="!store.axios_running" class="row mx-auto">
-        <div class="container">
+        <div class="container px-3">
 
-            <div class="row pb-2">
-                <div class="col-5 row box-sx ">
-                    <div v-for="(apartment, index) in store.apartments " :key='index' class="col-6 p-0">
+            <div class="row pb-2" >
+                <div class="row box-sx px-3 col-5">
+                    <div v-for="(apartment, index) in store.apartments " :key='index' class="px-1 col-6 mb-2 ">
                         <router-link :to="{name: 'apartments_show', params: { id: apartment.id, slug:apartment.slug}}" class="text-decoration-none text-black" @click="store.prepare_reactive_call('single',apartment.id)">
-                            <div class="w-100 card">
-                                <div class="text-end">
-                                    <i>
-                                        Distanza : {{ apartment.distance }}Km
-                                    </i>
+                            <div class="w-100 card p-1">
+                                <div class="px-1" style="height: 40px; line-height: 35px;">
+                                    <b>
+                                        {{ apartment.title }} 
+                                    </b>
                                 </div>
-                                <div class="overflow-hidden rounded-4" v-bind:class="{ 'sponsorized' : is_sponsorized(apartment) }" style="height: 150px;">
+                                <div class="overflow-hidden rounded-1" v-bind:class="{ 'sponsorized' : is_sponsorized(apartment) }" style="height: 150px;">
                                     <img :src="`http://127.0.0.1:8000/storage/${apartment.cover_img}`" alt="" class="img-box"  style="width: 100%;">
-                                </div>
-                                    <div>                        
-                                        <b>
-                                            {{ apartment.title }}, 
-                                        </b>
-                                        <span class="ms-2">
-                                            <b>
-                                                <i>
-                                                    {{ apartment.city }}
-                                                </i>
-                                            </b>
-                                        </span>
-                                        <div class="mt-0">
-                                            <i>
-                                                {{ apartment.address }}
-                                            </i>
-                                        </div>
+                                </div>                    
+                                    <div style="height: 40px; line-height: 40px;">
+                                        <i>
+                                            {{ apartment.address }}
+                                        </i>
                                     </div>
                                 </div>
                         </router-link>
                     </div>
                 </div>
-                <div class="col-7 px-0 ms-3" >
+                <div class="px-0 ms-3 col-7" >
                     <Comp_Map/>
                 </div>
             </div>
@@ -182,7 +171,7 @@ import Comp_Map from '../components/Comp_Map.vue';
     }
 
     .box-sx {
-        height: 100%;
+        height: 80vh;
         overflow-y: scroll;
         max-height: 80vh;
     }

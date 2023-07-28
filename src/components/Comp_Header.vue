@@ -199,9 +199,7 @@ import { store } from "../store";
         </button>
         <div class="collapse navbar-collapse text-white" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <router-link v-if="store.page_name != 'Home'" class="nav-link active" aria-current="page" to="/">Home</router-link>
-                </li>
+               
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Area personali</a>
                     <ul class="dropdown-menu">
@@ -218,6 +216,13 @@ import { store } from "../store";
                             <a class="dropdown-item" href="#">Profilo</a>
                         </li> -->
                     </ul>
+                </li>
+                <li class="nav-item ms-5">
+                    <router-link v-if="store.page_name != 'Home'" class="nav-link active text-white" aria-current="page" to="/">
+                        <i>
+                            Ritorna nella HomePage
+                        </i>
+                    </router-link>
                 </li>
             </ul>
             <form v-if="(store.page_name !== 'Search')" class="d-flex" role="search" @submit.prevent="ready_for_call()">
