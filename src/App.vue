@@ -185,6 +185,7 @@
                   case 2  : //all
                             this.store.apartments = res.data.apartments;
                             this.store.searched_city = this.store.cityQuery.address;
+                            this.store.searched_text = this.store.searched_city;
                             break;
                 }
               }
