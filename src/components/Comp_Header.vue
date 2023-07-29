@@ -269,7 +269,7 @@ import { store } from "../store";
     </div>
     <div v-if="(this.filter)">
         <hr>
-        <div class="text-center mt-2">
+        <div class="text-center mt-2 row justify-content-center">
             <div>
                 <b>
                     Range di ricerca:
@@ -278,20 +278,22 @@ import { store } from "../store";
                     {{ store.selected_range }}Km
                 </span>
             </div>
-            <input class="text-success" type="range" id="range" name="range" :min="store.min_range" :max="store.max_range" v-model="store.selected_range" step="0.5"
-             v-on:change="ready_for_call(false)">    
+            <div class="col-12 col-md-7 col-xl-4 mt-1">
+                <input class="text-success" type="range" id="range" name="range" :min="store.min_range" :max="store.max_range" v-model="store.selected_range" step="0.5"
+                 v-on:change="ready_for_call(false)">    
+            </div>
         </div>
 
         <div>
-            <div class="text-center">
+            <div class="text-center mt-2">
                 <b>
                     Scegli uno o più servizi:
                 </b>
             </div>
-            <div class="row mt-2">
-                <div  v-for="(service, index) in store.services" :key="index" class="col-2">
+            <div class="row mt-3">
+                <div  v-for="(service, index) in store.services" :key="index" class="col-12 col-md-4 col-xl-2">
                     <input type="checkbox" name="services[]" :id="index" v-model="store.selected_services" :value="service.id" v-on:change="services_changed()">
-                    <span>{{ service.name }}</span>
+                    <span class="ms-2">{{ service.name }}</span>
                 </div>
             </div>
             <div v-if="Number(store.selected_range) !== 20 || store.selected_services.length !== 0" class="text-center mt-2">
