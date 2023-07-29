@@ -129,7 +129,7 @@ import Comp_Map from '../components/Comp_Map.vue';
     
     
     <div v-if="!store.axios_running" class="row mx-auto">
-        <div class="container px-3">
+        <div class="container px-3 pb-5">
 
             <div class="row pb-2" >
                 <div class="row box-sx px-3 col-5">
