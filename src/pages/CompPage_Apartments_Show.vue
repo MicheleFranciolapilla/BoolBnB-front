@@ -260,7 +260,7 @@ import axios from "axios";
                     <b>
                         Cosa troverai:
                     </b>
-                    <span class="ms-5 opacity-50 show-click" @click="(this.showService == true) ? this.showService = false : this.showService = true">
+                    <span v-if="store.one_apartment.services.length > 4" class="ms-5 opacity-50 show-click show-btn d-lg-none" @click="(this.showService == true) ? this.showService = false : this.showService = true">
                         <span v-if="!this.showService">
                             <i>
                                 Mostra tutto
@@ -274,9 +274,9 @@ import axios from "axios";
                     </span>
                 </div>
                 <div class="row mt-2 service-box" :style="(showService) ? 'max-height: none' : ''">
-                    <div v-for="(service, index) in store.one_apartment.services" class="col-6 my-2">
-                        <i :class="service.icon" class="fa-xl" style="color: rgba(0, 0, 0, 0.404);"></i>
-                        <span class="ms-2">
+                    <div v-for="(service, index) in store.one_apartment.services" class="col-6 col-md-4 col-xl-2 my-2">
+                        <i :class="service.icon"  style="color: rgba(0, 0, 0, 0.404);"></i>
+                        <span class="ms-2" style="font-size: 13px;">
                             {{ service.name }}
                         </span>
                     </div>
@@ -344,7 +344,7 @@ import axios from "axios";
 }
 
 .service-box {
-    max-height: 100px;
+    max-height: 85px;
     overflow: hidden;
 }
 
@@ -358,11 +358,7 @@ import axios from "axios";
     }
 }
 
-@media (min-width: 432px) {
-    .service-box {
-        max-height: 85px;
-    }
-}
+
 
 @media (min-width: 992px) {
     .box-image-sx {
@@ -381,5 +377,10 @@ import axios from "axios";
     .offcanvas.offcanvas-end {
         width: 50%;
     }
+
+    .service-box {
+    max-height: none;
+    overflow: none;
+}
 }
 </style>
