@@ -131,7 +131,7 @@ import Comp_Map from '../components/Comp_Map.vue';
     <div v-if="!store.axios_running" class="row mx-auto">
         <div class="container px-3 pb-5">
             <div class="row mx-0 pb-2" >
-                <div class="row mx-0 box-sx col-12 col-md-12 col-lg-6 mb-3 ">
+                <div class="row mx-0 box-sx col-12 col-md-12 col-lg-6 mb-3 p-1">
                     <div v-for="(apartment, index) in store.apartments " :key='index' class="px-1 col-12 col-sm-6 col-md-4 col-lg-6 align-items-start mb-2" >
                         <router-link :to="{name: 'apartments_show', params: { id: apartment.id, slug:apartment.slug}}" class="text-decoration-none text-black" @click="store.prepare_reactive_call('single',apartment.id)">
                             <div class="card p-2" :class=" is_sponsorized(apartment) ? ('sponsorized') : ('')  ">
@@ -179,9 +179,35 @@ import Comp_Map from '../components/Comp_Map.vue';
     .box-sx {
         overflow-y: scroll;
     }
+    
     .box-sx::-webkit-scrollbar{
-  display: none;
+        background-color:#fff;
+    width:16px
     }
+
+    .bos-sx::-webkit-scrollbar-track {
+    background-color:#fff
+    }
+
+    .box-sx::-webkit-scrollbar-track:hover {
+    background-color:#f4f4f4
+}
+
+/* scrollbar itself */
+.box-sx::-webkit-scrollbar-thumb {
+    background-color:#babac0;
+    border-radius:16px;
+    border:5px solid #fff
+}
+.box-sx::-webkit-scrollbar-thumb:hover {
+    background-color:#a0a0a5;
+    border:4px solid #f4f4f4
+}
+
+/* set button(top and bottom of the scrollbar) */
+.box-sx::-webkit-scrollbar-button {display:none}
+
+
     .map-box{
         min-height: 80vh;
     }
