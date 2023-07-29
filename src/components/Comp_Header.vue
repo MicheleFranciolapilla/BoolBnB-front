@@ -242,15 +242,20 @@ import { store } from "../store";
     </div>
 </nav>
 <div v-if="(store.page_name == 'Search')" class="container my-3" >
-    <form  class="d-flex w-50 mx-auto" role="search" @submit.prevent="ready_for_call()" style="margin-top: 20px;">
-        <input v-model="store.searched_text" autocomplete="off" class="form-control me-2 w-100" type="search" placeholder="Cerca un'appartamento..." aria-label="Search" list="cities" @keyup="Searched_hint()">
-        <datalist id="cities">
-          <option v-for="(city, index) in store.all_cities" :key="index" :value="city">{{ city }}</option>
-        </datalist>
-        <button class="btn" type="submit" @click.prevent="ready_for_call()">
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </button>
-    </form>
+    <div class="row justify-content-center">
+        <div class="col-md-12 col-xl-6" >
+            <form  class="d-flex  mx-auto" role="search" @submit.prevent="ready_for_call()" style="margin-top: 20px;">
+                <input v-model="store.searched_text" autocomplete="off" class="form-control me-2 w-100" type="search" placeholder="Cerca un'appartamento..." aria-label="Search" list="cities" @keyup="Searched_hint()">
+                <datalist id="cities">
+                  <option v-for="(city, index) in store.all_cities" :key="index" :value="city">{{ city }}</option>
+                </datalist>
+                <button class="btn" type="submit" @click.prevent="ready_for_call()">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </form>
+        </div>
+
+    </div>
     <div class="text-center mt-2">
         <button class="btn btn-success" @click="(this.filter == true) ? this.filter = false : this.filter = true">
             <span v-if="(!this.filter)">
