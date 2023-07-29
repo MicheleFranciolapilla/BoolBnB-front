@@ -125,9 +125,9 @@ import axios from "axios";
 
 <template>
     <div v-if="!store.axios_running" class="container">
-        <div class="mt-2 align-items-center">
+        <div class="my-4 align-items-center ">
             <div class="row mb-2">
-                <div class="col-12 text-center">
+                <div class="col-12 col-md-9 text-center text-md-start">
                     <h1>
                         {{ store.one_apartment.title }}
                     </h1>
@@ -142,7 +142,7 @@ import axios from "axios";
                         </span>
                     </div>    
                 </div>
-                <div class="col-6 text-end d-none d-md-block">
+                <div class="col-3 text-end d-none d-md-block align-self-center">
                     <!-- btn per form msg -->
                     <button class="btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
                     Contatta l'Host!
@@ -150,18 +150,11 @@ import axios from "axios";
                 </div>
             </div>
             <div>
-                
-
                 <div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel" style="width: 35vw;">
-
                     <MessageForm/>
-
                 </div>
             </div>    
         </div>
-        
-        
-
         <div class="row">
             <div class="col-6 p-2">
                 <div class="overflow-hidden box-image-sx" style="height: 100%; max-height: 500px;">
@@ -184,10 +177,7 @@ import axios from "axios";
                 </div>
             </div>
         </div>
-
-
         <div>
-
             <!-- offcanvas del carosello -->
             <div v-if="showCarousel" class="modal show d-block background" id="modal-carousel" tabindex="-1" @click="handleCarouselClick">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -225,8 +215,6 @@ import axios from "axios";
             </div>
 
         </div>
-
-
         <div class="row my-2">
             <div class="col-6">
                 <span><b>Stanze:</b> {{ store.one_apartment.number_of_rooms }}</span>
@@ -242,16 +230,19 @@ import axios from "axios";
                 </span>
             </div>
         </div>
-
         <hr>
-
         <!-- descrizione apt -->
         <p class="text-center">
             <i>
                 "{{ store.one_apartment.description }}"
             </i>
         </p>
-
+        <div class="col-12 text-center  d-md-none">
+            <!-- btn per form msg -->
+            <button class="btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
+            Contatta l'Host!
+            </button>    
+        </div>
         <hr>
 
         <!-- servizi -->
