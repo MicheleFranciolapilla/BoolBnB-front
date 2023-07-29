@@ -127,6 +127,7 @@ import axios from "axios";
     <div v-if="!store.axios_running" class="container">
         <div class="my-4 align-items-center ">
             <div class="row mb-2">
+                <!-- titoli -->
                 <div class="col-12 col-md-9 text-center text-md-start">
                     <h1>
                         {{ store.one_apartment.title }}
@@ -142,6 +143,7 @@ import axios from "axios";
                         </span>
                     </div>    
                 </div>
+                <!-- tasto contatta -->
                 <div class="col-3 text-end d-none d-md-block align-self-center">
                     <!-- btn per form msg -->
                     <button class="btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
@@ -149,36 +151,36 @@ import axios from "axios";
                     </button>    
                 </div>
             </div>
+            <!-- offcanvas -->
             <div>
                 <div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel" style="width: 35vw;">
                     <MessageForm/>
                 </div>
             </div>    
         </div>
+        <!-- carosello -->
         <div class="row">
-            <div class="col-6 p-2">
+            <div class="col-12  col-lg-6 p-2">
                 <div class="overflow-hidden box-image-sx" style="height: 100%; max-height: 500px;">
                     <a href="#" @click.stop="openCarousel">
                         <img :src="`http://127.0.0.1:8000/storage/${store.one_apartment.cover_img}`" alt="" class="img-box">    
                     </a>
-                    
                 </div>
             </div>
-            <div class="col-6">
-                <div class="row">
-                    <div v-for="(pictures, index) in store.one_apartment.pictures" :key="index" class="col-6 p-2">
+            <div class="col-12 col-lg-6 ">
+                <div class="row px-1">
+                    <div v-for="(pictures, index) in store.one_apartment.pictures" :key="index" class="col-3 col-lg-6 p-1 p-lg-2">
                         <div class="overflow-hidden box-image-dx" style="height: 100%; max-height: 240px;">
                             <a href="#" @click.stop="openCarousel">
                                 <img :src="`http://127.0.0.1:8000/storage/${pictures.picture_url}`" alt="" :class="`img-box img-${index}`">    
                             </a>
-                            
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- offcanvas del carosello -->
         <div>
-            <!-- offcanvas del carosello -->
             <div v-if="showCarousel" class="modal show d-block background" id="modal-carousel" tabindex="-1" @click="handleCarouselClick">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content">
@@ -213,7 +215,6 @@ import axios from "axios";
                     </div>
                 </div>
             </div>
-
         </div>
         <div class="row my-2">
             <div class="col-6">
@@ -285,18 +286,7 @@ import axios from "axios";
 </template>
 
 <style lang="scss">
-.box-image-sx {
-    border-top-left-radius: 30px;
-    border-bottom-left-radius: 30px;
-}
 
-.img-1 {
-    border-top-right-radius: 30px;
-}
-
-.img-3 {
-    border-bottom-right-radius: 30px;
-}
 
 .modal-open {
   overflow: hidden;
@@ -332,4 +322,22 @@ import axios from "axios";
     }
 }
 
+@media (min-width: 992px) {
+    .box-image-sx {
+
+    
+border-top-left-radius: 30px;
+border-bottom-left-radius: 30px;
+}
+
+
+
+.img-1 {
+border-top-right-radius: 30px;
+}
+
+.img-3 {
+border-bottom-right-radius: 30px;
+}
+}
 </style>
