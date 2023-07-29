@@ -198,6 +198,12 @@ import { store } from "../store";
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <router-link v-if="store.page_name != 'Home'" class="nav-link active text-white me-5" aria-current="page" to="/">
+            <i class="fa-solid fa-house"></i>
+            <span>
+                Home
+            </span>
+        </router-link>
         <div class="collapse navbar-collapse text-white" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                
@@ -233,6 +239,7 @@ import { store } from "../store";
                 </button>
             </form>
         </div>
+
     </div>
 </nav>
 <div v-if="(store.page_name == 'Search')" class="container my-3" >

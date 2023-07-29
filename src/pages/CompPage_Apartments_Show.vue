@@ -56,6 +56,11 @@ import axios from "axios";
                 this.direct_call = true;
                 this.store.prepare_reactive_call('single', this.$route.params.id); 
             }
+            store.selected_range = 20;
+            store.selected_services = [];
+            store.city_to_search = '';
+            store.searched_text= '';
+            store.searched_city= '';
 
         },
         methods: 
