@@ -221,13 +221,7 @@ import { store } from "../store";
                         </li> -->
                     </ul>
                 </li>
-                <li class="nav-item ms-5">
-                    <router-link v-if="store.page_name != 'Home'" class="nav-link active text-white" aria-current="page" to="/">
-                        <i>
-                            Ritorna nella HomePage
-                        </i>
-                    </router-link>
-                </li>
+
             </ul>
             <form v-if="(store.page_name !== 'Search')" class="d-flex" role="search" @submit.prevent="ready_for_call()">
                 <input v-model="store.searched_text" autocomplete="off" class="form-control" type="search" placeholder="Cerca un'appartamento..." aria-label="Search" list="cities" @keyup="Searched_hint()" style="width: 300px;">
@@ -256,7 +250,7 @@ import { store } from "../store";
         </div>
 
     </div>
-    <div class="text-center mt-2">
+    <div class="text-center mt-4">
         <button class="btn btn-success" @click="(this.filter == true) ? this.filter = false : this.filter = true">
             <span v-if="(!this.filter)">
                 Mostra Filtri Avanzati
@@ -291,7 +285,7 @@ import { store } from "../store";
                 </b>
             </div>
             <div class="row mt-3">
-                <div  v-for="(service, index) in store.services" :key="index" class="col-12 col-md-4 col-xl-2">
+                <div  v-for="(service, index) in store.services" :key="index" class="col-12 col-md-6 col-lg-4 col-xl-2">
                     <input type="checkbox" name="services[]" :id="index" v-model="store.selected_services" :value="service.id" v-on:change="services_changed()">
                     <span class="ms-2">{{ service.name }}</span>
                 </div>

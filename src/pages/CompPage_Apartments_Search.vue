@@ -139,6 +139,7 @@ import Comp_Map from '../components/Comp_Map.vue';
                                     <b>
                                         {{ apartment.title }} 
                                     </b>
+                                    <i class="fa-solid fa-receipt ms-2" v-if="is_sponsorized(apartment)" style="font-size: 12px; vertical-align:10%; color: rgba(0, 0, 0, 0.247);"></i>
                                 </div>
                                 <div class="overflow-hidden rounded-1"  style="height: 150px;">
                                     <img :src="`http://127.0.0.1:8000/storage/${apartment.cover_img}`" alt="" class="img-box"  style="width: 100%;">
@@ -157,7 +158,7 @@ import Comp_Map from '../components/Comp_Map.vue';
                         </router-link>
                     </div>
                 </div>
-                <div class="px-0 col-11 col-sm-12 col-md-12 col-lg-6  map-box"  >
+                <div class="px-0 col-11 col-sm-12 col-md-12 col-lg-6 mx-auto map-box"  >
                     <Comp_Map/>
                 </div>
             </div>
@@ -176,9 +177,6 @@ import Comp_Map from '../components/Comp_Map.vue';
         background-color: rgba(9, 48, 14, 0.103);
     }
 
-    .box-sx {
-        overflow-y: scroll;
-    }
     
     .box-sx::-webkit-scrollbar{
         background-color:#fff;
@@ -216,6 +214,7 @@ import Comp_Map from '../components/Comp_Map.vue';
     @media (min-width: 992px) {
     .box-sx {
         max-height: 80vh;
+        overflow-y: scroll;
     }
 }
 </style>
