@@ -44,6 +44,7 @@
             <div v-for="(apartment, index) in store.apartments.data " :key='index' class="p-1 col-sm-12 col-md-6 col-xl-4">
                 <router-link :to="{name: 'apartments_show', params: { id: apartment.id, slug:apartment.slug}}" class="text-decoration-none text-black" @click="store.prepare_reactive_call('single',apartment.id)">
                     <div class=" p-2 my-1">
+                        <span class="badge text-bg-warning">Sponsored</span>
                         <div class="overflow-hidden rounded-4 image_container apart-card" style="height: 300px;">
                             <img :src="`http://127.0.0.1:8000/storage/${apartment.cover_img}`" alt="" class="img-box">
                             <img v-for="(image, index) in apartment.pictures" :src="`http://127.0.0.1:8000/storage/${image.picture_url}`" alt=""> 
@@ -107,6 +108,14 @@
 
     .apart-card{
         box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    }
+
+    .badge{
+        position: relative;
+        top: 15px;
+        left: -10px;
+        padding: 6px;
+        z-index: 9999;
     }
 
 }
