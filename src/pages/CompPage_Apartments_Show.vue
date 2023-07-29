@@ -19,6 +19,7 @@ import axios from "axios";
                 store,
                 direct_call : false,
                 showCarousel: false,
+                showService: false,
             }
         },
         beforeRouteUpdate(to, from, next) 
@@ -216,18 +217,23 @@ import axios from "axios";
                 </div>
             </div>
         </div>
+        <!-- specifiche appartamento -->
         <div class="row my-2">
-            <div class="col-6">
+            <div class="col-6 col-md-4 col-lg-3 col-xl-12">
                 <span><b>Stanze:</b> {{ store.one_apartment.number_of_rooms }}</span>
-                <span class="ms-3"><b>Bagni:</b> {{ store.one_apartment.number_of_bathrooms }}</span>
-                <span class="ms-3"><b>Dimensioni:</b> {{ store.one_apartment.square_meters }} Mq.</span>
             </div>
-            <div class="col-6">
+            <div class="col-6 col-md-4 col-lg-3 col-xl-12">
+                <span><b>Bagni:</b> {{ store.one_apartment.number_of_bathrooms }}</span>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3 col-xl-12">
+                <span><b>Dimensioni:</b> {{ store.one_apartment.square_meters }} Mq.</span>
+            </div>
+            <div class="col-12 col-lg-3 col-xl-12">
                 <span>
                     <b>
                         Prezzo:
                     </b>
-                     {{ store.one_apartment.price }}
+                     {{ store.one_apartment.price }}&#x20AC;
                 </span>
             </div>
         </div>
@@ -238,7 +244,8 @@ import axios from "axios";
                 "{{ store.one_apartment.description }}"
             </i>
         </p>
-        <div class="col-12 text-center  d-md-none">
+        <!-- bottone che appare solo nel mobile -->
+        <div class="col-12 text-center  d-md-none ">
             <!-- btn per form msg -->
             <button class="btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
             Contatta l'Host!
@@ -248,15 +255,27 @@ import axios from "axios";
 
         <!-- servizi -->
         <div class="row pb-2">
-            <div class="col-6">
-                <p>
+            <div class="col-12">
+                <div>
                     <b>
                         Cosa troverai:
                     </b>
-                </p>
-                <div class="row">
+                    <span class="ms-5 opacity-50 show-click" @click="(this.showService == true) ? this.showService = false : this.showService = true">
+                        <span v-if="!this.showService">
+                            <i>
+                                Mostra tutto
+                            </i>
+                        </span>
+                        <span v-else>
+                            <i>
+                                Mostra meno
+                            </i>
+                        </span>
+                    </span>
+                </div>
+                <div class="row mt-2 service-box" :style="(showService) ? 'max-height: none' : ''">
                     <div v-for="(service, index) in store.one_apartment.services" class="col-6 my-2">
-                        <i :class="service.icon" class="fa-xl"></i>
+                        <i :class="service.icon" class="fa-xl" style="color: rgba(0, 0, 0, 0.404);"></i>
                         <span class="ms-2">
                             {{ service.name }}
                         </span>
@@ -264,7 +283,9 @@ import axios from "axios";
                 </div>
             </div>
 
-            <div class="col-6 my-3">
+            <hr>
+
+            <div class="col-12 my-3">
                  <!-- mappa -->
                 <div style="height: 50vh;">
                     <Comp_Map />
@@ -322,9 +343,24 @@ import axios from "axios";
     }
 }
 
+.service-box {
+    max-height: 100px;
+    overflow: hidden;
+}
+
+.show-click {
+    cursor: pointer;
+}
+
 @media (max-width: 992px) {
     .offcanvas.offcanvas-end {
         width: 100%;
+    }
+}
+
+@media (min-width: 432px) {
+    .service-box {
+        max-height: 85px;
     }
 }
 
