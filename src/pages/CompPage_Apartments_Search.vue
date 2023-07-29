@@ -130,10 +130,9 @@ import Comp_Map from '../components/Comp_Map.vue';
     
     <div v-if="!store.axios_running" class="row mx-auto">
         <div class="container px-3 pb-5">
-
-            <div class="row pb-2" >
-                <div class="row box-sx px-3 col-5">
-                    <div v-for="(apartment, index) in store.apartments " :key='index' class="px-1 col-6 align-items-start mb-2" >
+            <div class="row mx-0 pb-2" >
+                <div class="row mx-0 box-sx col-12 col-md-12 col-lg-6 mb-3 ">
+                    <div v-for="(apartment, index) in store.apartments " :key='index' class="px-1 col-12 col-sm-6 col-md-4 col-lg-6 align-items-start mb-2" >
                         <router-link :to="{name: 'apartments_show', params: { id: apartment.id, slug:apartment.slug}}" class="text-decoration-none text-black" @click="store.prepare_reactive_call('single',apartment.id)">
                             <div class="card p-2" :class=" is_sponsorized(apartment) ? ('sponsorized') : ('')  ">
                                 <div class="px-1" style="height: 40px; line-height: 35px;">
@@ -144,7 +143,7 @@ import Comp_Map from '../components/Comp_Map.vue';
                                 <div class="overflow-hidden rounded-1"  style="height: 150px;">
                                     <img :src="`http://127.0.0.1:8000/storage/${apartment.cover_img}`" alt="" class="img-box"  style="width: 100%;">
                                 </div>                    
-                                    <div style="height: 40px; line-height: 40px;">
+                                    <div class="overflow-hidden" style="height: 40px; line-height: 40px;">
                                         <i>
                                             {{ apartment.address }}
                                         </i>
@@ -158,7 +157,7 @@ import Comp_Map from '../components/Comp_Map.vue';
                         </router-link>
                     </div>
                 </div>
-                <div class="px-0 ms-3 col-7 map-box" >
+                <div class="px-0 col-11 col-sm-12 col-md-12 col-lg-6  map-box"  >
                     <Comp_Map/>
                 </div>
             </div>
@@ -179,7 +178,6 @@ import Comp_Map from '../components/Comp_Map.vue';
 
     .box-sx {
         overflow-y: scroll;
-        max-height: 80vh;
     }
     .box-sx::-webkit-scrollbar{
   display: none;
@@ -187,4 +185,11 @@ import Comp_Map from '../components/Comp_Map.vue';
     .map-box{
         min-height: 80vh;
     }
+
+
+    @media (min-width: 992px) {
+    .box-sx {
+        max-height: 80vh;
+    }
+}
 </style>
