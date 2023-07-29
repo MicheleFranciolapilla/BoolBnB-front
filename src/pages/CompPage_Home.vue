@@ -21,6 +21,11 @@
             store.searched_text = "";
             console.log("ready for calling");
             this.page_update(1);
+            store.selected_range = 20;
+            store.selected_services = [];
+            store.city_to_search = '';
+            store.searched_text= '';
+            store.searched_city= '';
         },
         methods: 
         {

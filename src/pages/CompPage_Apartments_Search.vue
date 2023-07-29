@@ -125,34 +125,40 @@ import Comp_Map from '../components/Comp_Map.vue';
 <template>
 
     <h2 class="text-center mb-4">Risultati per "{{ store.searched_city }}"</h2>
+    <!-- <p class="text-center">{{ store.apartments.size }} Appartamenti trovati</p> -->
     
     
-    <div id="main-cont" v-if="!store.axios_running" class="row mx-auto">
-        <div class="container px-3">
-
-            <div class="row pb-2" >
-                <div class="row box-sx px-3 col-5">
-                    <div v-for="(apartment, index) in store.apartments " :key='index' class="px-1 col-6 mb-2 ">
+    <div v-if="!store.axios_running" class="row mx-auto">
+        <div class="container px-3 pb-5">
+            <div class="row mx-0 pb-2" >
+                <div class="row mx-0 box-sx col-12 col-md-12 col-lg-6 mb-3 p-1">
+                    <div v-for="(apartment, index) in store.apartments " :key='index' class="px-1 col-12 col-sm-6 col-md-4 col-lg-6 align-items-start mb-2" >
                         <router-link :to="{name: 'apartments_show', params: { id: apartment.id, slug:apartment.slug}}" class="text-decoration-none text-black" @click="store.prepare_reactive_call('single',apartment.id)">
-                            <div class="w-100 card p-1" :class=" is_sponsorized(apartment) ? ('sponsorized') : ('')  ">
+                            <div class="card p-2" :class=" is_sponsorized(apartment) ? ('sponsorized') : ('')  ">
                                 <div class="px-1" style="height: 40px; line-height: 35px;">
                                     <b>
                                         {{ apartment.title }} 
                                     </b>
+                                    <i class="fa-solid fa-receipt ms-2" v-if="is_sponsorized(apartment)" style="font-size: 12px; vertical-align:10%; color: rgba(0, 0, 0, 0.247);"></i>
                                 </div>
                                 <div class="overflow-hidden rounded-1"  style="height: 150px;">
                                     <img :src="`http://127.0.0.1:8000/storage/${apartment.cover_img}`" alt="" class="img-box"  style="width: 100%;">
                                 </div>                    
-                                    <div style="height: 40px; line-height: 40px;">
+                                    <div class="overflow-hidden" style="height: 40px; line-height: 40px;">
                                         <i>
                                             {{ apartment.address }}
+                                        </i>
+                                    </div>
+                                    <div  class="text-end" style="height: 20px; line-height: 20px; font-size: 14px;">
+                                        <i>
+                                             {{ apartment.distance }} Km dalla ricerca
                                         </i>
                                     </div>
                                 </div>
                         </router-link>
                     </div>
                 </div>
-                <div class="px-0 ms-3 col-7" >
+                <div class="px-0 col-11 col-sm-12 col-md-12 col-lg-6 mx-auto map-box"  >
                     <Comp_Map/>
                 </div>
             </div>
@@ -173,15 +179,47 @@ import Comp_Map from '../components/Comp_Map.vue';
 
     .sponsorized
     {
-        border: 5px solid blue !important;
+        background-color: rgba(9, 48, 14, 0.103);
     }
 
-    .box-sx {
-        height: 100vh;
-        overflow-y: scroll;
-        max-height: 90vh;
-    }
+    
     .box-sx::-webkit-scrollbar{
-  display: none;
+        background-color:#fff;
+    width:16px
+    }
+
+    .bos-sx::-webkit-scrollbar-track {
+    background-color:#fff
+    }
+
+    .box-sx::-webkit-scrollbar-track:hover {
+    background-color:#f4f4f4
+}
+
+/* scrollbar itself */
+.box-sx::-webkit-scrollbar-thumb {
+    background-color:#babac0;
+    border-radius:16px;
+    border:5px solid #fff
+}
+.box-sx::-webkit-scrollbar-thumb:hover {
+    background-color:#a0a0a5;
+    border:4px solid #f4f4f4
+}
+
+/* set button(top and bottom of the scrollbar) */
+.box-sx::-webkit-scrollbar-button {display:none}
+
+
+    .map-box{
+        min-height: 80vh;
+    }
+
+
+    @media (min-width: 992px) {
+    .box-sx {
+        max-height: 80vh;
+        overflow-y: scroll;
+    }
 }
 </style>

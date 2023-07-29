@@ -32,7 +32,7 @@ input[type=range] {
     height: 20px;
     -webkit-appearance: none;
     margin: 10px 0;
-    width: 30%;
+    width: 100%;
   }
   input[type=range]:focus {
     outline: none;
@@ -116,4 +116,8 @@ input[type=range] {
   }
   input[type=range]:focus::-ms-fill-upper {
     background: #1d7465;
+  }
+
+  input[type=check] {
+color: red;
   }

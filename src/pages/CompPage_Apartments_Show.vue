@@ -19,6 +19,7 @@ import axios from "axios";
                 store,
                 direct_call : false,
                 showCarousel: false,
+                showService: false,
             }
         },
         beforeRouteUpdate(to, from, next) 
@@ -56,6 +57,11 @@ import axios from "axios";
                 this.direct_call = true;
                 this.store.prepare_reactive_call('single', this.$route.params.id); 
             }
+            store.selected_range = 20;
+            store.selected_services = [];
+            store.city_to_search = '';
+            store.searched_text= '';
+            store.searched_city= '';
 
         },
         methods: 
@@ -143,32 +149,27 @@ import axios from "axios";
             </span>
         </p>
         <div class="row">
-            <div class="col-6 p-2">
+            <div class="col-12  col-lg-6 p-2">
                 <div class="overflow-hidden box-image-sx" style="height: 100%; max-height: 500px;">
                     <a href="#" @click.stop="openCarousel">
                         <img :src="`http://127.0.0.1:8000/storage/${store.one_apartment.cover_img}`" alt="" class="img-box">    
                     </a>
-                    
                 </div>
             </div>
-            <div class="col-6">
-                <div class="row">
-                    <div v-for="(pictures, index) in store.one_apartment.pictures" :key="index" class="col-6 p-2">
+            <div class="col-12 col-lg-6 ">
+                <div class="row px-1">
+                    <div v-for="(pictures, index) in store.one_apartment.pictures" :key="index" class="col-3 col-lg-6 p-1 p-lg-2">
                         <div class="overflow-hidden box-image-dx" style="height: 100%; max-height: 240px;">
                             <a href="#" @click.stop="openCarousel">
                                 <img :src="`http://127.0.0.1:8000/storage/${pictures.picture_url}`" alt="" :class="`img-box img-${index}`">    
                             </a>
-                            
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
+        <!-- offcanvas del carosello -->
         <div>
-
-            <!-- offcanvas del carosello -->
             <div v-if="showCarousel" class="modal show d-block background" id="modal-carousel" tabindex="-1" @click="handleCarouselClick">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content">
@@ -203,26 +204,27 @@ import axios from "axios";
                     </div>
                 </div>
             </div>
-
         </div>
-
-
+        <!-- specifiche appartamento -->
         <div class="row my-2">
-            <div class="col-6">
+            <div class="col-12 col-md-4 col-lg-3 col-xl-3">
                 <span><b>Stanze:</b> {{ store.one_apartment.number_of_rooms }}</span>
-                <span class="ms-3"><b>Bagni:</b> {{ store.one_apartment.number_of_bathrooms }}</span>
-                <span class="ms-3"><b>Dimensioni:</b> {{ store.one_apartment.square_meters }} Mq.</span>
             </div>
-            <div class="col-6">
+            <div class="col-12 col-md-4 col-lg-3 col-xl-3">
+                <span><b>Bagni:</b> {{ store.one_apartment.number_of_bathrooms }}</span>
+            </div>
+            <div class="col-12 col-md-4 col-lg-3 col-xl-3">
+                <span><b>Dimensioni:</b> {{ store.one_apartment.square_meters }} Mq.</span>
+            </div>
+            <div class="col-12 col-lg-3 col-xl-3">
                 <span>
                     <b>
                         Prezzo:
                     </b>
-                     {{ store.one_apartment.price }}
+                     {{ store.one_apartment.price }}&#x20AC;
                 </span>
             </div>
         </div>
-
         <hr>
 
                 <!-- descrizione apt -->
@@ -236,28 +238,40 @@ import axios from "axios";
 
         <!-- servizi -->
         <div class="row pb-2">
-            <div class="col-6">
-                <p>
+            <div class="col-12 col-lg-6">
+                <div>
                     <b>
                         Cosa troverai:
                     </b>
-                </p>
-                <div class="row">
-                    <div v-for="(service, index) in store.one_apartment.services" class="col-6 my-2">
-                        <i :class="service.icon" class="fa-xl"></i>
-                        <span class="ms-2">
+                    <span v-if="store.one_apartment.services.length > 4" class="ms-5 opacity-50 show-click show-btn d-lg-none" @click="(this.showService == true) ? this.showService = false : this.showService = true">
+                        <span v-if="!this.showService">
+                            <i>
+                                Mostra tutto
+                            </i>
+                        </span>
+                        <span v-else>
+                            <i>
+                                Mostra meno
+                            </i>
+                        </span>
+                    </span>
+                </div>
+                <div class="row mt-2 service-box" :style="(showService) ? 'max-height: none' : ''">
+                    <div v-for="(service, index) in store.one_apartment.services" class="col-6 col-md-4 col-xl-2 my-2">
+                        <i :class="service.icon"  style="color: rgba(0, 0, 0, 0.404);"></i>
+                        <span class="ms-2" style="font-size: 13px;">
                             {{ service.name }}
                         </span>
                     </div>
                 </div>
             </div>
 
-            <div class="col-6 my-3">
+            <!-- mappa -->
+            <div  class="col-12 col-lg-6" style="height: 30vh;">
+                <Comp_Map />
+            </div>
 
-                        <!-- mappa -->
-                <div style="height: 30vh;">
-                    <Comp_Map />
-                </div>
+            <div class="col-6 my-3">
                 
 
                 <div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
@@ -269,8 +283,7 @@ import axios from "axios";
 
             <!-- Overlay -->
             <div v-if="showCarousel" class="overlay" @click="closeCarousel" @mousedown="handleMouseDown"></div>
-            
-            
+
         </div>
 
 
@@ -283,18 +296,7 @@ import axios from "axios";
 </template>
 
 <style lang="scss">
-.box-image-sx {
-    border-top-left-radius: 30px;
-    border-bottom-left-radius: 30px;
-}
 
-.img-1 {
-    border-top-right-radius: 30px;
-}
-
-.img-3 {
-    border-bottom-right-radius: 30px;
-}
 
 .modal-open {
   overflow: hidden;
@@ -312,7 +314,7 @@ import axios from "axios";
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
-    z-index: 9999;
+    z-index: 999999!important;
 }
 
 .overlay.active {
@@ -330,4 +332,44 @@ import axios from "axios";
     }
 }
 
+.service-box {
+    max-height: 85px;
+    overflow: hidden;
+}
+
+.show-click {
+    cursor: pointer;
+}
+
+@media (max-width: 992px) {
+    .offcanvas.offcanvas-end {
+        width: 100%;
+    }
+}
+
+
+
+@media (min-width: 992px) {
+    .box-image-sx {
+        border-top-left-radius: 30px;
+        border-bottom-left-radius: 30px;
+    }
+
+    .img-1 {
+        border-top-right-radius: 30px;
+    }
+
+    .img-3 {
+        border-bottom-right-radius: 30px;
+    }
+
+    .offcanvas.offcanvas-end {
+        width: 50%;
+    }
+
+    .service-box {
+    max-height: none;
+    overflow: none;
+}
+}
 </style>

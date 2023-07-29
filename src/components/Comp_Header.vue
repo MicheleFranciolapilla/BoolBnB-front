@@ -198,17 +198,29 @@ import { store } from "../store";
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <router-link v-if="store.page_name != 'Home'" class="nav-link active text-white me-5" aria-current="page" to="/">
+            <i class="fa-solid fa-house"></i>
+            <span>
+                Home
+            </span>
+        </router-link>
         <div class="collapse navbar-collapse text-white" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Area personali</a>
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Area personale</a>
                     <ul class="dropdown-menu">
                         <li>
                             <a class="dropdown-item text-white" href="http://127.0.0.1:8000/login">Login</a>
                         </li>
                         <li>
                             <a class="dropdown-item text-white" href="http://127.0.0.1:8000/register">Registrazione</a>
+                        </li>
+                        <li>
+                            <a href=""><a class="dropdown-item text-white" href="/ChiSiamo">Chi Siamo</a></a>
+                        </li>
+                        <li>
+                            <a href=""><a class="dropdown-item text-white" href="http://127.0.0.1:8000/">Vai al Backend</a></a>
                         </li>
                         <!-- <li>
                             <hr class="dropdown-divider">
@@ -218,13 +230,7 @@ import { store } from "../store";
                         </li> -->
                     </ul>
                 </li>
-                <li class="nav-item ms-5">
-                    <router-link v-if="store.page_name != 'Home'" class="nav-link active text-white" aria-current="page" to="/">
-                        <i>
-                            Ritorna nella HomePage
-                        </i>
-                    </router-link>
-                </li>
+
             </ul>
             <form v-if="(store.page_name !== 'Search')" class="d-flex" role="search" @submit.prevent="ready_for_call()">
                 <input v-model="store.searched_text" autocomplete="off" class="form-control" type="search" placeholder="Cerca un'appartamento..." aria-label="Search" list="cities" @keyup="Searched_hint()" style="width: 300px;">
@@ -236,26 +242,38 @@ import { store } from "../store";
                 </button>
             </form>
         </div>
+
     </div>
 </nav>
 <div v-if="(store.page_name == 'Search')" class="container my-3" >
-    <form  class="d-flex w-50 mx-auto" role="search" @submit.prevent="ready_for_call()" style="margin-top: 20px;">
-        <input v-model="store.searched_text" autocomplete="off" class="form-control me-2 w-100" type="search" placeholder="Cerca un'appartamento..." aria-label="Search" list="cities" @keyup="Searched_hint()">
-        <datalist id="cities">
-          <option v-for="(city, index) in store.all_cities" :key="index" :value="city">{{ city }}</option>
-        </datalist>
-        <button class="btn" type="submit" @click.prevent="ready_for_call()">
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </button>
-    </form>
-    <div class="text-center mt-2">
-        <button class="btn btn-success">
-            Filtri Avanzati
+    <div class="row justify-content-center">
+        <div class="col-md-12 col-xl-6" >
+            <form  class="d-flex  mx-auto" role="search" @submit.prevent="ready_for_call()" style="margin-top: 20px;">
+                <input v-model="store.searched_text" autocomplete="off" class="form-control me-2 w-100" type="search" placeholder="Cerca un'appartamento..." aria-label="Search" list="cities" @keyup="Searched_hint()">
+                <datalist id="cities">
+                  <option v-for="(city, index) in store.all_cities" :key="index" :value="city">{{ city }}</option>
+                </datalist>
+                <button class="btn" type="submit" @click.prevent="ready_for_call()">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </form>
+        </div>
+
+    </div>
+    <div class="text-center mt-4">
+        <button class="btn btn-success" @click="(this.filter == true) ? this.filter = false : this.filter = true">
+            <span v-if="(!this.filter)">
+                Mostra Filtri Avanzati
+            </span>
+            <span v-else>
+                Nascondi Filtri Avanzati
+
+            </span>
         </button>
     </div>
     <div v-if="(this.filter)">
         <hr>
-        <div class="text-center mt-2">
+        <div class="text-center mt-2 row justify-content-center">
             <div>
                 <b>
                     Range di ricerca:
@@ -264,21 +282,29 @@ import { store } from "../store";
                     {{ store.selected_range }}Km
                 </span>
             </div>
-            <input class="text-success" type="range" id="range" name="range" :min="store.min_range" :max="store.max_range" v-model="store.selected_range" step="0.5"
-             v-on:change="ready_for_call(false)">    
+            <div class="col-12 col-md-7 col-xl-4 mt-1">
+                <input class="text-success" type="range" id="range" name="range" :min="store.min_range" :max="store.max_range" v-model="store.selected_range" step="0.5"
+                 v-on:change="ready_for_call(false)">    
+            </div>
         </div>
 
         <div>
-            <div class="text-center">
+            <div class="text-center mt-2">
                 <b>
                     Scegli uno o più servizi:
                 </b>
             </div>
-            <div class="row mt-2">
-                <div  v-for="(service, index) in store.services" :key="index" class="col-2">
+            <div class="row mt-3">
+                <div  v-for="(service, index) in store.services" :key="index" class="col-12 col-md-6 col-lg-4 col-xl-2">
                     <input type="checkbox" name="services[]" :id="index" v-model="store.selected_services" :value="service.id" v-on:change="services_changed()">
-                    <span>{{ service.name }}</span>
+                    <span class="ms-2">{{ service.name }}</span>
                 </div>
+            </div>
+            <div v-if="Number(store.selected_range) !== 20 || store.selected_services.length !== 0" class="text-center mt-2">
+                <button class="btn btn-warning" @click="this.store.selected_range = 20, this.store.selected_services = [], ready_for_call(false)">
+                    Reset filtri
+                </button>
+
             </div>
         </div>
         <hr>
@@ -286,3 +312,11 @@ import { store } from "../store";
 </div>
 
 </template>
+
+<style>
+
+nav li a{
+    text-decoration: none;
+}
+
+</style>
