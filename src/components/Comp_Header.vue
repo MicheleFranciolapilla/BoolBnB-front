@@ -289,6 +289,12 @@ import { store } from "../store";
                     <span>{{ service.name }}</span>
                 </div>
             </div>
+            <div v-if="store.selected_range !== 20 || store.selected_services.length !== 0" class="text-center mt-2">
+                <button class="btn btn-warning" @click="this.store.selected_range = 20, this.store.selected_services = [], ready_for_call(false)">
+                    Reset filtri
+                </button>
+
+            </div>
         </div>
         <hr>
     </div>
