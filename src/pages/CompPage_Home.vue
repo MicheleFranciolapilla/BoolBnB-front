@@ -68,22 +68,24 @@
             </div>
         </div>
         <div class="mt-3">
-            <nav aria-label="Page navigation">
-              <ul class="pagination mx-auto" style="max-width: 15%;">
-                <li class="page-item" :class="(this.store.currentpage === 1) ? 'disabled' : ''">
-                  <a class="page-link"  @click.prevent="page_update(this.store.currentpage - 1)" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                  </a>
-                </li>
-                <li class="page-item" :class="(this.store.currentpage === pages) ? 'active' : ''" aria-current="page" v-for="(pages,index) in this.store.maxPage ">
-                    <a class="page-link" @click.prevent="page_update(pages)" href="#" :style="(store.currentpage === pages) ? 'pointer-events: none; cursor: default;' : ''" >{{ pages }}</a>
-                </li>
-                <li class="page-item" :class="(this.store.currentpage === this.store.maxPage) ? 'disabled' : ''" >
-                  <a class="page-link" @click.prevent="page_update(this.store.currentpage + 1)" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                  </a>
-                </li>
-              </ul>
+            <nav aria-label="Page navigation container-fluid">
+                <div class="row justify-content-center">
+                    <ul class="pagination justify-content-center">
+                      <li class="page-item" :class="(this.store.currentpage === 1) ? 'disabled' : ''">
+                        <a class="page-link"  @click.prevent="page_update(this.store.currentpage - 1)" href="#" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                        </a>
+                      </li>
+                      <li class="page-item" :class="(this.store.currentpage === pages) ? 'active' : ''" aria-current="page" v-for="(pages,index) in this.store.maxPage ">
+                          <a class="page-link" @click.prevent="page_update(pages)" href="#" :style="(store.currentpage === pages) ? 'pointer-events: none; cursor: default;' : ''" >{{ pages }}</a>
+                      </li>
+                      <li class="page-item" :class="(this.store.currentpage === this.store.maxPage) ? 'disabled' : ''" >
+                        <a class="page-link" @click.prevent="page_update(this.store.currentpage + 1)" href="#" aria-label="Next">
+                          <span aria-hidden="true">&raquo;</span>
+                        </a>
+                      </li>
+                    </ul>
+                </div>
             </nav> 
         </div>
     </div>

@@ -119,10 +119,19 @@ import axios from "axios";
 </script>
 
 <template>
-    <div v-if="!store.axios_running" class="container">
-        <h1>
-            {{ store.one_apartment.title }}
-        </h1>
+    <div v-if="!store.axios_running" class="container mt-5 mb-5">
+        <div class="d-flex">
+            <h1 class="col-xl-10">
+                {{ store.one_apartment.title }}
+            </h1>
+            <div class="text-center mt-3 col-xl-2">
+                <!-- btn per form msg -->
+                <button class="btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
+                    Contatta l'Host!
+                </button>    
+            </div>
+        </div>
+        
         <p class="mt-3">
             <i>
                 {{store.one_apartment.address  }}
@@ -216,10 +225,12 @@ import axios from "axios";
 
         <hr>
 
-        <!-- mappa -->
-        <div style="height: 30vh;">
-            <Comp_Map />
-        </div>
+                <!-- descrizione apt -->
+                <p class="text-center">
+                    <i>
+                        "{{ store.one_apartment.description }}"
+                    </i>
+                </p>
 
         <hr>
 
@@ -243,18 +254,9 @@ import axios from "axios";
 
             <div class="col-6 my-3">
 
-                <!-- descrizione apt -->
-                <p class="text-center">
-                    <i>
-                        "{{ store.one_apartment.description }}"
-                    </i>
-                </p>
-
-                <div class="text-center">
-                    <!-- btn per form msg -->
-                    <button class="btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
-                    Contatta l'Host!
-                    </button>    
+                        <!-- mappa -->
+                <div style="height: 30vh;">
+                    <Comp_Map />
                 </div>
                 
 

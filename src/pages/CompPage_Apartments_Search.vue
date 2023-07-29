@@ -127,7 +127,7 @@ import Comp_Map from '../components/Comp_Map.vue';
     <h2 class="text-center mb-4">Risultati per "{{ store.searched_city }}"</h2>
     
     
-    <div v-if="!store.axios_running" class="row mx-auto">
+    <div id="main-cont" v-if="!store.axios_running" class="row mx-auto">
         <div class="container px-3">
 
             <div class="row pb-2" >
@@ -166,6 +166,11 @@ import Comp_Map from '../components/Comp_Map.vue';
 </template>
 
 <style lang="scss">
+
+    #main-cont{
+        height: 98vh;
+    }
+
     .sponsorized
     {
         border: 5px solid blue !important;

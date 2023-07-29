@@ -64,7 +64,7 @@
                 </div>
             </section>
             <section>
-                <div class="mt-2">
+                <div class="mt-2 d-none d-md-none d-sm-none d-lg-block d-xl-block d-xxl-block">
                     <ul>
                         <li class="mt-1 text-center" id="paragrafi">Partner</li>
                         <li>
@@ -114,22 +114,23 @@ footer a{
 
 
 footer img{
-    width: 100px;
-    height: 60px;
+    width: 80px!important;
+    height: 60px!important;
 }
+
 
 footer hr{
     color: rgb(214,222,35);
 }
 
 #logo-partner1{
-    width: 250px;
-    height: 65px;
+    width: 120px!important;
+    height: 65px!important;
 }
 
 #logo-partner2{
-    width: 250px;
-    height: 35px;
+    width: 130px!important;
+    height: 35px!important;
 }
 
 #footer-button{
