@@ -208,7 +208,7 @@ import { store } from "../store";
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Area personali</a>
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Area personale</a>
                     <ul class="dropdown-menu">
                         <li>
                             <a class="dropdown-item text-white" href="http://127.0.0.1:8000/login">Login</a>
@@ -218,6 +218,9 @@ import { store } from "../store";
                         </li>
                         <li>
                             <a href=""><a class="dropdown-item text-white" href="/ChiSiamo">Chi Siamo</a></a>
+                        </li>
+                        <li>
+                            <a href=""><a class="dropdown-item text-white" href="http://127.0.0.1:8000/">Vai al Backend</a></a>
                         </li>
                         <!-- <li>
                             <hr class="dropdown-divider">
