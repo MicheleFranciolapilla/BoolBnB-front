@@ -245,4 +245,9 @@
     // Uso del foglio di stile scss
     @use "./assets/style/main.scss" as *;
 
+    h1{
+      background-color: #C4D7B2;
+      margin-bottom: 0;
+    }
+
 </style>
