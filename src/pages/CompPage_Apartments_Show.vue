@@ -153,7 +153,7 @@ import axios from "axios";
             </div>
             <!-- offcanvas -->
             <div>
-                <div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel" style="width: 35vw;">
+                <div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
                     <MessageForm/>
                 </div>
             </div>    
@@ -304,7 +304,7 @@ import axios from "axios";
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
-    z-index: 9999;
+    z-index: 999999!important;
 }
 
 .overlay.active {
@@ -322,22 +322,28 @@ import axios from "axios";
     }
 }
 
+@media (max-width: 992px) {
+    .offcanvas.offcanvas-end {
+        width: 100%;
+    }
+}
+
 @media (min-width: 992px) {
     .box-image-sx {
+        border-top-left-radius: 30px;
+        border-bottom-left-radius: 30px;
+    }
 
-    
-border-top-left-radius: 30px;
-border-bottom-left-radius: 30px;
-}
+    .img-1 {
+        border-top-right-radius: 30px;
+    }
 
+    .img-3 {
+        border-bottom-right-radius: 30px;
+    }
 
-
-.img-1 {
-border-top-right-radius: 30px;
-}
-
-.img-3 {
-border-bottom-right-radius: 30px;
-}
+    .offcanvas.offcanvas-end {
+        width: 50%;
+    }
 }
 </style>
