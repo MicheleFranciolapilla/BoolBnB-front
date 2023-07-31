@@ -226,7 +226,28 @@ import { store } from "../store";
                                 console.error("Error fetching data:", error);
                             });
                 }
-            },  
+            }, 
+            
+            changeRange() {
+                if (store.selected_range > 20) {
+                  store.selected_zoom = 11;
+                } else if (store.selected_range > 22.5) {
+                  store.selected_zoom = 10;
+                } else if (store.selected_range <= 20 && store.selected_range > 7) {
+                  store.selected_zoom = 12;
+                } else if (store.selected_range < 7 && store.selected_range > 10) {
+                  store.selected_zoom = 12;
+                } else if (store.selected_range < 10 && store.selected_range > 5) {
+                  store.selected_zoom = 13;
+                } else if (store.selected_range < 5 && store.selected_range > 3) {
+                  store.selected_zoom = 14;
+                } else if (store.selected_range < 3 && store.selected_range > 1) {
+                  store.selected_zoom = 14;
+                } else if (store.selected_range <= 1) {
+                  store.selected_zoom = 15;
+                }
+
+            }
         },
     }
 </script>
@@ -313,7 +334,7 @@ import { store } from "../store";
             </div>
             <div class="col-12 col-md-7 col-xl-4 mt-1">
                 <input class="text-success" type="range" id="range" name="range" :min="store.min_range" :max="store.max_range" v-model="store.selected_range" step="0.5"
-                 v-on:change="ready_for_call(false)">    
+                 v-on:change="ready_for_call(false), changeRange()">    
             </div>
         </div>
 

@@ -26,6 +26,7 @@ import Comp_Map from '../components/Comp_Map.vue';
         },
         created()
         {
+            this.store.selected_zoom = 12;
             this.store.page_name = "Search";
             if (this.store.calls_params.call_type !== this.store.call_type_array.indexOf('all'))
             {
@@ -50,6 +51,7 @@ import Comp_Map from '../components/Comp_Map.vue';
                         this.store.cityQuery['latitude'] = this.$route.query.lat;
                         this.store.cityQuery['longitude'] = this.$route.query.long;
                         this.store.cityQuery['address'] = this.$route.query.address;
+                        store.selected_range = this.store.cityQuery['range'];
                         this.store.selected_range = this.$route.query.range;
                         if (this.store.selected_range > this.store.max_range)
                             this.store.selected_range = this.store.max_range;
@@ -146,7 +148,7 @@ import Comp_Map from '../components/Comp_Map.vue';
 
             divElement.dispatchEvent(clickEvent);
 
-            }
+            },
         }
     }
 
