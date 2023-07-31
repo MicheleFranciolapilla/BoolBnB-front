@@ -76,17 +76,23 @@ import axios from "axios";
                 else
                     return false;
             },
-            openCarousel(event) 
+
+            openCarousel(index) 
             {
-                // evita di cambiare URL
-                event.preventDefault();
-
+                // Imposta lo showCarousel su true
                 this.showCarousel = true;
-
-                document.body.classList.add('modal-open');
-
+                // Imposta l'indice dell'immagine cliccata come indice attivo nel carosello
+                this.$nextTick(() => {
+                    const carouselElement = document.getElementById('carouselExampleFade');
+                    const bsCarousel = new bootstrap.Carousel(carouselElement);
+                    bsCarousel.to(index);
+                });
+                // Rimuovi la classe "modal-open" dal body per consentire lo scorrimento della pagina
+                document.body.classList.remove('modal-open');
+                // Aggiungi l'evento click al documento per gestire la chiusura del carosello
                 document.addEventListener('click', this.handleDocumentMouseClick.bind(this));
             },
+            
             handleDocumentMouseClick(event) 
             {
                 const carouselElement = document.getElementById('carouselExampleFade');
@@ -97,6 +103,7 @@ import axios from "axios";
                     this.closeCarousel();
                 }
             },
+
             handleCarouselClick(event) 
             {
                 const carouselElement = document.getElementById('carouselExampleFade');
@@ -107,6 +114,7 @@ import axios from "axios";
                     this.closeCarousel();
                 }
             },
+
             closeCarousel() 
             {
                 this.showCarousel = false;
@@ -126,7 +134,7 @@ import axios from "axios";
 
 <template>
     <div v-if="!store.axios_running" class="container">
-        <div class="my-4 align-items-center ">
+        <div class="my-4">
             <div class="row mb-2">
                 <!-- titoli -->
                 <div class="col-12 col-md-9 text-center text-md-start">
@@ -163,7 +171,7 @@ import axios from "axios";
         <div class="row">
             <div class="col-12  col-lg-6 p-2">
                 <div class="overflow-hidden box-image-sx" style="height: 100%; max-height: 500px;">
-                    <a href="#" @click.stop="openCarousel">
+                    <a href="#" @click.stop="openCarousel(0)">
                         <img :src="`http://127.0.0.1:8000/storage/${store.one_apartment.cover_img}`" alt="" class="img-box">    
                     </a>
                 </div>
@@ -172,7 +180,7 @@ import axios from "axios";
                 <div class="row px-1">
                     <div v-for="(pictures, index) in store.one_apartment.pictures" :key="index" class="col-3 col-lg-6 p-1 p-lg-2">
                         <div class="overflow-hidden box-image-dx" style="height: 100%; max-height: 240px;">
-                            <a href="#" @click.stop="openCarousel">
+                            <a href="#" @click.stop="openCarousel(index + 1)">
                                 <img :src="`http://127.0.0.1:8000/storage/${pictures.picture_url}`" alt="" :class="`img-box img-${index}`">    
                             </a>
                         </div>
