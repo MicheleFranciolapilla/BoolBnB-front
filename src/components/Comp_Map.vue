@@ -75,6 +75,8 @@ onMounted(async () => {
 
         });
 
+        marker.set('markerId', markerData.aptIdent);
+
         // Aggiungi un listener per l'evento di click sul marker
         marker.addListener('click', () => {
             // Apri il link associato al marker in una nuova finestra
@@ -89,10 +91,16 @@ onMounted(async () => {
 
                 let aptRef = document.getElementById(markerData.aptIdent);
              
+
+
+
+                openInfoWindow(marker, markerData);
+
                 if (aptRef) {
                     aptRef.style.opacity = '0.7';
                 }
-            }
+        }
+                
         });
 
         marker.addListener('mouseout', () => {
@@ -103,8 +111,11 @@ onMounted(async () => {
                 if (aptRef) {
                     aptRef.style.opacity = '1';
                 }
+
             }
         });
+
+        
     });
 });
 
@@ -130,6 +141,13 @@ function openInfoWindow(marker, markerData) {
   // Open the InfoWindow on the map at the clicked marker's position
   infoWindow.value.open(mapDiv.value, marker);
 }
+
+// function closeInfoWindow() {
+//   if (infoWindow) {
+//     infoWindow.value.close();
+//     console.log('chiudo')
+//   }
+// }
 </script>
 
 <template>
