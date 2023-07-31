@@ -158,7 +158,8 @@ export const store = reactive(
         direct_search_only_city : false,
         latitude : "",
         longitude : "",
-        
+        house : `${import.meta.env.BASE_URL}iconAprtment.png`,
+
 
 
 

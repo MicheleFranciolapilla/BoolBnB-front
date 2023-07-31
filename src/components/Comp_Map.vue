@@ -24,6 +24,9 @@ const loader = new Loader({ apiKey: GOOGLE_MAPS_API_KEY });
 const mapDiv = ref(null);
 const markers = nostriMarker;
 const infoWindow = ref(null);
+const image = store.house
+
+
 
 onMounted(async () => {
     await loader.load();
@@ -70,7 +73,8 @@ onMounted(async () => {
             position: markerData.position,
             map,
             title: markerData.title,
-            info: markerData.aptIdent
+            info: markerData.aptIdent,
+            icon: image
 
 
         });
