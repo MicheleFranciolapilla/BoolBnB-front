@@ -145,10 +145,13 @@ function openInfoWindow(marker, markerData) {
   infoWindow.value.setContent(`
     <div style="max-width: 320px; max-height: 320px;">
       
-      <img src="http://127.0.0.1:8000/storage/${markerData.cover_image}" style="width : 70%" >
-      <h6>${markerData.title}</h6>
-      <h6>${markerData.price}&#8364;</h6>
-      <a class="text-black text-decoration-none" href="http://localhost:5174/dettaglio/${markerData.id}/${markerData.slug}"><b>vai alla pagina</b></a>
+      
+        <div style="height: 150px; width: 200px; overflow: hidden;">
+            <img src="http://127.0.0.1:8000/storage/${markerData.cover_image}" style="object-fit: cover;object-position: bottom;width: 100%;height: 100%;" >
+        </div>
+        <h6>${markerData.title}</h6>
+        <h6>${markerData.price}&#8364;</h6>
+        <a class="text-black text-decoration-none" href="http://localhost:5174/dettaglio/${markerData.id}/${markerData.slug}"><b>vai alla pagina</b></a>
     </div>
   `);
 
