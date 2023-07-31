@@ -84,10 +84,48 @@ import { store } from "../store";
                 }
             },
 
+            clean_input()
+            {
+                const text_length = this.store.searched_text.length;
+                const last_char = this.store.searched_text.slice(-1).toLowerCase();
+                if (text_length > 1)
+                    var before_last = this.store.searched_text.slice(-2, -1).toLowerCase();
+                const without_last = this.store.searched_text.slice(0, -1);
+                console.log("tutto: ", this.store.searched_text);
+                console.log("ultimo: ", last_char);
+                console.log("penultimo: ", before_last);
+                console.log("tagliato: ", without_last);
+                if ( ((last_char >= "a") && (last_char <= "z")) || (!isNaN(last_char)) || (last_char === " ") || (last_char === '\b') )
+                {
+                    if ((text_length === 1) && !((last_char >= "a") && (last_char <= "z")))
+                        this.store.searched_text = without_last;
+                    else if ((text_length > 1) && (last_char === " ") && (before_last === " "))
+                        this.store.searched_text = without_last;
+                    else if ((text_length > 1) && (!isNaN(last_char)) && (before_last >= "a") && (before_last <= "z"))
+                        this.store.searched_text = without_last;
+                }
+                else
+                {
+                    this.store.searched_text = without_last;
+                }
+            },
+
+            best_matches()
+            {
+                this.click_on_hint = false;
+                console.log("tasto premuto");
+                console.log("click on hint: ", this.click_on_hint);
+                // if (this.store.searched_text.length > 3)
+            },
+
             Searched_hint()
             {
                 this.click_on_hint = false;
                 console.log("tasto premuto");
+                console.log("click on hint: ", this.click_on_hint);
+                // this.clean_input();
+                console.log("testo attuale: ",this.store.searched_text);
+                console.log("dimensione del testo attuale: ",this.store.searched_text.length);
                 if (store.searched_text.length > 3) 
                 {
                     const tomTomUrl = `https://api.tomtom.com/search/2/geocode/${store.searched_text}.json?key=mDuLGwpUfBez8sET5BVhGMRbc4FRXzB4&countrySet=IT&limit=100&minFuzzyLevel=2&typeahead=false`;
@@ -96,7 +134,7 @@ import { store } from "../store";
                             .then(data => 
                             {
                                 let results = data.results;
-                                console.log(results);
+                                // console.log(results);
                                 // Create a Map to store unique elements
                                 // console.log(results)
                                 const uniqueElements = new Map();
@@ -151,6 +189,7 @@ import { store } from "../store";
                                 store.RaccoltaIndirizzi = uniqueElementsArray            
                                 let hintList = document.getElementById('cities');
                                 hintList.innerHTML = '';
+                                console.log("unique elements array: ",uniqueElementsArray);
                                 store.RaccoltaIndirizzi.forEach(element => 
                                 {
                                     // Create a new option element
