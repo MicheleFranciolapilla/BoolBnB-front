@@ -32,7 +32,6 @@ import Comp_Map from '../components/Comp_Map.vue';
                 if ((!(this.$route.params.city) && (window.location.search.length < 1)) ||
                     ((this.$route.params.city) && (window.location.search.length > 0)))
                 {
-                    console.log("hai digitato ad capocchiam quindi te ne vai alla home");
                     this.$router.push({ name: 'home' });
                 }
                 else 
@@ -57,7 +56,11 @@ import Comp_Map from '../components/Comp_Map.vue';
                         else if (this.store.selected_range < this.store.min_range)
                                 this.store.selected_range = this.store.min_range;
                         if (this.$route.query.services)
-                            this.store.selected_services = this.$route.query.services;
+                        {
+                            this.store.selected_services = [];
+                            for (let i = 0; i < this.$route.query.services.length; i++)
+                            this.store.selected_services.push(this.$route.query.services[i]);
+                        }
                         this.$router.replace({                                
                                                 name: 'apartments_search',
                                                 query: 
@@ -85,33 +88,33 @@ import Comp_Map from '../components/Comp_Map.vue';
                 {
                     apartment.sponsors.forEach( sponsor => 
                     {   
-                        console.log("");
-                        console.log("");
-                        console.log("Appartamento: ", apartment.id, " - ",apartment.title);
+                        // console.log("");
+                        // console.log("");
+                        // console.log("Appartamento: ", apartment.id, " - ",apartment.title);
                         const expire_date_msec = Date.parse(sponsor.pivot.expire_at);
-                        console.log('--------------------------------------------------------');
-                        console.log("Data di scadenza: ", sponsor.pivot.expire_at);
-                        console.log("Time relativo alla scadenza: ",expire_date_msec);
+                        // console.log('--------------------------------------------------------');
+                        // console.log("Data di scadenza: ", sponsor.pivot.expire_at);
+                        // console.log("Time relativo alla scadenza: ",expire_date_msec);
 
                         const now = new Date();
-                        console.log("Data attuale in Giappone: ", now);
-                        console.log("Time attuale in Giappone: ", now.getTime());
+                        // console.log("Data attuale in Giappone: ", now);
+                        // console.log("Time attuale in Giappone: ", now.getTime());
 
                         const it_zone = { timeZone : 'Europe/Rome' };
                         const now_it = new Date(now.toLocaleString('en-US', it_zone));
                         const now_it_msec = now_it.getTime();
-                        console.log("Data attuale in Italia: ", now_it);
-                        console.log("Time attuale in Italia: ", now_it_msec);
-                        console.log('--------------------------------------------------------');
+                        // console.log("Data attuale in Italia: ", now_it);
+                        // console.log("Time attuale in Italia: ", now_it_msec);
+                        // console.log('--------------------------------------------------------');
 
                         if (now_it_msec < expire_date_msec)
                         {
-                            console.log("SPONSOR ATTIVO");
+                            // console.log("SPONSOR ATTIVO");
                             sponsorized = true;
                         }
                         else
-                            console.log("SPONSOR SCADUTO");
-                        console.log("");
+                        //     console.log("SPONSOR SCADUTO");
+                        // console.log("");
                         console.log("");
                     });
                 }
