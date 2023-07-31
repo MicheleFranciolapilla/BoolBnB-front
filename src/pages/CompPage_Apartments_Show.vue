@@ -260,7 +260,7 @@ import axios from "axios";
                     <b>
                         Cosa troverai:
                     </b>
-                    <span v-if="store.one_apartment.services.length > 4" class="ms-5 opacity-50 show-click show-btn d-lg-none" @click="(this.showService == true) ? this.showService = false : this.showService = true">
+                    <span class="ms-5 opacity-50 show-click show-btn d-lg-none" @click="(this.showService == true) ? this.showService = false : this.showService = true">
                         <span v-if="!this.showService">
                             <i>
                                 Mostra tutto
