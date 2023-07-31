@@ -16,6 +16,10 @@ let nostriMarker = ref(
 let nostraMap = {
             center: { lat:  parseFloat(store.one_apartment.latitude), lng: parseFloat(store.one_apartment.longitude) },
             zoom: 16,
+            mapTypeControl: false,
+            streetViewControl: false,
+            overviewMapControl: false,
+            rotateControl: false
         };
 
 
@@ -36,6 +40,11 @@ onMounted(async () => {
         nostraMap = {
             center: { lat:  parseFloat(store.cityQuery.latitude), lng: parseFloat(store.cityQuery.longitude)},
             zoom: 12,
+            mapTypeControl: false,
+            streetViewControl: false,
+            overviewMapControl: false,
+            rotateControl: false,
+            
         };
 
         nostriMarker.value.pop();
@@ -74,7 +83,8 @@ onMounted(async () => {
             map,
             title: markerData.title,
             info: markerData.aptIdent,
-            icon: image
+            icon: image,
+            animation:google.maps.Animation.BOUNCE
 
 
         });
