@@ -132,7 +132,7 @@ import Comp_Map from '../components/Comp_Map.vue';
         <div class="container px-3 pb-5">
             <div class="row mx-0 pb-2" >
                 <div class="row mx-0 box-sx col-12 col-md-12 col-lg-6 mb-3 p-1">
-                    <div v-for="(apartment, index) in store.apartments " :key='index' class="px-1 col-12 col-sm-6 col-md-4 col-lg-6 align-items-start mb-2" >
+                    <div v-for="(apartment, index) in store.apartments " :key='index' class="px-1 col-12 col-sm-6 col-md-4 col-lg-6 align-items-start mb-2" :id="apartment.id + apartment.slug">
                         <router-link :to="{name: 'apartments_show', params: { id: apartment.id, slug:apartment.slug}}" class="text-decoration-none text-black" @click="store.prepare_reactive_call('single',apartment.id)">
                             <div class="card p-2" :class=" is_sponsorized(apartment) ? ('sponsorized') : ('')  ">
                                 <div class="px-1" style="height: 40px; line-height: 35px;">
