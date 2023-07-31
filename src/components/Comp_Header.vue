@@ -216,12 +216,9 @@ import { store } from "../store";
                         <li>
                             <a class="dropdown-item text-white" href="http://127.0.0.1:8000/register">Registrazione</a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href=""><a class="dropdown-item text-white" href="/ChiSiamo">Chi Siamo</a></a>
-                        </li>
-                        <li>
-                            <a href=""><a class="dropdown-item text-white" href="http://127.0.0.1:8000/">Vai al Backend</a></a>
-                        </li>
+                        </li> -->
                         <!-- <li>
                             <hr class="dropdown-divider">
                         </li>
