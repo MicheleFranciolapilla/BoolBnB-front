@@ -87,6 +87,7 @@ import { store } from "../store";
             Searched_hint()
             {
                 this.click_on_hint = false;
+                console.log("tasto premuto");
                 if (store.searched_text.length > 3) 
                 {
                     const tomTomUrl = `https://api.tomtom.com/search/2/geocode/${store.searched_text}.json?key=mDuLGwpUfBez8sET5BVhGMRbc4FRXzB4&countrySet=IT&limit=100&minFuzzyLevel=2&typeahead=false`;
@@ -95,6 +96,7 @@ import { store } from "../store";
                             .then(data => 
                             {
                                 let results = data.results;
+                                console.log(results);
                                 // Create a Map to store unique elements
                                 // console.log(results)
                                 const uniqueElements = new Map();
@@ -216,23 +218,14 @@ import { store } from "../store";
                         <li>
                             <a class="dropdown-item text-white" href="http://127.0.0.1:8000/register">Registrazione</a>
                         </li>
-                        <!-- <li>
-                            <a href=""><a class="dropdown-item text-white" href="/ChiSiamo">Chi Siamo</a></a>
-                        </li> -->
-                        <!-- <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">Profilo</a>
-                        </li> -->
                     </ul>
                 </li>
 
             </ul>
             <form v-if="(store.page_name !== 'Search')" class="d-flex" role="search" @submit.prevent="ready_for_call()">
                 <input v-model="store.searched_text" autocomplete="off" class="form-control" type="search" placeholder="Cerca un'appartamento..." aria-label="Search" list="cities" @keyup="Searched_hint()" style="width: 300px;">
-                <datalist id="cities">
-                  <option v-for="(city, index) in store.all_cities" :key="index" :value="city">{{ city }}</option>
+                <datalist id="cities" v-if="!click_on_hint">
+                  <!-- <option v-for="(city, index) in store.all_cities" :key="index" :value="city">{{ city }}</option> -->
                 </datalist>
                 <button class="btn" type="submit" @click.prevent="ready_for_call()">
                   <i class="fa-solid fa-magnifying-glass text-white ms-0"></i>
@@ -247,8 +240,8 @@ import { store } from "../store";
         <div class="col-md-12 col-xl-6" >
             <form  class="d-flex  mx-auto" role="search" @submit.prevent="ready_for_call()" style="margin-top: 20px;">
                 <input v-model="store.searched_text" autocomplete="off" class="form-control me-2 w-100" type="search" placeholder="Cerca un'appartamento..." aria-label="Search" list="cities" @keyup="Searched_hint()">
-                <datalist id="cities">
-                  <option v-for="(city, index) in store.all_cities" :key="index" :value="city">{{ city }}</option>
+                <datalist id="cities" v-if="!click_on_hint">
+                  <!-- <option v-for="(city, index) in store.all_cities" :key="index" :value="city">{{ city }}</option> -->
                 </datalist>
                 <button class="btn" type="submit" @click.prevent="ready_for_call()">
                   <i class="fa-solid fa-magnifying-glass"></i>
