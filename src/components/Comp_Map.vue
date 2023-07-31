@@ -16,6 +16,10 @@ let nostriMarker = ref(
 let nostraMap = {
             center: { lat:  parseFloat(store.one_apartment.latitude), lng: parseFloat(store.one_apartment.longitude) },
             zoom: 16,
+            mapTypeControl: false,
+            streetViewControl: false,
+            overviewMapControl: false,
+            rotateControl: false
         };
 
 
@@ -36,6 +40,11 @@ onMounted(async () => {
         nostraMap = {
             center: { lat:  parseFloat(store.cityQuery.latitude), lng: parseFloat(store.cityQuery.longitude)},
             zoom: 12,
+            mapTypeControl: false,
+            streetViewControl: false,
+            overviewMapControl: false,
+            rotateControl: false,
+            
         };
 
         nostriMarker.value.pop();
@@ -74,7 +83,8 @@ onMounted(async () => {
             map,
             title: markerData.title,
             info: markerData.aptIdent,
-            icon: image
+            icon: image,
+            animation:google.maps.Animation.BOUNCE
 
 
         });
@@ -135,10 +145,13 @@ function openInfoWindow(marker, markerData) {
   infoWindow.value.setContent(`
     <div style="max-width: 320px; max-height: 320px;">
       
-      <img src="http://127.0.0.1:8000/storage/${markerData.cover_image}" style="width : 70%" >
-      <h6>${markerData.title}</h6>
-      <h6>${markerData.price}&#8364;</h6>
-      <a class="text-black text-decoration-none" href="http://localhost:5174/dettaglio/${markerData.id}/${markerData.slug}"><b>vai alla pagina</b></a>
+      
+        <div style="height: 150px; width: 200px; overflow: hidden;">
+            <img src="http://127.0.0.1:8000/storage/${markerData.cover_image}" style="object-fit: cover;object-position: bottom;width: 100%;height: 100%;" >
+        </div>
+        <h6>${markerData.title}</h6>
+        <h6>${markerData.price}&#8364;</h6>
+        <a class="text-black text-decoration-none" href="http://localhost:5174/dettaglio/${markerData.id}/${markerData.slug}"><b>vai alla pagina</b></a>
     </div>
   `);
 
