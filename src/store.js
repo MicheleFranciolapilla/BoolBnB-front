@@ -159,6 +159,7 @@ export const store = reactive(
         latitude : "",
         longitude : "",
         house : `${import.meta.env.BASE_URL}iconAprtment.png`,
+        selected_zoom : 12,
 
 
 

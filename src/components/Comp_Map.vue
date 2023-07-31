@@ -39,7 +39,7 @@ onMounted(async () => {
     if(store.page_name == 'Search'){
         nostraMap = {
             center: { lat:  parseFloat(store.cityQuery.latitude), lng: parseFloat(store.cityQuery.longitude)},
-            zoom: 12,
+            zoom: store.selected_zoom,
             mapTypeControl: false,
             streetViewControl: false,
             overviewMapControl: false,
@@ -84,7 +84,7 @@ onMounted(async () => {
             title: markerData.title,
             info: markerData.aptIdent,
             icon: image,
-            animation:google.maps.Animation.BOUNCE
+
 
 
         });
