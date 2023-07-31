@@ -125,29 +125,41 @@ import axios from "axios";
 </script>
 
 <template>
-    <div v-if="!store.axios_running" class="container mt-5 mb-5">
-        <div class="d-flex">
-            <h1 class="col-xl-10">
-                {{ store.one_apartment.title }}
-            </h1>
-            <div class="text-center mt-3 col-xl-2">
-                <!-- btn per form msg -->
-                <button class="btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
+    <div v-if="!store.axios_running" class="container">
+        <div class="my-4 align-items-center ">
+            <div class="row mb-2">
+                <!-- titoli -->
+                <div class="col-12 col-md-9 text-center text-md-start">
+                    <h1>
+                        {{ store.one_apartment.title }}
+                    </h1>
+                    <div>
+                        <i>
+                            {{store.one_apartment.address  }}
+                        </i>
+                        <span class="ms-2">
+                            <b>
+                                {{store.one_apartment.city }}
+                            </b>
+                        </span>
+                    </div>    
+                </div>
+                <!-- tasto contatta -->
+                <div class="col-3 text-end d-none d-md-block align-self-center">
+                    <!-- btn per form msg -->
+                    <button class="btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
                     Contatta l'Host!
-                </button>    
+                    </button>    
+                </div>
             </div>
+            <!-- offcanvas -->
+            <div>
+                <div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
+                    <MessageForm/>
+                </div>
+            </div>    
         </div>
-        
-        <p class="mt-3">
-            <i>
-                {{store.one_apartment.address  }}
-            </i>
-            <span class="ms-2">
-                <b>
-                    {{store.one_apartment.city }}
-                </b>
-            </span>
-        </p>
+        <!-- carosello -->
         <div class="row">
             <div class="col-12  col-lg-6 p-2">
                 <div class="overflow-hidden box-image-sx" style="height: 100%; max-height: 500px;">
@@ -207,16 +219,16 @@ import axios from "axios";
         </div>
         <!-- specifiche appartamento -->
         <div class="row my-2">
-            <div class="col-12 col-md-4 col-lg-3 col-xl-3">
+            <div class="col-6 col-md-4 col-lg-3 col-xl-12">
                 <span><b>Stanze:</b> {{ store.one_apartment.number_of_rooms }}</span>
             </div>
-            <div class="col-12 col-md-4 col-lg-3 col-xl-3">
+            <div class="col-6 col-md-4 col-lg-3 col-xl-12">
                 <span><b>Bagni:</b> {{ store.one_apartment.number_of_bathrooms }}</span>
             </div>
-            <div class="col-12 col-md-4 col-lg-3 col-xl-3">
+            <div class="col-6 col-md-4 col-lg-3 col-xl-12">
                 <span><b>Dimensioni:</b> {{ store.one_apartment.square_meters }} Mq.</span>
             </div>
-            <div class="col-12 col-lg-3 col-xl-3">
+            <div class="col-12 col-lg-3 col-xl-12">
                 <span>
                     <b>
                         Prezzo:
@@ -226,19 +238,24 @@ import axios from "axios";
             </div>
         </div>
         <hr>
-
-                <!-- descrizione apt -->
-                <p class="text-center">
-                    <i>
-                        "{{ store.one_apartment.description }}"
-                    </i>
-                </p>
-
+        <!-- descrizione apt -->
+        <p class="text-center">
+            <i>
+                "{{ store.one_apartment.description }}"
+            </i>
+        </p>
+        <!-- bottone che appare solo nel mobile -->
+        <div class="col-12 text-center  d-md-none ">
+            <!-- btn per form msg -->
+            <button class="btn btn-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
+            Contatta l'Host!
+            </button>    
+        </div>
         <hr>
 
         <!-- servizi -->
         <div class="row pb-2">
-            <div class="col-12 col-lg-6">
+            <div class="col-12">
                 <div>
                     <b>
                         Cosa troverai:
@@ -266,18 +283,12 @@ import axios from "axios";
                 </div>
             </div>
 
-            <!-- mappa -->
-            <div  class="col-12 col-lg-6" style="height: 30vh;">
-                <Comp_Map />
-            </div>
+            <hr>
 
-            <div class="col-6 my-3">
-                
-
-                <div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
-
-                    <MessageForm/>
-
+            <div class="col-12 my-3">
+                 <!-- mappa -->
+                <div style="height: 50vh;">
+                    <Comp_Map />
                 </div>
             </div>
 
