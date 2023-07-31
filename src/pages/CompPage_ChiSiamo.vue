@@ -64,12 +64,6 @@
               Andrea Ferrini
         </span>
       </div>
-      <div class="card col-6 col-md-3 mx-auto">
-        <img class="img-fluid" src="public\logo chatgpt.webp" alt="">
-        <span class="text-center mt-2">
-              L' amico tuo / Il 6° membro 
-        </span>
-      </div>
     </div>
 
 

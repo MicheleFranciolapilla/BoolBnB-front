@@ -33,7 +33,7 @@
                             <div class="col-md-6 col-12">
                                 <ul class="flex-column align-items-center">
                                     <li class="mt-1">
-                                        <a href="">Chi Siamo</a>
+                                        <a href="/ChiSiamo">Chi Siamo</a>
                                     </li>
                                     <li class="mt-1"></li>
                                     <li class="mt-1">Lavora con noi</li>
