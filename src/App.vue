@@ -236,7 +236,7 @@
       <div class="wrapper">
         <div class="header" v-if="store.page_name !== '404'">
           <Comp_Header />
-          <h1 v-if="(store.page_name == 'Home')" class="text-center mt-5 display-3"><strong class="text-white">Find the perfect spot for your vacation on Bool B&B</strong></h1>
+          <h1 v-if="(store.page_name == 'Home')" class="text-center mt-5 display-3"><strong class="animate__fadeInDown animate__animated text-white">Trova l'appartamento dei tuoi sogni con Bool B&B</strong></h1>
         </div>
         <router-view id="router"></router-view>
       </div>
