@@ -154,6 +154,9 @@ import { store } from "../store";
 
             get_ranking(city, address, text)
             {
+                console.log("city",city);
+                console.log("address",address);
+                console.log("text",text);
                 let result = 0;
                 let city_matches = 0;
                 let address_matches = 0;
@@ -183,7 +186,7 @@ import { store } from "../store";
 
             best_matches()
             {
-                const tomTomUrl = `https://api.tomtom.com/search/2/geocode/${store.searched_text}.json?key=mDuLGwpUfBez8sET5BVhGMRbc4FRXzB4&countrySet=IT&limit=100&minFuzzyLevel=2&typeahead=false`;
+                const tomTomUrl = `https://api.tomtom.com/search/2/geocode/${store.searched_text}.json?key=mDuLGwpUfBez8sET5BVhGMRbc4FRXzB4&countrySet=IT&limit=100&minFuzzyLevel=2&typeahead=true`;
                 fetch(tomTomUrl)
                     .then(response => response.json())
                         .then(data =>
@@ -197,7 +200,7 @@ import { store } from "../store";
                                     if ( ["Geography", "Street"].includes(element.type) )
                                     {
                                         var city        = element.address.municipality;
-                                        var address     = city;
+                                        var address     = element.address.municipality;
                                         var type        = element.type;
                                         var latitude    = element.position.lat;
                                         var longitude   = element.position.lon;
@@ -243,26 +246,37 @@ import { store } from "../store";
                             let hintList = document.getElementById('cities');
                             hintList.innerHTML = '';
                             this.store.RaccoltaIndirizzi = uniqueElementsArray;
+                            let counter = -1;
                             this.store.RaccoltaIndirizzi.forEach( element =>
                             {
-                                // let element_parts = element.split('_');
-                                // let new_obj =   {
-                                //                     'city'      : element_parts[0],
-                                //                     'address'   : element_parts[1],
-                                //                     'type'      : element_parts[2],
-                                //                     'latitude'  : element_parts[3],
-                                //                     'longitude' : element_parts[4]
-                                //                 };
-                                // this.store.RaccoltaIndirizzi.push(new_obj);
                                 let option = document.createElement('option');
+                                counter++;
+                                option.setAttribute("id", `${counter}option`);
                                 let address = element.city;
                                 if (element.city !== element.address)
                                     address = address.concat(" ", element.address);
                                 option.value = address;
                                 option.textContent = address;
                                 hintList.appendChild(option);
-                                this.store.cityQuery = new_obj;
-                                this.click_on_hint = true;
+
+                                    if (element.type === "Street") 
+                                    {
+                                        if (element.address === store.searched_text) 
+                                        {
+                                            console.log("element: ", element);
+                                            store.cityQuery = element;
+                                            this.click_on_hint = true;
+                                        }
+                                    } 
+                                    else if (element.type === "Geography") 
+                                    {
+                                        if (element.address === store.searched_text) 
+                                        {
+                                            console.log("element: ", element);
+                                            store.cityQuery = element;
+                                            this.click_on_hint = true;
+                                        }
+                                    }
                             });
                         })
                         .catch(error => 
@@ -431,7 +445,7 @@ import { store } from "../store";
             </ul>
             <form v-if="(store.page_name !== 'Search')" class="d-flex" role="search" @submit.prevent="ready_for_call()">
                 <input v-model="store.searched_text" autocomplete="off" class="form-control" type="search" placeholder="Cerca un'appartamento..." aria-label="Search" list="cities" @keyup="clean_input" style="width: 300px;">
-                <datalist id="cities">
+                <datalist id="cities" v-if="!this.click_on_hint">
                   <!-- <option v-for="(city, index) in store.all_cities" :key="index" :value="city">{{ city }}</option> -->
                 </datalist>
                 <button class="btn" type="submit" @click.prevent="ready_for_call()">
@@ -446,7 +460,7 @@ import { store } from "../store";
         <div class="col-md-12 col-xl-6" >
             <form  class="d-flex  mx-auto" role="search" @submit.prevent="ready_for_call()" style="margin-top: 20px;">
                 <input v-model="store.searched_text" autocomplete="off" class="form-control me-2 w-100" type="search" placeholder="Cerca un'appartamento..." aria-label="Search" list="cities" @keyup="clean_input">
-                <datalist id="cities">
+                <datalist id="cities" v-if="!this.click_on_hint">
                   <!-- <option v-for="(city, index) in store.all_cities" :key="index" :value="city">{{ city }}</option> -->
                 </datalist>
                 <button class="btn" type="submit" @click.prevent="ready_for_call()">
