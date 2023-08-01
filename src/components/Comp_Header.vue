@@ -88,20 +88,21 @@ import { store } from "../store";
             {
                 const text_length = this.store.searched_text.length;
                 const last_char = this.store.searched_text.slice(-1).toLowerCase();
-                if (text_length > 1)
-                    var before_last = this.store.searched_text.slice(-2, -1).toLowerCase();
                 const without_last = this.store.searched_text.slice(0, -1);
                 console.log("tutto: ", this.store.searched_text);
                 console.log("ultimo: ", last_char);
-                console.log("penultimo: ", before_last);
                 console.log("tagliato: ", without_last);
                 if ( ((last_char >= "a") && (last_char <= "z")) || (!isNaN(last_char)) || (last_char === " ") || (last_char === '\b') )
                 {
-                    if ((text_length === 1) && !((last_char >= "a") && (last_char <= "z")))
-                        this.store.searched_text = without_last;
-                    else if ((text_length > 1) && (last_char === " ") && (before_last === " "))
-                        this.store.searched_text = without_last;
-                    else if ((text_length > 1) && (!isNaN(last_char)) && (before_last >= "a") && (before_last <= "z"))
+                    if (text_length > 1)
+                    {
+                        const before_last = this.store.searched_text.slice(-2, -1).toLowerCase();
+                        console.log("penultimo: ", before_last);
+                        if (((last_char === " ") && (before_last === last_char)) ||
+                            ((!isNaN(last_char)) && (before_last >= "a") && (before_last <= "z")))
+                            this.store.searched_text = without_last;
+                    } 
+                    else if ((text_length === 1) && !((last_char >= "a") && (last_char <= "z")))
                         this.store.searched_text = without_last;
                 }
                 else
@@ -123,7 +124,7 @@ import { store } from "../store";
                 this.click_on_hint = false;
                 console.log("tasto premuto");
                 console.log("click on hint: ", this.click_on_hint);
-                // this.clean_input();
+                this.clean_input();
                 console.log("testo attuale: ",this.store.searched_text);
                 console.log("dimensione del testo attuale: ",this.store.searched_text.length);
                 if (store.searched_text.length > 3) 
