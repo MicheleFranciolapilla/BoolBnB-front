@@ -106,8 +106,8 @@ import { store } from "../store";
 
             clean_input(event)
             {
+                console.log("ingresso in clean_input");
                 this.click_on_hint = false;
-                console.log("event: ", event);
                 this.input_allowed = false;
                 let last_char = event.key;
                 const text_to_check = this.store.searched_text;
@@ -120,13 +120,11 @@ import { store } from "../store";
                         (last_char === '\b') 
                     )
                 {
-                    console.log("CARATTERE LECITO");
                     switch (text_length)
                     {
                         case 1  :   
                             if ( !this.is_letter(last_char) )
                             {
-                                console.log("IL PRIMO CARATTERE NON E' VALIDO");
                                 this.store.searched_text = without_last;
                             }
                             break;
@@ -138,7 +136,6 @@ import { store } from "../store";
                                     ((last_char.includes(' ')) && (before_last.includes(' ')))
                                 )
                             {
-                                console.log("IL CARATTERE NON E' VALIDO");
                                 this.store.searched_text = without_last;
                             }
                             break;
@@ -146,7 +143,6 @@ import { store } from "../store";
                 }
                 else
                 {
-                    console.log("ELSE");
                     this.store.searched_text = without_last;
                 }
                 this.input_allowed = true;
@@ -196,17 +192,18 @@ import { store } from "../store";
                         {
                             let results = data.results;
                             let uniqueElements = [];
+                            let main_info = [];
                             let rankings = [];
                             let searched_text_lc = this.store.searched_text.toLowerCase();
                             results.forEach( element => 
                                 {
-                                    if ( ["Geography", "Street"].contains(element.type) )
+                                    if ( ["Geography", "Street"].includes(element.type) )
                                     {
-                                        let city        = element.address.municipality;
-                                        let address     = city;
-                                        let type        = element.type;
-                                        let latitude    = element.position.lat;
-                                        let longitude   = element.position.lon;
+                                        var city        = element.address.municipality;
+                                        var address     = city;
+                                        var type        = element.type;
+                                        var latitude    = element.position.lat;
+                                        var longitude   = element.position.lon;
                                     }
                                     if (type === "Street")
                                         address = element.address.freeformAddress;
@@ -215,8 +212,10 @@ import { store } from "../store";
                                         let city_lc = city.toLowerCase();
                                         let address_lc = address.toLowerCase();
                                         let new_item = `${city}_${address}_${type}_${latitude}_${longitude}`;
-                                        if (!uniqueElements.contains(new_item))
+                                        let new_main_info = `${city}_${address}`;
+                                        if (!main_info.includes(new_main_info))
                                         {
+                                            main_info.push(new_main_info);
                                             uniqueElements.push(new_item);
                                             if ((city_lc.concat(" ", address_lc) == searched_text_lc) || (address_lc.concat(" ", city_lc) == searched_text_lc))
                                                 rankings.push(10);
@@ -245,22 +244,26 @@ import { store } from "../store";
                                         uniqueElements[j] = elem_swap;
                                     }
                                 }
+                            console.log(uniqueElements);
+                            console.log(rankings);
                             let hintList = document.getElementById('cities');
                             hintList.innerHTML = '';
                             this.store.RaccoltaIndirizzi = [];
                             uniqueElements.forEach( element =>
                             {
-                                element_parts = element.split('_');
-                                new_obj =   {
-                                                'city'      : element_parts[0],
-                                                'address'   : element_parts[1],
-                                                'type'      : element_parts[2],
-                                                'latitude'  : element_parts[3],
-                                                'longitude' : element_parts[4]
-                                            };
+                                let element_parts = element.split('_');
+                                let new_obj =   {
+                                                    'city'      : element_parts[0],
+                                                    'address'   : element_parts[1],
+                                                    'type'      : element_parts[2],
+                                                    'latitude'  : element_parts[3],
+                                                    'longitude' : element_parts[4]
+                                                };
                                 this.store.RaccoltaIndirizzi.push(new_obj);
                                 let option = document.createElement('option');
-                                let address = element_parts[0].concat(" ", element_parts[1]);
+                                let address = element_parts[0];
+                                if (element_parts[0] !== element_parts[1])
+                                    address = address.concat(" ", element_parts[1]);
                                 option.value = address;
                                 option.textContent = address;
                                 hintList.appendChild(option);
@@ -433,7 +436,7 @@ import { store } from "../store";
                 </li>
             </ul>
             <form v-if="(store.page_name !== 'Search')" class="d-flex" role="search" @submit.prevent="ready_for_call()">
-                <input v-model="store.searched_text" autocomplete="off" class="form-control" type="search" placeholder="Cerca un'appartamento..." aria-label="Search" list="cities" @keyup="Searched_hint" style="width: 300px;">
+                <input v-model="store.searched_text" autocomplete="off" class="form-control" type="search" placeholder="Cerca un'appartamento..." aria-label="Search" list="cities" @keyup="clean_input" style="width: 300px;">
                 <datalist id="cities">
                   <!-- <option v-for="(city, index) in store.all_cities" :key="index" :value="city">{{ city }}</option> -->
                 </datalist>
