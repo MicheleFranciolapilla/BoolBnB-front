@@ -75,7 +75,7 @@ export default {
     <span :class="currentSlideIndex == 0 ? 'd-non' : '' " class="text-white d-block display-1 fade-in"><strong class="color">A</strong></span>
     <span :class="currentSlideIndex == 0 ? 'd-non' : '' " class="text-white d-block display-1 fade-in"><strong class="color">R</strong></span>
     <span :class="currentSlideIndex == 0 ? 'd-non' : '' " class="text-white d-block display-1 fade-in"><strong class="color">I</strong></span>
-    <button :class="currentSlideIndex == 0 ? '' : 'd-none' " type="button" class="btn btn-warning main-txt">Book now</button>
+    <button :class="currentSlideIndex == 0 ? '' : 'd-none' " type="button" class="btn btn-warning main-txt">Prenota Ora</button>
 
     </div>
     <div 
@@ -90,7 +90,7 @@ export default {
       <span :class="currentSlideIndex == 1 ? 'd-non' : '' " class="text-white d-block display-1 fade-in"><strong class="color">R</strong></span>
       <span :class="currentSlideIndex == 1 ? 'd-non' : '' " class="text-white d-block display-1 fade-in"><strong class="color">M</strong></span>
       <span :class="currentSlideIndex == 1 ? 'd-non' : '' " class="text-white d-block display-1 fade-in"><strong class="color">O</strong></span>
-      <button :class="currentSlideIndex == 1 ? '' : 'd-none' " type="button" class="btn btn-warning main-txt2">Book now</button>
+      <button :class="currentSlideIndex == 1 ? '' : 'd-none' " type="button" class="btn btn-warning main-txt2">Prenota Ora</button>
     </div>
     <div
       @mouseleave="hoverLeave('slide3')"
@@ -104,7 +104,7 @@ export default {
       <span :class="currentSlideIndex == 2 ? 'd-non' : '' " class="text-white d-block display-1 fade-in"><strong class="color">I</strong></span>
       <span :class="currentSlideIndex == 2 ? 'd-non' : '' " class="text-white d-block display-1 fade-in"><strong class="color">N</strong></span>
       <span :class="currentSlideIndex == 2 ? 'd-non' : '' " class="text-white d-block display-1 fade-in"><strong class="color">A</strong></span>
-      <button :class="currentSlideIndex == 2 ? '' : 'd-none' " type="button" class="btn btn-warning main-txt3">Book now</button>
+      <button :class="currentSlideIndex == 2 ? '' : 'd-none' " type="button" class="btn btn-warning main-txt3">Prenota Ora</button>
     </div>
     <div 
       @mouseleave="hoverLeave('slide4')"
@@ -118,7 +118,7 @@ export default {
       <span :class="currentSlideIndex == 3 ? 'd-non' : '' " class="text-white d-block display-1 fade-in"><strong class="color">N</strong></span>
       <span :class="currentSlideIndex == 3 ? 'd-non' : '' " class="text-white d-block display-1 fade-in"><strong class="color">Z</strong></span>
       <span :class="currentSlideIndex == 3 ? 'd-non' : '' " class="text-white d-block display-1 fade-in"><strong class="color">E</strong></span>
-      <button :class="currentSlideIndex == 3 ? '' : 'd-none' " type="button" class="btn btn-warning main-txt4">Book now</button>
+      <button :class="currentSlideIndex == 3 ? '' : 'd-none' " type="button" class="btn btn-warning main-txt4">Prenota Ora</button>
     </div>
     <div
       @mouseleave="hoverLeave('slide5')"
@@ -131,7 +131,7 @@ export default {
       <span :class="currentSlideIndex == 4 ? 'd-non' : '' " class="text-white d-block display-1 fade-in"><strong class="color">A</strong></span>
       <span :class="currentSlideIndex == 4 ? 'd-non' : '' " class="text-white d-block display-1 fade-in"><strong class="color">N</strong></span>
       <span :class="currentSlideIndex == 4 ? 'd-non' : '' " class="text-white d-block display-1 fade-in"><strong class="color">O</strong></span>
-      <button :class="currentSlideIndex == 4 ? '' : 'd-none' " type="button" class="btn btn-warning main-txt5">Book now</button>
+      <button :class="currentSlideIndex == 4 ? '' : 'd-none' " type="button" class="btn btn-warning main-txt5">Prenota Ora</button>
     </div>
   </div>
 </template>
