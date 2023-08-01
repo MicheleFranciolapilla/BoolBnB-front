@@ -1,13 +1,15 @@
 <script>
     import { store } from '../store';
     import Comp_OnLoading from '../components/Comp_OnLoading.vue';
+    import Comp_Jumbotron from '../components/Comp_Jumbotron.vue';
 
     export default
     {
         name    :   "CompPage_Home",
         components :
         {
-            Comp_OnLoading
+            Comp_OnLoading,
+            Comp_Jumbotron
         },
         data()
         {
@@ -40,6 +42,9 @@
 
 <template>
     <div class="main">
+        <div class="row mx-auto">
+            <Comp_Jumbotron />
+        </div>
         <div class="row container mx-auto">
             <div v-for="(apartment, index) in store.apartments.data " :key='index' class="p-1 col-sm-12 col-md-6 col-xl-4">
                 <router-link :to="{name: 'apartments_show', params: { id: apartment.id, slug:apartment.slug}}" class="text-decoration-none text-black" @click="store.prepare_reactive_call('single',apartment.id)">

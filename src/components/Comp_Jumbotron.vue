@@ -1,7 +1,7 @@
 <script>
 
-  import Comp_Jumbotron_Dekstop from "../components/Comp_Jumbotron_Dekstop.vue";
-  import Comp_Jumbotron_Mobile from "../components/Comp_Jumbotron_Mobile.vue";
+  import Comp_Jumbotron_Dekstop from "./Comp_Jumbotron_Dekstop.vue";
+  import Comp_Jumbotron_Mobile from "./Comp_Jumbotron_Mobile.vue";
 
   export default{
       name: "",

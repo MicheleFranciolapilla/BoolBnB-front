@@ -6,7 +6,6 @@ import CompPage_Apartments_Show from "./pages/CompPage_Apartments_Show.vue";
 import CompPage_Chi_Siamo from "./pages/CompPage_ChiSiamo.vue";
 import CompPage_Map from "./pages/CompPage_Map.vue";
 import CompPage_404 from "./pages/CompPage_404.vue";
-import CompPage_Jumbotron from "./pages/CompPage_Jumbotron.vue";
 
 const router = createRouter(
     {
@@ -64,14 +63,6 @@ const router = createRouter(
                             meta        :   {
                                                 page_title : 'BoolB&B | 404'
                                             }
-                        },
-                        {
-                            path        :   '/jumbo', 
-                            name        :   'jumbo',
-                            component   :   CompPage_Jumbotron,
-                            meta        :   {
-                                                page_title  :   "jumbotron"  
-                                            },
                         },
                     ] 
       });
