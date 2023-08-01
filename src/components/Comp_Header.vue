@@ -161,6 +161,29 @@ import { store } from "../store";
             get_ranking(city, address, text)
             {
                 let result = 0;
+                let city_matches = 0;
+                let address_matches = 0;
+                if (city.includes(text))
+                    return 7;
+                if (address.includes(text)) 
+                    return 6;
+                for (let i = 0; i < text.length; i++)
+                {
+                    if (city.includes(text[i]))
+                        city_matches++;
+                    else
+                        break;
+                }
+                for (let j = 0; j < text.length; j++)
+                {
+                    if (address.includes(text[j]))
+                        address_matches++;
+                    else
+                        break;
+                }
+                result = Math.max(city_matches, address_matches);
+                if (result > 5)
+                    result = 5;
                 return result;
             },
 
@@ -203,7 +226,7 @@ import { store } from "../store";
                                                 rankings.push(8);
                                             else
                                             {
-                                                let rank = get_ranking(city_lc, address_lc, searched_text_lc);
+                                                let rank = this.get_ranking(city_lc, address_lc, searched_text_lc);
                                                 rankings.push(rank);
                                             }
                                         }
