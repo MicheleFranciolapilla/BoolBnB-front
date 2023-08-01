@@ -10,7 +10,8 @@ import { store } from "../store";
             return {
                 store,
                 click_on_hint   : false,
-                filter : false,
+                filter          : false,
+                input_allowed   : true, 
             }
         },
         mounted(){
@@ -39,7 +40,10 @@ import { store } from "../store";
             ready_for_call(from_search_bar = true)
             {
                 // console.log("cityquery da ready for call: ", store.cityQuery);
-                if (((this.click_on_hint) && (from_search_bar)) || (!from_search_bar))
+                if  (
+                        ((this.click_on_hint) && (from_search_bar)) || 
+                        (!from_search_bar)
+                    )
                 {
                     this.store.city_to_search = this.store.cityQuery.city;
                     this.store.prepare_reactive_call("all");
@@ -102,6 +106,9 @@ import { store } from "../store";
 
             clean_input(event)
             {
+                this.click_on_hint = false;
+                console.log("event: ", event);
+                this.input_allowed = false;
                 let last_char = event.key;
                 const text_to_check = this.store.searched_text;
                 const text_length = text_to_check.length;
@@ -122,8 +129,6 @@ import { store } from "../store";
                                 console.log("IL PRIMO CARATTERE NON E' VALIDO");
                                 this.store.searched_text = without_last;
                             }
-                            else
-                                return;
                             break;
                         default :   
                             const before_last = text_to_check[text_length - 2]; 
@@ -136,8 +141,6 @@ import { store } from "../store";
                                 console.log("IL CARATTERE NON E' VALIDO");
                                 this.store.searched_text = without_last;
                             }
-                            else
-                                return;
                             break;
                     }
                 }
@@ -146,14 +149,67 @@ import { store } from "../store";
                     console.log("ELSE");
                     this.store.searched_text = without_last;
                 }
+                this.input_allowed = true;
+                if  (   (this.store.searched_text.length > 4) ||
+                        ((this.store.searched_text.length == 4) && (this.store.searched_text[3] != ' '))
+                    ) 
+                {
+                    this.best_matches();
+                }
+            },
+
+            get_ranking(city, address, text)
+            {
+                let result = 0;
+                return result;
             },
 
             best_matches()
             {
-                this.click_on_hint = false;
-                console.log("tasto premuto");
-                console.log("click on hint: ", this.click_on_hint);
-                // if (this.store.searched_text.length > 3)
+                const tomTomUrl = `https://api.tomtom.com/search/2/geocode/${store.searched_text}.json?key=mDuLGwpUfBez8sET5BVhGMRbc4FRXzB4&countrySet=IT&limit=100&minFuzzyLevel=2&typeahead=false`;
+                fetch(tomTomUrl)
+                    .then(response => response.json())
+                        .then(data =>
+                        {
+                            let results = data.results;
+                            let uniqueElements = [];
+                            let rankings = [];
+                            let searched_text_lc = this.store.searched_text.toLowerCase();
+                            results.forEach( element => 
+                                {
+                                    if ( ["Geography", "Street"].contains(element.type) )
+                                    {
+                                        let city        = element.address.municipality;
+                                        let address     = city;
+                                        let type        = element.type;
+                                        let latitude    = element.position.lat;
+                                        let longitude   = element.position.lon;
+                                    }
+                                    if (type === "Street")
+                                        address = element.address.freeformAddress;
+                                    if  (address && city && type && (latitude !== undefined) && (longitude !== undefined))
+                                    {
+                                        let city_lc = city.toLowerCase();
+                                        let address_lc = address.toLowerCase();
+                                        let new_item = `${city}_${address}_${latitude}_${longitude}_${type}`;
+                                        if (!uniqueElements.contains(new_item))
+                                        {
+                                            uniqueElements.push(new_item);
+                                            if ((city_lc.concat(" ", address_lc) == searched_text_lc) || (address_lc.concat(" ", city_lc) == searched_text_lc))
+                                                rankings.push(10);
+                                            else if ((city_lc == searched_text_lc))
+                                                rankings.push(9);
+                                            else if ((address_lc == searched_text_lc))
+                                                rankings.push(8);
+                                            else
+                                            {
+                                                let rank = get_ranking(city_lc, address_lc, searched_text_lc);
+                                                rankings.push(rank);
+                                            }
+                                        }
+                                    }
+                                });
+                        });
             },
 
             Searched_hint(event)
@@ -281,8 +337,6 @@ import { store } from "../store";
                   store.selected_zoom = 15;
                 }
             },
-
-
         },
     }
 </script>
@@ -315,11 +369,10 @@ import { store } from "../store";
                         </li>
                     </ul>
                 </li>
-
             </ul>
             <form v-if="(store.page_name !== 'Search')" class="d-flex" role="search" @submit.prevent="ready_for_call()">
-                <input v-model="store.searched_text" autocomplete="off" class="form-control" type="search" placeholder="Cerca un'appartamento..." aria-label="Search" list="cities" @keyup="Searched_hint" style="width: 300px;">
-                <datalist id="cities" v-if="!click_on_hint">
+                <input v-model="store.searched_text" autocomplete="off" class="form-control" type="search" placeholder="Cerca un'appartamento..." aria-label="Search" list="cities" @keyup="clean_input" style="width: 300px;">
+                <datalist id="cities">
                   <!-- <option v-for="(city, index) in store.all_cities" :key="index" :value="city">{{ city }}</option> -->
                 </datalist>
                 <button class="btn" type="submit" @click.prevent="ready_for_call()">
@@ -327,15 +380,14 @@ import { store } from "../store";
                 </button>
             </form>
         </div>
-
     </div>
 </nav>
 <div v-if="(store.page_name == 'Search')" class="container my-3" >
     <div class="row justify-content-center">
         <div class="col-md-12 col-xl-6" >
             <form  class="d-flex  mx-auto" role="search" @submit.prevent="ready_for_call()" style="margin-top: 20px;">
-                <input v-model="store.searched_text" autocomplete="off" class="form-control me-2 w-100" type="search" placeholder="Cerca un'appartamento..." aria-label="Search" list="cities" @keyup="Searched_hint()">
-                <datalist id="cities" v-if="!click_on_hint">
+                <input v-model="store.searched_text" autocomplete="off" class="form-control me-2 w-100" type="search" placeholder="Cerca un'appartamento..." aria-label="Search" list="cities" @keyup="Searched_hint">
+                <datalist id="cities">
                   <!-- <option v-for="(city, index) in store.all_cities" :key="index" :value="city">{{ city }}</option> -->
                 </datalist>
                 <button class="btn" type="submit" @click.prevent="ready_for_call()">
