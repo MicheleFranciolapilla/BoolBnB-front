@@ -84,29 +84,53 @@ import { store } from "../store";
                 }
             },
 
-            clean_input()
+            clean_input(event)
             {
-                const text_length = this.store.searched_text.length;
-                const last_char = this.store.searched_text.slice(-1).toLowerCase();
-                const without_last = this.store.searched_text.slice(0, -1);
-                console.log("tutto: ", this.store.searched_text);
-                console.log("ultimo: ", last_char);
-                console.log("tagliato: ", without_last);
-                if ( ((last_char >= "a") && (last_char <= "z")) || (!isNaN(last_char)) || (last_char === " ") || (last_char === '\b') )
+                let last_char = event.key;
+                const text_to_check = this.store.searched_text;
+                const text_length = text_to_check.length;
+                // const last_char = text_to_check[text_length - 1];
+                const without_last = text_to_check.slice(0, -1);
+                if  ( 
+                        ((last_char.toLowerCase() >= "a") && (last_char.toLowerCase() <= "z")) || 
+                        (!isNaN(last_char)) || 
+                        (last_char == ' ') || 
+                        (last_char === '\b') 
+                    )
                 {
-                    if (text_length > 1)
+                    console.log("CARATTERE LECITO");
+                    switch (text_length)
                     {
-                        const before_last = this.store.searched_text.slice(-2, -1).toLowerCase();
-                        console.log("penultimo: ", before_last);
-                        if (((last_char === " ") && (before_last === last_char)) ||
-                            ((!isNaN(last_char)) && (before_last >= "a") && (before_last <= "z")))
-                            this.store.searched_text = without_last;
-                    } 
-                    else if ((text_length === 1) && !((last_char >= "a") && (last_char <= "z")))
-                        this.store.searched_text = without_last;
+                        case 1  :   
+                            if ( !((last_char.toLowerCase() >= "a") && (last_char.toLowerCase() <= "z")) )
+                            {
+                                console.log("IL PRIMO CARATTERE NON E' VALIDO");
+                                this.store.searched_text = without_last;
+                            }
+                            break;
+                        default :   
+                            const before_last = text_to_check[text_length - 2]; 
+                            console.log("tipo penultimo: ",typeof(before_last));
+                            console.log("valore penultimo: '",before_last,"'");
+                            console.log("lunghezza penultimo: ", before_last.length);
+                            console.log("tipo ultimo: ",typeof(last_char));
+                            console.log("valore ultimo: '",last_char,"'");
+                            console.log("lunghezza ultimo: ", last_char.length);
+                            if  (
+                                    (!isNaN(last_char) && (before_last.toLowerCase() >= "a") && (before_last.toLowerCase() <= "z")) ||
+                                    (!isNaN(before_last) && (last_char.toLowerCase() >= "a") && (last_char.toLowerCase() <= "z")) ||
+                                    ((last_char.includes(' ')) && (before_last.includes(' ')))
+                                )
+                            {
+                                console.log("IL CARATTERE NON E' VALIDO");
+                                this.store.searched_text = without_last;
+                            }
+                            break;
+                    }
                 }
                 else
                 {
+                    console.log("ELSE");
                     this.store.searched_text = without_last;
                 }
             },
@@ -119,14 +143,10 @@ import { store } from "../store";
                 // if (this.store.searched_text.length > 3)
             },
 
-            Searched_hint()
+            Searched_hint(event)
             {
                 this.click_on_hint = false;
-                console.log("tasto premuto");
-                console.log("click on hint: ", this.click_on_hint);
-                this.clean_input();
-                console.log("testo attuale: ",this.store.searched_text);
-                console.log("dimensione del testo attuale: ",this.store.searched_text.length);
+                this.clean_input(event);
                 if (store.searched_text.length > 3) 
                 {
                     const tomTomUrl = `https://api.tomtom.com/search/2/geocode/${store.searched_text}.json?key=mDuLGwpUfBez8sET5BVhGMRbc4FRXzB4&countrySet=IT&limit=100&minFuzzyLevel=2&typeahead=false`;
@@ -247,8 +267,9 @@ import { store } from "../store";
                 } else if (store.selected_range <= 1) {
                   store.selected_zoom = 15;
                 }
+            },
 
-            }
+
         },
     }
 </script>
@@ -284,7 +305,7 @@ import { store } from "../store";
 
             </ul>
             <form v-if="(store.page_name !== 'Search')" class="d-flex" role="search" @submit.prevent="ready_for_call()">
-                <input v-model="store.searched_text" autocomplete="off" class="form-control" type="search" placeholder="Cerca un'appartamento..." aria-label="Search" list="cities" @keyup="Searched_hint()" style="width: 300px;">
+                <input v-model="store.searched_text" autocomplete="off" class="form-control" type="search" placeholder="Cerca un'appartamento..." aria-label="Search" list="cities" @keyup="Searched_hint" style="width: 300px;">
                 <datalist id="cities" v-if="!click_on_hint">
                   <!-- <option v-for="(city, index) in store.all_cities" :key="index" :value="city">{{ city }}</option> -->
                 </datalist>
