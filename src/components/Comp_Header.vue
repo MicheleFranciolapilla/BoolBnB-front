@@ -214,7 +214,7 @@ import { store } from "../store";
                                     {
                                         let city_lc = city.toLowerCase();
                                         let address_lc = address.toLowerCase();
-                                        let new_item = `${city}_${address}_${latitude}_${longitude}_${type}`;
+                                        let new_item = `${city}_${address}_${type}_${latitude}_${longitude}`;
                                         if (!uniqueElements.contains(new_item))
                                         {
                                             uniqueElements.push(new_item);
@@ -232,6 +232,19 @@ import { store } from "../store";
                                         }
                                     }
                                 });
+                            for (let i = 0; i < uniqueElements.length - 1; i++)
+                                for (let j = i + 1; j < uniqueElements.length; j++ )
+                                {
+                                    if (rankings[i] < rankings[j])
+                                    {
+                                        let rank_swap = rankings[i];
+                                        let elem_swap = uniqueElements[i];
+                                        rankings[i] = rankings[j];
+                                        uniqueElements[i] = uniqueElements[j];
+                                        rankings[j] = rank_swap;
+                                        uniqueElements[j] = elem_swap;
+                                    }
+                                }
                         });
             },
 
