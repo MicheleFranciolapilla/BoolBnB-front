@@ -104,15 +104,14 @@ import { store } from "../store";
                     return false;
             },
 
-            clean_input(event)
+            clean_input()
             {
                 console.log("ingresso in clean_input");
                 this.click_on_hint = false;
-                this.input_allowed = false;
-                let last_char = event.key;
                 const text_to_check = this.store.searched_text;
                 const text_length = text_to_check.length;
                 const without_last = text_to_check.slice(0, -1);
+                let last_char = text_to_check.slice(-1);
                 if  ( 
                         (this.is_letter(last_char)) || 
                         (this.is_digit(last_char)) || 
@@ -145,7 +144,6 @@ import { store } from "../store";
                 {
                     this.store.searched_text = without_last;
                 }
-                this.input_allowed = true;
                 if  (   (this.store.searched_text.length > 4) ||
                         ((this.store.searched_text.length == 4) && (this.store.searched_text[3] != ' '))
                     ) 
@@ -191,9 +189,8 @@ import { store } from "../store";
                         .then(data =>
                         {
                             let results = data.results;
-                            let uniqueElements = [];
+                            let uniqueElements = new Map();
                             let main_info = [];
-                            let rankings = [];
                             let searched_text_lc = this.store.searched_text.toLowerCase();
                             results.forEach( element => 
                                 {
@@ -211,59 +208,56 @@ import { store } from "../store";
                                     {
                                         let city_lc = city.toLowerCase();
                                         let address_lc = address.toLowerCase();
-                                        let new_item = `${city}_${address}_${type}_${latitude}_${longitude}`;
                                         let new_main_info = `${city}_${address}`;
                                         if (!main_info.includes(new_main_info))
                                         {
+                                            let rank = 0;
                                             main_info.push(new_main_info);
-                                            uniqueElements.push(new_item);
                                             if ((city_lc.concat(" ", address_lc) == searched_text_lc) || (address_lc.concat(" ", city_lc) == searched_text_lc))
-                                                rankings.push(10);
+                                                rank = 10;
                                             else if ((city_lc == searched_text_lc))
-                                                rankings.push(9);
+                                                rank = 9;
                                             else if ((address_lc == searched_text_lc))
-                                                rankings.push(8);
+                                                rank = 8;
                                             else
                                             {
-                                                let rank = this.get_ranking(city_lc, address_lc, searched_text_lc);
-                                                rankings.push(rank);
+                                                rank = this.get_ranking(city_lc, address_lc, searched_text_lc);
                                             }
+                                            let key = `${city}_${address}_${type}_${latitude}_${longitude}_${rank}`;
+                                            uniqueElements.set(key, { city, address, type, latitude, longitude, rank });
                                         }
                                     }
                                 });
-                            for (let i = 0; i < uniqueElements.length - 1; i++)
-                                for (let j = i + 1; j < uniqueElements.length; j++ )
+                            let uniqueElementsArray = Array.from(uniqueElements.values());
+                            for (let i = 0; i < uniqueElementsArray.length - 1; i++)
+                                for (let j = i + 1; j < uniqueElementsArray.length; j++ )
                                 {
-                                    if (rankings[i] < rankings[j])
+                                    if (uniqueElementsArray[i].rank < uniqueElementsArray[j].rank)
                                     {
-                                        let rank_swap = rankings[i];
-                                        let elem_swap = uniqueElements[i];
-                                        rankings[i] = rankings[j];
-                                        uniqueElements[i] = uniqueElements[j];
-                                        rankings[j] = rank_swap;
-                                        uniqueElements[j] = elem_swap;
+                                        let elem_swap = uniqueElementsArray[i];
+                                        uniqueElementsArray[i] = uniqueElementsArray[j];
+                                        uniqueElementsArray[j] = elem_swap;
                                     }
                                 }
-                            console.log(uniqueElements);
-                            console.log(rankings);
+                            console.log(uniqueElementsArray);
                             let hintList = document.getElementById('cities');
                             hintList.innerHTML = '';
-                            this.store.RaccoltaIndirizzi = [];
-                            uniqueElements.forEach( element =>
+                            this.store.RaccoltaIndirizzi = uniqueElementsArray;
+                            this.store.RaccoltaIndirizzi.forEach( element =>
                             {
-                                let element_parts = element.split('_');
-                                let new_obj =   {
-                                                    'city'      : element_parts[0],
-                                                    'address'   : element_parts[1],
-                                                    'type'      : element_parts[2],
-                                                    'latitude'  : element_parts[3],
-                                                    'longitude' : element_parts[4]
-                                                };
-                                this.store.RaccoltaIndirizzi.push(new_obj);
+                                // let element_parts = element.split('_');
+                                // let new_obj =   {
+                                //                     'city'      : element_parts[0],
+                                //                     'address'   : element_parts[1],
+                                //                     'type'      : element_parts[2],
+                                //                     'latitude'  : element_parts[3],
+                                //                     'longitude' : element_parts[4]
+                                //                 };
+                                // this.store.RaccoltaIndirizzi.push(new_obj);
                                 let option = document.createElement('option');
-                                let address = element_parts[0];
-                                if (element_parts[0] !== element_parts[1])
-                                    address = address.concat(" ", element_parts[1]);
+                                let address = element.city;
+                                if (element.city !== element.address)
+                                    address = address.concat(" ", element.address);
                                 option.value = address;
                                 option.textContent = address;
                                 hintList.appendChild(option);
@@ -277,7 +271,7 @@ import { store } from "../store";
                             });
             },
 
-            Searched_hint(event)
+            Searched_hint()
             {
                 this.click_on_hint = false;
                 // this.clean_input(event);
@@ -451,7 +445,7 @@ import { store } from "../store";
     <div class="row justify-content-center">
         <div class="col-md-12 col-xl-6" >
             <form  class="d-flex  mx-auto" role="search" @submit.prevent="ready_for_call()" style="margin-top: 20px;">
-                <input v-model="store.searched_text" autocomplete="off" class="form-control me-2 w-100" type="search" placeholder="Cerca un'appartamento..." aria-label="Search" list="cities" @keyup="Searched_hint">
+                <input v-model="store.searched_text" autocomplete="off" class="form-control me-2 w-100" type="search" placeholder="Cerca un'appartamento..." aria-label="Search" list="cities" @keyup="clean_input">
                 <datalist id="cities">
                   <!-- <option v-for="(city, index) in store.all_cities" :key="index" :value="city">{{ city }}</option> -->
                 </datalist>
