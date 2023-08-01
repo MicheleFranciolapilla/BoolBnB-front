@@ -236,7 +236,7 @@
       <div class="wrapper">
         <div class="header" v-if="store.page_name !== '404'">
           <Comp_Header />
-          <h1 v-if="(store.page_name == 'Home')" class="text-center">Welcome to Bool B&B</h1>
+          <h1 v-if="(store.page_name == 'Home')" class="text-center mt-5 display-3"><strong class="text-white">Find the perfect spot for your vacation on Bool B&B</strong></h1>
         </div>
         <router-view id="router"></router-view>
       </div>
@@ -254,6 +254,7 @@
     h1{
       background-color: #C4D7B2;
       margin-bottom: 0;
+      text-shadow: 0px 1px 5px rgba(0, 0, 0, 0.77);
     }
 
     #front_end{
@@ -265,12 +266,13 @@
     }
     
     .header{
-      
+      min-height: 190px;
     }
     .wrapper {
       flex: 1; /* Il contenuto principale (wrapper) occupa lo spazio disponibile rimanente */
       display: flex;
       flex-direction: column;
+      background-color: #C4D7B2;
     }
 
     .main{

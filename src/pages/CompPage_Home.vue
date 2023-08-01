@@ -46,6 +46,7 @@
             <Comp_Jumbotron />
         </div>
         <div class="row container mx-auto">
+            <h2 class="display-1 text-white">FEATURED APARTMENTS</h2>
             <div v-for="(apartment, index) in store.apartments.data " :key='index' class="p-1 col-sm-12 col-md-6 col-xl-4">
                 <router-link :to="{name: 'apartments_show', params: { id: apartment.id, slug:apartment.slug}}" class="text-decoration-none text-black" @click="store.prepare_reactive_call('single',apartment.id)">
                     <div class=" p-2 my-1">
@@ -121,6 +122,10 @@
         left: -10px;
         padding: 6px;
         z-index: 9999;
+    }
+
+    h2{
+        text-shadow: 0px 1px 5px rgba(0, 0, 0, 0.77);
     }
 
 }

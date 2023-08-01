@@ -166,7 +166,7 @@ import Comp_Map from '../components/Comp_Map.vue';
     <!-- <p class="text-center">{{ store.apartments.size }} Appartamenti trovati</p> -->
     
     
-    <div v-if="!store.axios_running" class="row mx-auto">
+    <div v-if="!store.axios_running" class="row p-1">
         <div class="container px-3 pb-5">
             <div class="row mx-0 pb-2" >
                 <div class="row mx-0 box-sx col-12 col-md-12 col-lg-6 mb-3 p-1">

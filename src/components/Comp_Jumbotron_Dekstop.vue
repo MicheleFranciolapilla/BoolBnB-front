@@ -156,27 +156,37 @@ export default {
   .img1 {
     background-image: url('../../public/jumbo/barijumbotron.jpg');
     background-position: center;
+    -webkit-box-shadow: -4px 0px 11px 3px rgba(0,0,0,0.58); 
+    box-shadow: -4px 0px 11px 3px rgba(0,0,0,0.58);
   }
 
   .img2 {
     background-image: url(/public/jumbo/palermojumbotron.webp);
     background-size: cover;
+    -webkit-box-shadow: 0px -1px 11px 2px rgba(0,0,0,0.64); 
+    box-shadow: 0px -1px 11px 2px rgba(0,0,0,0.64);
   }
 
   .img3 {
     background-image: url('/public/jumbo/cortinajumbotron.jpg');
     background-repeat: no-repeat;
     background-size: cover;
+    -webkit-box-shadow: 0px -1px 11px 2px rgba(0,0,0,0.64); 
+    box-shadow: 0px -1px 11px 2px rgba(0,0,0,0.64);
   }
 
   .img4 {
     background-image: url('../../public/jumbo/firenzejumbotron.jpg');
     background-size: cover;
+    -webkit-box-shadow: 0px -1px 11px 2px rgba(0,0,0,0.64); 
+    box-shadow: 0px -1px 11px 2px rgba(0,0,0,0.64);
   }
 
   .img5 {
     background-image: url(/public/jumbo/milanojumbotron.jpg);
     background-size: cover;
+    -webkit-box-shadow: 5px -1px 11px 2px rgba(0,0,0,0.58); 
+    box-shadow: 5px -1px 11px 2px rgba(0,0,0,0.58);
   }
 
   .col-1 {
@@ -184,7 +194,8 @@ export default {
   }
 
   .color {
-    color: black;
+    color: white;
+    -webkit-text-stroke: 1px black; /* width and color */
   }
 
   .fade-in {

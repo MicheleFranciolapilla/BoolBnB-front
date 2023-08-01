@@ -334,7 +334,7 @@ import { store } from "../store";
             </div>
             <div class="col-12 col-md-7 col-xl-4 mt-1">
                 <input class="text-success" type="range" id="range" name="range" :min="store.min_range" :max="store.max_range" v-model="store.selected_range" step="0.5"
-                 v-on:change="ready_for_call(false), changeRange()">    
+                 v-on:change="ready_for_call(false), changeRange()" style="background-color: transparent;">    
             </div>
         </div>
 
@@ -363,7 +363,12 @@ import { store } from "../store";
 
 </template>
 
-<style>
+<style scoped>
+
+nav{
+    -webkit-box-shadow: 0px 2px 15px 5px rgba(0,0,0,0.71); 
+    box-shadow: 0px 2px 15px 5px rgba(0,0,0,0.71);
+}
 
 nav li a{
     text-decoration: none;
