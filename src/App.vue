@@ -218,26 +218,32 @@
 
 <template>
 
-  <Comp_ErrorManager />
+  
+    
+    <Comp_ErrorManager />
+  
+    <Comp_OnLoading
+      v-if="((store.just_started) && (store.axios_running))"
+      :hg_color = "(!front_url_sent) ? ('orange') : ('blue')"
+      :big = "true"
+      :message = "(!front_url_sent) ? ('Tentativo di prima connessione al database in corso...') : ('Recupero dati dal database')"
+    />
+  
+    <div 
+      v-else-if="((!store.just_started) && (go_to_pages()))" 
+      id="front_end"
+    >
+      <div class="wrapper">
+        <div class="header" v-if="store.page_name !== '404'">
+          <Comp_Header />
+          <h1 v-if="(store.page_name == 'Home')" class="text-center">Welcome to Bool B&B</h1>
+        </div>
+        <router-view id="router"></router-view>
+      </div>
+      <Comp_Footer v-if="store.page_name !== '404'" />
+    </div>
+  
 
-  <Comp_OnLoading
-    v-if="((store.just_started) && (store.axios_running))"
-    :hg_color = "(!front_url_sent) ? ('orange') : ('blue')"
-    :big = "true"
-    :message = "(!front_url_sent) ? ('Tentativo di prima connessione al database in corso...') : ('Recupero dati dal database')"
-  />
-
-  <div 
-    v-else-if="((!store.just_started) && (go_to_pages()))" 
-    id="front_end"
-  >
-  <div v-if="store.page_name !== '404'">
-    <Comp_Header />
-    <h1 v-if="(store.page_name == 'Home')" class="text-center">Welcome to Bool B&B</h1>
-  </div>
-    <router-view></router-view>
-    <Comp_Footer v-if="store.page_name !== '404'" />
-  </div>
   
 </template>
 
@@ -248,6 +254,27 @@
     h1{
       background-color: #C4D7B2;
       margin-bottom: 0;
+    }
+
+    #front_end{
+      margin: 0;
+      padding: 0;
+      min-height: 100vh; 
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .header{
+      
+    }
+    .wrapper {
+      flex: 1; /* Il contenuto principale (wrapper) occupa lo spazio disponibile rimanente */
+      display: flex;
+      flex-direction: column;
+    }
+
+    .main{
+      flex: 1;
     }
 
 </style>
