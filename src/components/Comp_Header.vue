@@ -245,13 +245,39 @@ import { store } from "../store";
                                         uniqueElements[j] = elem_swap;
                                     }
                                 }
-                        });
+                            let hintList = document.getElementById('cities');
+                            hintList.innerHTML = '';
+                            this.store.RaccoltaIndirizzi = [];
+                            uniqueElements.forEach( element =>
+                            {
+                                element_parts = element.split('_');
+                                new_obj =   {
+                                                'city'      : element_parts[0],
+                                                'address'   : element_parts[1],
+                                                'type'      : element_parts[2],
+                                                'latitude'  : element_parts[3],
+                                                'longitude' : element_parts[4]
+                                            };
+                                this.store.RaccoltaIndirizzi.push(new_obj);
+                                let option = document.createElement('option');
+                                let address = element_parts[0].concat(" ", element_parts[1]);
+                                option.value = address;
+                                option.textContent = address;
+                                hintList.appendChild(option);
+                                this.store.cityQuery = new_obj;
+                                this.click_on_hint = true;
+                            });
+                        })
+                        .catch(error => 
+                            {
+                                console.error("Error fetching data:", error);
+                            });
             },
 
             Searched_hint(event)
             {
                 this.click_on_hint = false;
-                this.clean_input(event);
+                // this.clean_input(event);
                 if (store.searched_text.length > 3) 
                 {
                     const tomTomUrl = `https://api.tomtom.com/search/2/geocode/${store.searched_text}.json?key=mDuLGwpUfBez8sET5BVhGMRbc4FRXzB4&countrySet=IT&limit=100&minFuzzyLevel=2&typeahead=false`;
@@ -328,22 +354,22 @@ import { store } from "../store";
                                     hintList.appendChild(option);
 
 
-                                    if (element.type === "Street") 
-                                    {
-                                        if (element.address === store.searched_text) 
-                                        {
+                                    // if (element.type === "Street") 
+                                    // {
+                                    //     if (element.address === store.searched_text) 
+                                    //     {
                                             store.cityQuery = element;
                                             this.click_on_hint = true;
-                                        }
-                                    } 
-                                    else if (element.type === "Geography") 
-                                    {
-                                        if (element.address === store.searched_text) 
-                                        {
-                                            store.cityQuery = element;
-                                            this.click_on_hint = true;
-                                        }
-                                    }
+                                    //     }
+                                    // } 
+                                    // else if (element.type === "Geography") 
+                                    // {
+                                    //     if (element.address === store.searched_text) 
+                                    //     {
+                                    //         store.cityQuery = element;
+                                    //         this.click_on_hint = true;
+                                    //     }
+                                    // }
                                 });   
                                 // console.log("valore di city query: ",store.cityQuery);                         
                             })
@@ -407,7 +433,7 @@ import { store } from "../store";
                 </li>
             </ul>
             <form v-if="(store.page_name !== 'Search')" class="d-flex" role="search" @submit.prevent="ready_for_call()">
-                <input v-model="store.searched_text" autocomplete="off" class="form-control" type="search" placeholder="Cerca un'appartamento..." aria-label="Search" list="cities" @keyup="clean_input" style="width: 300px;">
+                <input v-model="store.searched_text" autocomplete="off" class="form-control" type="search" placeholder="Cerca un'appartamento..." aria-label="Search" list="cities" @keyup="Searched_hint" style="width: 300px;">
                 <datalist id="cities">
                   <!-- <option v-for="(city, index) in store.all_cities" :key="index" :value="city">{{ city }}</option> -->
                 </datalist>
