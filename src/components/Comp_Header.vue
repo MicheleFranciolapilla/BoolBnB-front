@@ -84,16 +84,31 @@ import { store } from "../store";
                 }
             },
 
+            is_digit(char)
+            {
+                if ((char >= "0") && (char <= "9"))
+                    return true;
+                else
+                    return false;
+            },
+
+            is_letter(char)
+            {
+                if ((char.toLowerCase() >= "a") && (char.toLowerCase() <= "z"))
+                    return true;
+                else
+                    return false;
+            },
+
             clean_input(event)
             {
                 let last_char = event.key;
                 const text_to_check = this.store.searched_text;
                 const text_length = text_to_check.length;
-                // const last_char = text_to_check[text_length - 1];
                 const without_last = text_to_check.slice(0, -1);
                 if  ( 
-                        ((last_char.toLowerCase() >= "a") && (last_char.toLowerCase() <= "z")) || 
-                        (!isNaN(last_char)) || 
+                        (this.is_letter(last_char)) || 
+                        (this.is_digit(last_char)) || 
                         (last_char == ' ') || 
                         (last_char === '\b') 
                     )
@@ -102,29 +117,27 @@ import { store } from "../store";
                     switch (text_length)
                     {
                         case 1  :   
-                            if ( !((last_char.toLowerCase() >= "a") && (last_char.toLowerCase() <= "z")) )
+                            if ( !this.is_letter(last_char) )
                             {
                                 console.log("IL PRIMO CARATTERE NON E' VALIDO");
                                 this.store.searched_text = without_last;
                             }
+                            else
+                                return;
                             break;
                         default :   
                             const before_last = text_to_check[text_length - 2]; 
-                            console.log("tipo penultimo: ",typeof(before_last));
-                            console.log("valore penultimo: '",before_last,"'");
-                            console.log("lunghezza penultimo: ", before_last.length);
-                            console.log("tipo ultimo: ",typeof(last_char));
-                            console.log("valore ultimo: '",last_char,"'");
-                            console.log("lunghezza ultimo: ", last_char.length);
                             if  (
-                                    (!isNaN(last_char) && (before_last.toLowerCase() >= "a") && (before_last.toLowerCase() <= "z")) ||
-                                    (!isNaN(before_last) && (last_char.toLowerCase() >= "a") && (last_char.toLowerCase() <= "z")) ||
+                                    (this.is_digit(last_char) && this.is_letter(before_last)) ||
+                                    (this.is_digit(before_last) && this.is_letter(last_char)) ||
                                     ((last_char.includes(' ')) && (before_last.includes(' ')))
                                 )
                             {
                                 console.log("IL CARATTERE NON E' VALIDO");
                                 this.store.searched_text = without_last;
                             }
+                            else
+                                return;
                             break;
                     }
                 }
