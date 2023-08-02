@@ -75,7 +75,7 @@ export default {
     <span :class="currentSlideIndex == 0 ? 'd-non' : '' " class="text-white d-block display-1 fade-in"><strong class="color">A</strong></span>
     <span :class="currentSlideIndex == 0 ? 'd-non' : '' " class="text-white d-block display-1 fade-in"><strong class="color">R</strong></span>
     <span :class="currentSlideIndex == 0 ? 'd-non' : '' " class="text-white d-block display-1 fade-in"><strong class="color">I</strong></span>
-    <button :class="currentSlideIndex == 0 ? '' : 'd-none' " type="button" class="btn btn-warning main-txt">Prenota Ora</button>
+    <button :class="currentSlideIndex == 0 ? '' : 'd-none' " type="button" class="btn btn-warning main-txt"><a href="http://localhost:5173/search?city=Bari&lat=41.0746&long=16.86997&range=20&address=Bari">Prenota ora</a></button>
 
     </div>
     <div 
@@ -90,7 +90,7 @@ export default {
       <span :class="currentSlideIndex == 1 ? 'd-non' : '' " class="text-white d-block display-1 fade-in"><strong class="color">R</strong></span>
       <span :class="currentSlideIndex == 1 ? 'd-non' : '' " class="text-white d-block display-1 fade-in"><strong class="color">M</strong></span>
       <span :class="currentSlideIndex == 1 ? 'd-non' : '' " class="text-white d-block display-1 fade-in"><strong class="color">O</strong></span>
-      <button :class="currentSlideIndex == 1 ? '' : 'd-none' " type="button" class="btn btn-warning main-txt2">Prenota Ora</button>
+      <button :class="currentSlideIndex == 1 ? '' : 'd-none' " type="button" class="btn btn-warning main-txt2"><a href="http://localhost:5173/search?city=Palermo&address=Palermo&lat=38.11566&long=13.36147&range=20">Prenota ora</a></button>
     </div>
     <div
       @mouseleave="hoverLeave('slide3')"
@@ -104,7 +104,7 @@ export default {
       <span :class="currentSlideIndex == 2 ? 'd-non' : '' " class="text-white d-block display-1 fade-in"><strong class="color">I</strong></span>
       <span :class="currentSlideIndex == 2 ? 'd-non' : '' " class="text-white d-block display-1 fade-in"><strong class="color">N</strong></span>
       <span :class="currentSlideIndex == 2 ? 'd-non' : '' " class="text-white d-block display-1 fade-in"><strong class="color">A</strong></span>
-      <button :class="currentSlideIndex == 2 ? '' : 'd-none' " type="button" class="btn btn-warning main-txt3">Prenota Ora</button>
+      <button :class="currentSlideIndex == 2 ? '' : 'd-none' " type="button" class="btn btn-warning main-txt3"><a href="http://localhost:5173/search?city=Cortina+d+Ampezzo&address=Cortina+d+Ampezzo&lat=46.53738&long=12.13892&range=20">Prenota ora</a></button>
     </div>
     <div 
       @mouseleave="hoverLeave('slide4')"
@@ -118,7 +118,7 @@ export default {
       <span :class="currentSlideIndex == 3 ? 'd-non' : '' " class="text-white d-block display-1 fade-in"><strong class="color">N</strong></span>
       <span :class="currentSlideIndex == 3 ? 'd-non' : '' " class="text-white d-block display-1 fade-in"><strong class="color">Z</strong></span>
       <span :class="currentSlideIndex == 3 ? 'd-non' : '' " class="text-white d-block display-1 fade-in"><strong class="color">E</strong></span>
-      <button :class="currentSlideIndex == 3 ? '' : 'd-none' " type="button" class="btn btn-warning main-txt4">Prenota Ora</button>
+      <button :class="currentSlideIndex == 3 ? '' : 'd-none' " type="button" class="btn btn-warning main-txt4"><a href="http://localhost:5173/search?city=Firenze&lat=43.7687&long=11.25693&range=20&address=Firenze">Prenota ora</a></button>
     </div>
     <div
       @mouseleave="hoverLeave('slide5')"
@@ -131,7 +131,7 @@ export default {
       <span :class="currentSlideIndex == 4 ? 'd-non' : '' " class="text-white d-block display-1 fade-in"><strong class="color">A</strong></span>
       <span :class="currentSlideIndex == 4 ? 'd-non' : '' " class="text-white d-block display-1 fade-in"><strong class="color">N</strong></span>
       <span :class="currentSlideIndex == 4 ? 'd-non' : '' " class="text-white d-block display-1 fade-in"><strong class="color">O</strong></span>
-      <button :class="currentSlideIndex == 4 ? '' : 'd-none' " type="button" class="btn btn-warning main-txt5">Prenota Ora</button>
+      <button :class="currentSlideIndex == 4 ? '' : 'd-none' " type="button" class="btn btn-warning main-txt5"><a href="http://localhost:5173/search?city=Milano&address=Milano&lat=45.48217&long=9.18729&range=20">Prenota ora</a></button>
     </div>
   </div>
 </template>
@@ -144,6 +144,11 @@ export default {
   padding-bottom: 100px;
   font-family: 'Bebas Neue', sans-serif;
   font-family: 'Poppins', sans-serif;
+
+  a{
+    text-decoration: none;
+    color: black;
+  }
 
   .first {
     border-radius: 20px 0px 0px 20px;

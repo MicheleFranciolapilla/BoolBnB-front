@@ -169,8 +169,8 @@ import Comp_Map from '../components/Comp_Map.vue';
     <div v-if="!store.axios_running" class="row p-1">
         <div class="container px-3 pb-5">
             <div class="row mx-0 pb-2" >
-                <div class="row mx-0 box-sx col-12 col-md-12 col-lg-6 mb-3 p-1">
-                    <div v-for="(apartment, index) in store.apartments " :key='index' class="px-1 col-12 col-sm-6 col-md-4 col-lg-6 align-items-start mb-2" :id="apartment.id + apartment.slug" @mouseover="this.emulateClickOnDiv(apartment.title)" @mouseleave="this.emulateClickOnEsc()">
+                <div class="row mx-0 box-sx col-12 col-md-12 col-lg-7 mb-3 p-1">
+                    <div v-for="(apartment, index) in store.apartments " :key='index' class="px-1 col-12 col-sm-6 col-md-4 col-lg-3 align-items-start mb-2" :id="apartment.id + apartment.slug" @mouseover="this.emulateClickOnDiv(apartment.title)" @mouseleave="this.emulateClickOnEsc()">
                         <router-link :to="{name: 'apartments_show', params: { id: apartment.id, slug:apartment.slug}}" class="text-decoration-none text-black" @click="store.prepare_reactive_call('single',apartment.id)">
                             <div class="card p-2" :class=" is_sponsorized(apartment) ? ('sponsorized') : ('')  ">
                                 <div class="px-1" style="height: 40px; line-height: 35px;">
@@ -196,7 +196,7 @@ import Comp_Map from '../components/Comp_Map.vue';
                         </router-link>
                     </div>
                 </div>
-                <div class="px-0 col-11 col-sm-12 col-md-12 col-lg-6 mx-auto map-box"  >
+                <div class="px-0 col-11 col-sm-12 col-md-12 col-lg-5 mx-auto map-box"  >
                     <Comp_Map/>
                 </div>
             </div>
@@ -257,7 +257,6 @@ import Comp_Map from '../components/Comp_Map.vue';
     @media (min-width: 992px) {
     .box-sx {
         max-height: 80vh;
-        overflow-y: scroll;
     }
 }
 </style>
