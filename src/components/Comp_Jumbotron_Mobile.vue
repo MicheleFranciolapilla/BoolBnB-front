@@ -1,6 +1,6 @@
 <script>
 export default {
-  name: "Comp_Jumbotron_mobile",
+  name: "Comp_Jumbotron_Mobile",
   data() {
     return {
       slide1: "",
