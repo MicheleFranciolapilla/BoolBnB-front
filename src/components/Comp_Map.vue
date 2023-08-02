@@ -151,7 +151,7 @@ function openInfoWindow(marker, markerData) {
         </div>
         <h6>${markerData.title}</h6>
         <h6>${markerData.price}&#8364;</h6>
-        <a class="text-black text-decoration-none" href="http://localhost:5174/dettaglio/${markerData.id}/${markerData.slug}"><b>vai alla pagina</b></a>
+        <a class="text-black text-decoration-none" href="${store.front_url_root}/dettaglio/${markerData.id}/${markerData.slug}"><b>vai alla pagina</b></a>
     </div>
   `);
 
