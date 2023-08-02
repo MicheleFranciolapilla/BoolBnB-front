@@ -150,21 +150,21 @@ import axios from "axios";
                 <!-- NOME -->
                 <div class="col-12">
                     <label for="name" class="form-label text-white">Nome:</label>
-                    <input type="text" :class="this.nome" class="form-control" id="name" placeholder="Mario" name="nome" v-model="this.mess_name">
+                    <input type="text" :class="this.nome" class="form-control" id="name" placeholder="Inserisci il tuo nome...." name="nome" v-model="this.mess_name">
                     <span :class="this.nome == 'is-invalid' ? '' : 'd-none'" class="text-danger">Inserisci un nome</span>
                 </div>
 
                 <!-- COGNOME -->
                 <div class="col-12">
                     <label for="surname" class="form-label text-white">Cognome:</label>
-                    <input type="text" :class="this.cognome" class="form-control" id="surname" placeholder="Rossi" name="cognome" v-model="this.mess_surname">
+                    <input type="text" :class="this.cognome" class="form-control" id="surname" placeholder="Inserisci il tuo cognome..." name="cognome" v-model="this.mess_surname">
                     <span :class="this.cognome == 'is-invalid' ? '' : 'd-none'" class="text-danger">Inserisci un cognome</span>
                 </div>
 
                 <!-- EMAIL -->
                 <div class="col-12">
                     <label for="email" class="form-label text-white">Email:</label>
-                    <input type="email" :class="this.email" class="form-control" id="email" placeholder="mariorossi@gmail.com" name="email" v-model="this.mess_email">
+                    <input type="email" :class="this.email" class="form-control" id="email" placeholder="Inserisci la tua mail..." name="email" v-model="this.mess_email">
                     <span :class="this.email == 'is-invalid' ? '' : 'd-none'" class="text-danger">Inserisci una email valida</span>
                 </div>
 

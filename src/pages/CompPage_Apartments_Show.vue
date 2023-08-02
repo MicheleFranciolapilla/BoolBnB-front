@@ -88,7 +88,7 @@ import axios from "axios";
                     bsCarousel.to(index);
                 });
                 // Rimuovi la classe "modal-open" dal body per consentire lo scorrimento della pagina
-                document.body.classList.remove('modal-open');
+                document.body.classList.add('modal-open');
                 // Aggiungi l'evento click al documento per gestire la chiusura del carosello
                 document.addEventListener('click', this.handleDocumentMouseClick.bind(this));
             },
